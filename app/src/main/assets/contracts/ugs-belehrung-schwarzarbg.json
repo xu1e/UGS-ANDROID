@@ -1,0 +1,143 @@
+{
+"title": "Bescheinigung über die Belehrung nach § 2a SchwarzArbG",
+"items": [
+{
+"k": "title",
+"t": "Bescheinigung über die Belehrung gemäß § 2a Schwarzarbeitsbekämpfungsgesetz (SchwarzArbG)"
+},
+{
+"k": "gap"
+},
+{
+"k": "h1",
+"t": "Arbeitgeber"
+},
+{
+"k": "normal",
+"t": "{{employer_name}}"
+},
+{
+"k": "normal",
+"t": "{{employer_street}}"
+},
+{
+"k": "normal",
+"t": "{{employer_postal_code}} {{employer_city}}"
+},
+{
+"k": "gap"
+},
+{
+"k": "h1",
+"t": "Arbeitnehmer"
+},
+{
+"k": "normal",
+"t": "Name: {{last_name}}"
+},
+{
+"k": "normal",
+"t": "Vorname: {{first_name}}"
+},
+{
+"k": "normal",
+"t": "Geburtsdatum: {{birth_date}}"
+},
+{
+"k": "normal",
+"t": "Anschrift: {{street}}, {{postal_code}} {{city}}"
+},
+{
+"k": "gap"
+},
+{
+"k": "h1",
+"t": "Belehrung"
+},
+{
+"k": "normal",
+"t": "Hiermit bestätige ich, dass ich von meinem Arbeitgeber über meine Verpflichtung nach § 2a Schwarzarbeitsbekämpfungsgesetz (SchwarzArbG) belehrt worden bin."
+},
+{
+"k": "normal",
+"t": "Ich wurde darauf hingewiesen, dass ich während der Ausübung meiner Tätigkeit im Sicherheitsgewerbe verpflichtet bin,"
+},
+{
+"k": "li",
+"t": "einen gültigen Personalausweis, Reisepass, Passersatz oder Ausweisersatz mitzuführen und"
+},
+{
+"k": "li",
+"t": "diesen auf Verlangen den Prüfbehörden, insbesondere der Finanzkontrolle Schwarzarbeit (FKS) des Zolls, vorzulegen."
+},
+{
+"k": "normal",
+"t": "Mir ist bekannt, dass ein Verstoß gegen diese Pflicht als Ordnungswidrigkeit geahndet werden kann."
+},
+{
+"k": "normal",
+"t": "Mit meiner Unterschrift bestätige ich den Erhalt dieser Belehrung."
+},
+{
+"k": "gap"
+},
+{
+"k": "normal",
+"t": "Ort: {{signing_place}}"
+},
+{
+"k": "normal",
+"t": "Datum: {{signing_date}}"
+},
+{
+"k": "gap"
+},
+{
+"k": "cols",
+"t": "________________________________",
+"r": ""
+},
+{
+"k": "normal",
+"t": "Unterschrift Arbeitnehmer"
+},
+{
+"k": "pagebreak"
+},
+{
+"k": "h1",
+"t": "Für den Arbeitgeber"
+},
+{
+"k": "normal",
+"t": "{{employer_representative}}"
+},
+{
+"k": "normal",
+"t": "Geschäftsführer"
+},
+{
+"k": "normal",
+"t": "{{employer_name}}"
+},
+{
+"k": "gap"
+},
+{
+"k": "normal",
+"t": "Ort, Datum: {{signing_place}}, {{signing_date}}"
+},
+{
+"k": "gap"
+},
+{
+"k": "cols",
+"t": "________________________________",
+"r": ""
+},
+{
+"k": "normal",
+"t": "Unterschrift Arbeitgeber"
+}
+]
+}

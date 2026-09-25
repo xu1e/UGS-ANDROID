@@ -1,0 +1,332 @@
+{
+  "source": "BDSW Entgeltübersicht für Sicherheitsmitarbeiter in ausgewählten Entgeltgruppen ohne Zulagen (Uebersicht_Entgelt_2026_0401b). Alle Angaben ohne Gewähr.",
+  "stand": "2026-04-01",
+  "standLabel": "1. April 2026",
+  "groups": [
+    {
+      "id": "objektschutz",
+      "title": "Objektschutzdienst / Separatwachdienst"
+    },
+    {
+      "id": "nrz",
+      "title": "Beschäftigte in betriebseigener NRZ / NSL"
+    },
+    {
+      "id": "revier",
+      "title": "Revierwachdienst"
+    },
+    {
+      "id": "werkschutz",
+      "title": "IHK-geprüfte Werkschutzfachkraft / geprüfte Schutz- und Sicherheitskraft"
+    },
+    {
+      "id": "fachkraft",
+      "title": "Fachkraft für Schutz und Sicherheit"
+    },
+    {
+      "id": "veranstaltung",
+      "title": "Veranstaltungsdienst"
+    },
+    {
+      "id": "fluechtlinge",
+      "title": "Schutz von Flüchtlingsunterkünften"
+    }
+  ],
+  "regions": [
+    {
+      "id": "BW",
+      "name": "Baden-Württemberg",
+      "validityFrom": "2026-01-01",
+      "validityTo": "2027-12-31",
+      "rates": {
+        "objektschutz": 15.14,
+        "nrz": 17.0,
+        "revier": 16.3,
+        "werkschutz": 18.4,
+        "fachkraft": 20.95,
+        "veranstaltung": 15.14,
+        "fluechtlinge": 15.14
+      },
+      "rateNotes": {},
+      "night": "15 % (20:00–06:00 Uhr)",
+      "sunday": "35 %",
+      "holiday": "100 %"
+    },
+    {
+      "id": "BY",
+      "name": "Bayern (Ortsklasse 1)",
+      "validityFrom": "2025-01-01",
+      "validityTo": "2026-12-31",
+      "rates": {
+        "objektschutz": 14.92,
+        "nrz": 17.59,
+        "revier": 15.55,
+        "werkschutz": 18.33,
+        "fachkraft": 21.06,
+        "veranstaltung": 14.92,
+        "fluechtlinge": 16.42
+      },
+      "rateNotes": {
+        "fluechtlinge": "14,92 € Grundlohn + 1,50 € Zulage für Flüchtlingsunterkünfte"
+      },
+      "night": "23 % (20:00–06:00 Uhr)",
+      "sunday": "26 % (06:00–20:00 Uhr), 3 % (20:00–06:00 Uhr)",
+      "holiday": "100 % (06:00–20:00 Uhr), 77 % (20:00–06:00 Uhr)"
+    },
+    {
+      "id": "BE",
+      "name": "Berlin",
+      "validityFrom": "2026-01-01",
+      "validityTo": "2027-12-31",
+      "rates": {
+        "objektschutz": 15.15,
+        "nrz": 16.8,
+        "revier": 16.2,
+        "werkschutz": 16.8,
+        "fachkraft": 17.65,
+        "veranstaltung": 15.55,
+        "fluechtlinge": 15.55
+      },
+      "rateNotes": {
+        "revier": "15,55 € Grundlohn + 0,65 € Zulage Revierwachdienst"
+      },
+      "night": "15 % (22:00–06:00 Uhr) (10 % im Veranstaltungsdienst)",
+      "sunday": "25 % (10 % im Veranstaltungsdienst)",
+      "holiday": "50 % (10 % im Veranstaltungsdienst)"
+    },
+    {
+      "id": "BB",
+      "name": "Brandenburg",
+      "validityFrom": "2026-01-01",
+      "validityTo": "2027-12-31",
+      "rates": {
+        "objektschutz": 15.15,
+        "nrz": 16.8,
+        "revier": 16.2,
+        "werkschutz": 16.8,
+        "fachkraft": 17.65,
+        "veranstaltung": 15.55,
+        "fluechtlinge": 15.55
+      },
+      "rateNotes": {
+        "revier": "15,55 € Grundlohn + 0,65 € Zulage Revierwachdienst"
+      },
+      "night": "15 % (22:00–06:00 Uhr) (10 % im Veranstaltungsdienst)",
+      "sunday": "25 % (10 % im Veranstaltungsdienst)",
+      "holiday": "50 % (10 % im Veranstaltungsdienst)"
+    },
+    {
+      "id": "HB",
+      "name": "Bremen",
+      "validityFrom": "2026-01-01",
+      "validityTo": "2027-12-31",
+      "rates": {
+        "objektschutz": 14.6,
+        "nrz": 15.44,
+        "revier": 14.72,
+        "werkschutz": 16.26,
+        "fachkraft": 16.26,
+        "veranstaltung": 14.6,
+        "fluechtlinge": 14.6
+      },
+      "rateNotes": {},
+      "night": "5 % (23:00–06:00 Uhr)",
+      "sunday": "50 %",
+      "holiday": "100 %"
+    },
+    {
+      "id": "HH",
+      "name": "Hamburg",
+      "validityFrom": "2026-01-01",
+      "validityTo": "2027-12-31",
+      "rates": {
+        "objektschutz": 15.14,
+        "nrz": 15.32,
+        "revier": 15.32,
+        "werkschutz": 16.77,
+        "fachkraft": 16.77,
+        "veranstaltung": 15.14
+      },
+      "rateNotes": {},
+      "night": "15 % (20:00–06:00 Uhr)",
+      "sunday": "50 %",
+      "holiday": "100 %"
+    },
+    {
+      "id": "HE",
+      "name": "Hessen",
+      "validityFrom": "2026-01-01",
+      "validityTo": "2027-12-31",
+      "rates": {
+        "objektschutz": 15.15,
+        "nrz": 15.84,
+        "revier": 15.5,
+        "werkschutz": 17.28,
+        "fachkraft": 20.07,
+        "veranstaltung": 15.15,
+        "fluechtlinge": 15.6
+      },
+      "rateNotes": {},
+      "night": "12 % oder 25 % (20:00–06:00 Uhr; Lohngruppe § 2 II 1 = 12 %)",
+      "sunday": "25 % (06:00–20:00 Uhr)",
+      "holiday": "100 % (06:00–20:00 Uhr), 75 % (20:00–06:00 Uhr)"
+    },
+    {
+      "id": "MV",
+      "name": "Mecklenburg-Vorpommern",
+      "validityFrom": "2026-01-01",
+      "validityTo": "2027-12-31",
+      "rates": {
+        "objektschutz": 15.27,
+        "nrz": 16.44,
+        "revier": 15.74,
+        "werkschutz": 16.44,
+        "fachkraft": 17.62,
+        "veranstaltung": 15.74,
+        "fluechtlinge": 16.24
+      },
+      "rateNotes": {
+        "fluechtlinge": "15,74 € Grundlohn + 0,50 € Zulage für Flüchtlingsunterkünfte"
+      },
+      "night": "10 % (22:00–06:00 Uhr)",
+      "sunday": "25 % (10 % im Veranstaltungsdienst)",
+      "holiday": "50 % (10 % im Veranstaltungsdienst)"
+    },
+    {
+      "id": "NI",
+      "name": "Niedersachsen (GÖD)",
+      "validityFrom": "2026-01-01",
+      "validityTo": "2027-12-31",
+      "rates": {
+        "objektschutz": 15.14,
+        "revier": 16.28,
+        "werkschutz": 17.77,
+        "fachkraft": 17.77,
+        "veranstaltung": 15.14,
+        "fluechtlinge": 15.54
+      },
+      "rateNotes": {
+        "fluechtlinge": "15,14 € Grundlohn + 0,40 € Zulage für Flüchtlingsunterkünfte"
+      },
+      "night": "10 % (23:00–06:00 Uhr)",
+      "sunday": "50 % (untere Lohngruppen 25 %)",
+      "holiday": "100 % (untere Lohngruppen 75 %)"
+    },
+    {
+      "id": "NW",
+      "name": "Nordrhein-Westfalen",
+      "validityFrom": "2025-04-01",
+      "validityTo": "2026-12-31",
+      "rates": {
+        "objektschutz": 15.11,
+        "nrz": 18.47,
+        "revier": 17.91,
+        "werkschutz": 21.83,
+        "fachkraft": 22.28,
+        "veranstaltung": 15.47,
+        "fluechtlinge": 16.84
+      },
+      "rateNotes": {},
+      "night": "10 % (22:00–06:00 Uhr)",
+      "sunday": "50 %",
+      "holiday": "100 %"
+    },
+    {
+      "id": "RP",
+      "name": "Rheinland-Pfalz / Saarland",
+      "validityFrom": "2026-01-01",
+      "validityTo": "2027-12-31",
+      "rates": {
+        "objektschutz": 15.14,
+        "nrz": 15.72,
+        "revier": 15.49,
+        "werkschutz": 16.98,
+        "fachkraft": 16.98,
+        "fluechtlinge": 16.51
+      },
+      "rateNotes": {},
+      "night": "10 % (20:00–06:00 Uhr)",
+      "sunday": "25 %",
+      "holiday": "100 %"
+    },
+    {
+      "id": "SN",
+      "name": "Sachsen (GÖD)",
+      "validityFrom": "2026-01-01",
+      "validityTo": "2027-12-31",
+      "rates": {
+        "objektschutz": 15.15,
+        "nrz": 15.64,
+        "revier": 15.64,
+        "werkschutz": 16.89,
+        "fachkraft": 18.09,
+        "veranstaltung": 15.64,
+        "fluechtlinge": 15.15
+      },
+      "rateNotes": {
+        "fluechtlinge": "allgemeiner Lohn für Objektschutz; keine Zulagenregelung"
+      },
+      "night": "10 % (23:00–06:00 Uhr)",
+      "sunday": "25 %",
+      "holiday": "50 %"
+    },
+    {
+      "id": "ST",
+      "name": "Sachsen-Anhalt",
+      "validityFrom": "2026-01-01",
+      "validityTo": "2027-12-31",
+      "rates": {
+        "objektschutz": 15.15,
+        "nrz": 16.86,
+        "revier": 15.64,
+        "werkschutz": 16.86,
+        "fachkraft": 18.09,
+        "veranstaltung": 15.64,
+        "fluechtlinge": 16.39
+      },
+      "rateNotes": {
+        "fluechtlinge": "Lohngruppe § 3 Ziffer 2 + 0,75 € Zulage für Flüchtlingsunterkünfte"
+      },
+      "night": "10 % (22:00–06:00 Uhr)",
+      "sunday": "25 % (10 % im Veranstaltungsdienst)",
+      "holiday": "50 % (10 % im Veranstaltungsdienst)"
+    },
+    {
+      "id": "SH",
+      "name": "Schleswig-Holstein",
+      "validityFrom": "2024-01-01",
+      "validityTo": "2026-12-31",
+      "rates": {
+        "objektschutz": 15.1,
+        "nrz": 16.71,
+        "revier": 15.1,
+        "werkschutz": 16.96,
+        "fachkraft": 16.96,
+        "veranstaltung": 15.1,
+        "fluechtlinge": 15.59
+      },
+      "rateNotes": {},
+      "night": "15 % (20:00–06:00 Uhr)",
+      "sunday": "10 % (außer Lohngruppe 3.2)",
+      "holiday": "50 %"
+    },
+    {
+      "id": "TH",
+      "name": "Thüringen",
+      "validityFrom": "2026-01-01",
+      "validityTo": "2027-12-31",
+      "rates": {
+        "objektschutz": 15.15,
+        "nrz": 16.03,
+        "revier": 15.51,
+        "werkschutz": 16.5,
+        "fachkraft": 16.77,
+        "veranstaltung": 15.15
+      },
+      "rateNotes": {},
+      "night": "10 % (22:00–06:00 Uhr)",
+      "sunday": "25 %",
+      "holiday": "50 %"
+    }
+  ]
+}

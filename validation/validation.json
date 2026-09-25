@@ -1,0 +1,30 @@
+{
+  "version": "1.0.0",
+  "minSdk": 26,
+  "targetSdk": 36,
+  "apk_abi": "arm64-v8a",
+  "build": "passed",
+  "unit_tests": [
+    {
+      "suite": "de.ugs.sicherheit.ContractTemplatesTest",
+      "tests": 5
+    },
+    {
+      "suite": "de.ugs.sicherheit.ExcelImportTest",
+      "tests": 2
+    },
+    {
+      "suite": "de.ugs.sicherheit.RulesTest",
+      "tests": 12
+    }
+  ],
+  "lint": {
+    "errors": 0,
+    "warnings": 8
+  },
+  "apk_signature": "verified v2 debug",
+  "alignment_16k": "verified",
+  "internet_permission": false,
+  "device_tests": "not executed: emulator could not boot",
+  "apk_sha256": "4c324e281e2047f19eeece26d2066b0ea3a0c7e04af5df39420b12026861430f"
+}

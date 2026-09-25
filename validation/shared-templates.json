@@ -1,0 +1,74 @@
+[
+  {
+    "file": "templates/ugs-broschuere-hoch.pdf",
+    "sha256": "3e81daa6b73319ac5b5a6a18173984c4985389d6982b2ae3c181341902cb1c13",
+    "source": "provided iOS/Mac project",
+    "byte_identical": true
+  },
+  {
+    "file": "templates/ugs-dienstausweis.pdf",
+    "sha256": "bf10f5cb5fa29181a7913ea626ef3ed486a438e487cb935aeeadd5a3207d7fc9",
+    "source": "provided iOS/Mac project",
+    "byte_identical": true
+  },
+  {
+    "file": "templates/ugs-visitenkarte.pdf",
+    "sha256": "dc16a459fe43f4ee71b449fbcb8d53708a77e9c31763ea8a100e42296fc38572",
+    "source": "provided iOS/Mac project",
+    "byte_identical": true
+  },
+  {
+    "file": "templates/ugs-broschuere-quer.pdf",
+    "sha256": "d9dc2161e5bf12aa8e3420e7a41742d804caf95a52f7edbbddbea7b4d2c245ef",
+    "source": "provided iOS/Mac project",
+    "byte_identical": true
+  },
+  {
+    "file": "templates/ugs-stundenzettel.pdf",
+    "sha256": "323be1936f914efbcbf0022db4d20e0133189f9c8f010d561c25416d9cfaa472",
+    "source": "provided iOS/Mac project",
+    "byte_identical": true
+  },
+  {
+    "file": "templates/fragebogen.pdf",
+    "sha256": "b95c37bd639e95628abeac8da751f2690d8022d52705bd39cba4c4b72f4e75ab",
+    "source": "provided iOS/Mac project",
+    "byte_identical": true
+  },
+  {
+    "file": "contracts/ugs-unterschrift.png",
+    "sha256": "699b586218b846937b3a5c62ab18389b46be4066377be0fb8274d2f379a92fd0",
+    "source": "provided iOS/Mac project",
+    "byte_identical": true
+  },
+  {
+    "file": "contracts/ugs-aufhebungsvertrag.json",
+    "sha256": "10ac4a9c7abbedd285f71ebded523ecbde7b4212c7a05bca9c19090b384f22fa",
+    "source": "provided iOS/Mac project",
+    "byte_identical": true
+  },
+  {
+    "file": "contracts/ugs-arbeitsvertrag.json",
+    "sha256": "e171fb9195654df51f8b6da7ce2cb2e9c6026c81f75f4df693217fe30bb65482",
+    "source": "provided iOS/Mac project",
+    "byte_identical": true
+  },
+  {
+    "file": "contracts/ugs-tarife.json",
+    "sha256": "2e6fec3576a2d864ebd1cf1fbcadf91d00d8f30e9629e3197fdb1010277b50b9",
+    "source": "provided iOS/Mac project",
+    "byte_identical": true
+  },
+  {
+    "file": "contracts/ugs-arbeitsvertrag-anlagen.json",
+    "sha256": "af7a0d13c32463dcdd313d86c99985bcee1cece595bd23da6d5684db2c9fa3fd",
+    "source": "provided iOS/Mac project",
+    "byte_identical": true
+  },
+  {
+    "file": "contracts/ugs-belehrung-schwarzarbg.json",
+    "sha256": "bb5bebce45dce0b497f47e5a7cf12e409b63a4b6b2426c0aee17a772efdb29fc",
+    "source": "provided iOS/Mac project",
+    "byte_identical": true
+  }
+]

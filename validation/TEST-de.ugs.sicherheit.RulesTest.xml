@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="de.ugs.sicherheit.RulesTest" tests="12" skipped="0" failures="0" errors="0" timestamp="2026-09-15T10:02:17.059Z" hostname="localhost" time="0.03">
+  <properties/>
+  <testcase name="duplicateNumberRejected" classname="de.ugs.sicherheit.RulesTest" time="0.002"/>
+  <testcase name="absenceEndBeforeStartRejected" classname="de.ugs.sicherheit.RulesTest" time="0.001"/>
+  <testcase name="adjacentShiftsAllowed" classname="de.ugs.sicherheit.RulesTest" time="0.001"/>
+  <testcase name="overlappingNextDayRejected" classname="de.ugs.sicherheit.RulesTest" time="0.004"/>
+  <testcase name="overnightHours" classname="de.ugs.sicherheit.RulesTest" time="0.002"/>
+  <testcase name="csvQuotesAndNewlines" classname="de.ugs.sicherheit.RulesTest" time="0.005"/>
+  <testcase name="weekendNotCounted" classname="de.ugs.sicherheit.RulesTest" time="0.003"/>
+  <testcase name="excessiveBreakRejected" classname="de.ugs.sicherheit.RulesTest" time="0.001"/>
+  <testcase name="optionalSegment" classname="de.ugs.sicherheit.RulesTest" time="0.003"/>
+  <testcase name="leapYearInclusiveEnd" classname="de.ugs.sicherheit.RulesTest" time="0.0"/>
+  <testcase name="unknownTokenRejected" classname="de.ugs.sicherheit.RulesTest" time="0.002"/>
+  <testcase name="probationNotice" classname="de.ugs.sicherheit.RulesTest" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

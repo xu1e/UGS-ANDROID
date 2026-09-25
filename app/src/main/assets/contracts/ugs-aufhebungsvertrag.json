@@ -1,0 +1,233 @@
+{
+  "title": "UGS Aufhebungsvertrag · Fassung 11.09.2026 · 5.9.27",
+  "items": [
+    {
+      "k": "title",
+      "t": "Aufhebungsvertrag"
+    },
+    {
+      "k": "subtitle",
+      "t": "Einvernehmliche Beendigung des Arbeitsverhältnisses"
+    },
+    {
+      "k": "subtitle",
+      "t": "{{header_summary}}"
+    },
+    {
+      "k": "gap"
+    },
+    {
+      "k": "normal",
+      "t": "Zwischen"
+    },
+    {
+      "k": "address",
+      "t": "{{employer_name}}",
+      "b": [
+        "{{employer_name}}"
+      ]
+    },
+    {
+      "k": "address",
+      "t": "{{employer_street}}"
+    },
+    {
+      "k": "address",
+      "t": "{{employer_postal_code}} {{employer_city}}"
+    },
+    {
+      "k": "address",
+      "t": "vertreten durch {{employer_representative}}"
+    },
+    {
+      "k": "normal",
+      "t": "nachfolgend „Arbeitgeber“"
+    },
+    {
+      "k": "gap"
+    },
+    {
+      "k": "normal",
+      "t": "und"
+    },
+    {
+      "k": "address",
+      "t": "{{salutation_name}}",
+      "b": [
+        "{{salutation_name}}"
+      ]
+    },
+    {
+      "k": "address",
+      "t": "{{street}}"
+    },
+    {
+      "k": "address",
+      "t": "{{postal_code}} {{city}}"
+    },
+    {
+      "k": "address",
+      "t": "[[geboren am {{birth_date}}]]"
+    },
+    {
+      "k": "address",
+      "t": "[[Personalnummer: {{personnel_number}}]]"
+    },
+    {
+      "k": "normal",
+      "t": "nachfolgend „Arbeitnehmer“"
+    },
+    {
+      "k": "gap"
+    },
+    {
+      "k": "normal",
+      "t": "wird die folgende Vereinbarung geschlossen. Die verwendeten Personenbezeichnungen gelten für alle Geschlechter."
+    },
+    {
+      "k": "h1",
+      "t": "§ 1 Einvernehmliche Aufhebung"
+    },
+    {
+      "k": "normal",
+      "t": "(1) Der zwischen den Parteien geschlossene Arbeitsvertrag mit vorgesehenem Arbeitsbeginn am {{contract_start_long}}[[ und vorgesehenem Vertragsende am {{contract_end}}]] wird mit Abschluss dieser Vereinbarung einvernehmlich aufgehoben. Maßgeblich ist der Tag der letzten beiderseitigen Unterzeichnung. Der Arbeitnehmer muss die Beschäftigung nicht antreten.",
+      "when": "before_start"
+    },
+    {
+      "k": "normal",
+      "t": "(1) Das zwischen den Parteien bestehende Arbeitsverhältnis, begonnen am {{contract_start_long}}, endet einvernehmlich mit Ablauf des {{end_date_long}}. Einer Kündigung bedarf es nicht.",
+      "when": "after_start"
+    },
+    {
+      "k": "normal",
+      "t": "(2) Die Aufhebung erfolgt auf Veranlassung des Arbeitgebers aus betriebsbedingten Gründen. Ohne diese Vereinbarung hätte der Arbeitgeber das Arbeitsverhältnis zum selben Zeitpunkt unter Einhaltung der maßgeblichen Frist aus betriebsbedingten Gründen ordentlich gekündigt.",
+      "when": "employer_initiated"
+    },
+    {
+      "k": "h1",
+      "t": "§ 2 Abwicklung bis zur Beendigung"
+    },
+    {
+      "k": "normal",
+      "t": "(1) Diese Fassung gilt für eine Unterzeichnung durch beide Parteien vor dem {{contract_start}} und setzt voraus, dass noch keine Arbeitsleistung erbracht wurde, auch keine vergütungspflichtige Einweisung oder Einarbeitung. Vergütungsansprüche sind bis zur Aufhebung nicht entstanden.",
+      "when": "before_start"
+    },
+    {
+      "k": "normal",
+      "t": "(1) Bis zum Beendigungszeitpunkt wird das Arbeitsverhältnis ordnungsgemäß fortgeführt und abgerechnet. Tatsächlich geleistete Arbeitszeit, Zuschläge und ein etwaiges Zeitguthaben werden nach den vertraglichen, tariflichen und gesetzlichen Regeln vergütet.",
+      "when": "after_start"
+    },
+    {
+      "k": "normal",
+      "t": "(2) Der Arbeitnehmer wird ab dem {{release_start_long}} {{release_mode}} von der Pflicht zur Arbeitsleistung freigestellt. Die vereinbarte Vergütung wird bis zum Beendigungszeitpunkt weitergezahlt. Anderweitiger Verdienst wird entsprechend § 615 Satz 2 BGB angerechnet; der Arbeitnehmer teilt einen solchen Verdienst unverzüglich mit.",
+      "when": "release_enabled"
+    },
+    {
+      "k": "normal",
+      "t": "(3) Der noch offene Urlaub wird wie folgt behandelt: {{vacation_settlement}}. Im Übrigen gelten die gesetzlichen und tariflichen Regeln über Urlaub und Urlaubsabgeltung.",
+      "when": "vacation_note"
+    },
+    {
+      "k": "h1",
+      "t": "§ 3 Abfindung und Ansprüche"
+    },
+    {
+      "k": "normal",
+      "t": "(1) Der Arbeitgeber zahlt dem Arbeitnehmer für den Verlust des Arbeitsplatzes eine Abfindung in Höhe von {{severance_amount}} Euro brutto entsprechend den §§ 9, 10 KSchG. Der Anspruch entsteht mit Abschluss dieser Vereinbarung und ist vererblich. Die Abfindung wird mit der Abrechnung für {{severance_due}} zur Zahlung fällig und nach den jeweils geltenden steuerlichen Vorschriften abgerechnet.",
+      "when": "severance_enabled"
+    },
+    {
+      "k": "normal",
+      "t": "(1) Eine Abfindung wird nicht gezahlt. Zusätzliche Prämien, Entschädigungen oder sonstige freiwillige Leistungen aus Anlass der Aufhebung werden nicht vereinbart.",
+      "when": "severance_disabled"
+    },
+    {
+      "k": "normal",
+      "t": "(2) Allein wegen der vereinbarten Aufhebung verlangen die Parteien voneinander weder eine Vertragsstrafe noch Schadensersatz. Bereits entstandene Ansprüche, insbesondere auf Vergütung oder Aufwendungsersatz, sowie zwingende gesetzliche und tarifliche Ansprüche bleiben unberührt."
+    },
+    {
+      "k": "normal",
+      "t": "(3) Mit der Erfüllung dieser Vereinbarung sind die beiderseitigen Ansprüche aus dem Arbeitsverhältnis und aus Anlass seiner Beendigung erledigt, soweit sie einer Vereinbarung zugänglich sind. Unverzichtbare Ansprüche bleiben unberührt, insbesondere Ansprüche auf den gesetzlichen Mindestlohn, auf den gesetzlichen Mindesturlaub sowie Ansprüche, die zwingenden gesetzlichen oder tariflichen Regelungen unterliegen.",
+      "when": "settlement_enabled"
+    },
+    {
+      "k": "h1",
+      "t": "§ 4 Rückgabe und Unterlagen"
+    },
+    {
+      "k": "normal",
+      "t": "(1) Bereits überlassene Schlüssel, Zutrittsmittel, Dienstausweise, Dienstkleidung, Arbeitsmittel und betriebliche Unterlagen sind unverzüglich an den Arbeitgeber zurückzugeben. Ein Zurückbehaltungsrecht wird nicht vereinbart."
+    },
+    {
+      "k": "normal",
+      "t": "(2) Die gesetzlich erforderlichen Bescheinigungen und Meldungen erteilt beziehungsweise veranlasst der Arbeitgeber fristgerecht. Die Pflicht zur Verschwiegenheit über berechtigt geheimhaltungsbedürftige Informationen und zum Schutz personenbezogener Daten besteht nach den gesetzlichen Vorgaben fort."
+    },
+    {
+      "k": "h1",
+      "t": "§ 5 Arbeitszeugnis"
+    },
+    {
+      "k": "normal",
+      "t": "(1) Eine Arbeitsleistung wurde nicht erbracht. Ein Arbeitszeugnis wird daher nicht erteilt. Auf Verlangen bestätigt der Arbeitgeber den Abschluss und die einvernehmliche Aufhebung des Arbeitsvertrages.",
+      "when": "reference_none"
+    },
+    {
+      "k": "normal",
+      "t": "(1) Der Arbeitnehmer erhält ein qualifiziertes Arbeitszeugnis mit wohlwollender Beurteilung von Führung und Leistung[[ mit der Gesamtbeurteilung {{reference_grade}}]]. Das Zeugnis wird bis zum Beendigungszeitpunkt erteilt; auf Verlangen wird zuvor ein Zwischenzeugnis ausgestellt.",
+      "when": "reference_issued"
+    },
+    {
+      "k": "normal",
+      "t": "(1) Ein Arbeitszeugnis wird auf Verlangen des Arbeitnehmers nach § 109 GewO erteilt.",
+      "when": "reference_on_request"
+    },
+    {
+      "k": "h1",
+      "t": "§ 6 Hinweise zur Arbeitslosenversicherung"
+    },
+    {
+      "k": "normal",
+      "t": "(1) Diese Vereinbarung kann sozialrechtliche Nachteile auslösen, insbesondere eine Sperrzeit beim Arbeitslosengeld und ein Ruhen des Anspruchs. Über Leistungen entscheidet allein die zuständige Stelle. Dem Arbeitnehmer wird empfohlen, die Folgen rechtzeitig mit der Agentur für Arbeit zu klären."
+    },
+    {
+      "k": "normal",
+      "t": "(2) Der Arbeitnehmer ist verpflichtet, sich unverzüglich nach Kenntnis des Beendigungszeitpunkts, spätestens drei Monate vor dessen Eintritt, bei der Agentur für Arbeit arbeitsuchend zu melden (§ 38 SGB III). Liegen zwischen der Kenntnis und der Beendigung weniger als drei Monate, hat die Meldung innerhalb von drei Tagen zu erfolgen."
+    },
+    {
+      "k": "h1",
+      "t": "§ 7 Schlussbestimmungen"
+    },
+    {
+      "k": "normal",
+      "t": "(1) Änderungen und Ergänzungen dieser Vereinbarung bedürfen der Schriftform. Ein Widerrufs- oder Rücktrittsrecht wird nicht vereinbart."
+    },
+    {
+      "k": "normal",
+      "t": "(2) Ist eine Bestimmung unwirksam, bleibt die Vereinbarung im Übrigen wirksam; an die Stelle der unwirksamen Bestimmung treten die gesetzlichen Vorschriften."
+    },
+    {
+      "k": "normal",
+      "t": "(3) Der Arbeitnehmer hatte vor der Unterzeichnung ausreichend Gelegenheit, diese Vereinbarung zu prüfen und Rat einzuholen."
+    },
+    {
+      "k": "normal",
+      "t": "(4) Die Parteien unterzeichnen diese Vereinbarung eigenhändig in zwei gleichlautenden Originalen. Jede Partei erhält ein von beiden Parteien unterschriebenes Original."
+    },
+    {
+      "k": "gap"
+    },
+    {
+      "k": "h2",
+      "t": "Unterzeichnung"
+    },
+    {
+      "k": "normal",
+      "t": "{{signing_place}}, den {{signing_date}}"
+    },
+    {
+      "k": "signatures",
+      "t": "Arbeitnehmer\n{{full_name}}",
+      "r": "Arbeitgeber\n{{employer_name}}\n{{employer_representative}}"
+    }
+  ]
+}

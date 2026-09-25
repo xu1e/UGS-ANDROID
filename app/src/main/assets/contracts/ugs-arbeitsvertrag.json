@@ -1,0 +1,1162 @@
+{
+  "title": "UGS Arbeitsvertrag · 15.09.2026 · optionale Zweckbefristung",
+  "items": [
+    {
+      "k": "title",
+      "t": "Arbeitsvertrag"
+    },
+    {
+      "k": "gap"
+    },
+    {
+      "k": "normal",
+      "t": "Zwischen"
+    },
+    {
+      "k": "address",
+      "t": "{{employer_name}}",
+      "b": [
+        "{{employer_name}}"
+      ]
+    },
+    {
+      "k": "address",
+      "t": "{{employer_street}}"
+    },
+    {
+      "k": "address",
+      "t": "{{employer_postal_code}} {{employer_city}}"
+    },
+    {
+      "k": "address",
+      "t": "vertreten durch {{employer_representative}}"
+    },
+    {
+      "k": "normal",
+      "t": "nachfolgend „Arbeitgeber“"
+    },
+    {
+      "k": "gap"
+    },
+    {
+      "k": "normal",
+      "t": "und"
+    },
+    {
+      "k": "address",
+      "t": "{{salutation_name}}",
+      "b": [
+        "{{salutation_name}}"
+      ]
+    },
+    {
+      "k": "address",
+      "t": "{{street}}"
+    },
+    {
+      "k": "address",
+      "t": "{{postal_code}} {{city}}"
+    },
+    {
+      "k": "normal",
+      "t": "nachfolgend „Arbeitnehmer“"
+    },
+    {
+      "k": "gap"
+    },
+    {
+      "k": "normal",
+      "t": "wird der folgende Arbeitsvertrag geschlossen. Die verwendeten Personenbezeichnungen gelten für alle Geschlechter."
+    },
+    {
+      "k": "h1",
+      "t": "§ 1 Tätigkeit, Beschäftigungsumfang und Einsatzgebiet"
+    },
+    {
+      "k": "normal",
+      "t": "Der Arbeitnehmer wird als Sicherheitsmitarbeiter im Bewachungsgewerbe beschäftigt.[[ Vereinbarte Funktion und Schwerpunkt: {{role}}.]]"
+    },
+    {
+      "k": "normal",
+      "t": "{{employment_scope_clause}}"
+    },
+    {
+      "k": "normal",
+      "t": "{{einsatzgebiet_clause}}"
+    },
+    {
+      "k": "normal",
+      "t": "Soweit in den Anlagen zu diesem Arbeitsvertrag Angaben zum konkreten Einsatz, Einsatzort, Arbeitszeitmodell, zur Vergütung oder zu sonstigen Einsatzbedingungen noch offen sind, sind diese vor Unterzeichnung des Arbeitsvertrages beziehungsweise spätestens vor Beginn des jeweiligen Einsatzes vollständig zu ergänzen und zu dokumentieren."
+    },
+    {
+      "k": "h1",
+      "t": "§ 2 Einsatzorte und Einsatzplanung"
+    },
+    {
+      "k": "normal",
+      "t": "(1) {{einsatzort_clause}}"
+    },
+    {
+      "k": "normal",
+      "t": "(2) {{einsatzwechsel_clause}}"
+    },
+    {
+      "k": "normal",
+      "t": "(3) Bei der Zumutbarkeitsprüfung werden insbesondere Entfernung, Einsatzdauer, Arbeits- und Reisezeiten, Verkehrsanbindung, Unterkunftsmöglichkeiten, familiäre Verpflichtungen sowie gesundheitliche und sonstige berechtigte persönliche Belange berücksichtigt. Eine allgemeine Verpflichtung zum Wohnortwechsel wird nicht vereinbart."
+    },
+    {
+      "k": "normal",
+      "t": "(4) {{objektwechsel_clause}}"
+    },
+    {
+      "k": "normal",
+      "t": "(5) Mobilität: {{mobility_clause}}"
+    },
+    {
+      "k": "h1",
+      "t": "§ 3 Reisezeiten und auswärtige Einsätze"
+    },
+    {
+      "k": "normal",
+      "t": "(1) Vor einem weiter entfernten Einsatz legt der Arbeitgeber Einsatzdauer, An- und Abreise sowie erforderliche Unterkunft und Kostenerstattung fest und teilt dies dem Arbeitnehmer mit. Notwendige, vom Arbeitgeber veranlasste Reise- und Übernachtungskosten trägt der Arbeitgeber nach den anwendbaren gesetzlichen und tariflichen Bestimmungen. Eine Dienstreise mit einem privaten Fahrzeug setzt eine vorherige Vereinbarung voraus."
+    },
+    {
+      "k": "normal",
+      "t": "(2) Der gewöhnliche Weg zwischen Wohnung und regelmäßigem Einsatzort ist grundsätzlich keine vergütungspflichtige Arbeitszeit. Angeordnete Fahrten zwischen Einsatzobjekten während eines Arbeitstages werden als Arbeitszeit erfasst und vergütet. Für sonstige angeordnete Reisen gelten die gesetzlichen, tariflichen und gegebenenfalls gesondert vereinbarten Vergütungsregeln; Reisezeit wird nicht pauschal von der Vergütung ausgeschlossen."
+    },
+    {
+      "k": "normal",
+      "t": "(3) Die arbeitszeitrechtliche Bewertung von Reisezeiten ist gesondert zu beachten. Die Einsatzplanung muss die vorgeschriebenen Ruhezeiten und Grenzen der Arbeitszeit einhalten."
+    },
+    {
+      "k": "normal",
+      "t": "(4) [[Betrieblicher Ausgangspunkt für Dienstfahrten: {{travel_base}}. ]]{{car_expenses_clause}}"
+    },
+    {
+      "k": "h1",
+      "t": "§ 4 Objektwechsel und Kundenbeschwerden"
+    },
+    {
+      "k": "normal",
+      "t": "(1) {{auftragsverlust_clause}}"
+    },
+    {
+      "k": "normal",
+      "t": "(2) Kundenbeschwerden werden sachlich geprüft. Der Arbeitnehmer wirkt an der Aufklärung dienstlicher Vorgänge mit und erhält Gelegenheit zur Stellungnahme. Eine Beschwerde allein beweist keine Pflichtverletzung. Bis zur Klärung ist eine anderweitige zulässige Einsatzplanung möglich."
+    },
+    {
+      "k": "normal",
+      "t": "(3) Ein Objektwechsel ändert den vereinbarten Tätigkeitsrahmen nicht. Die Auswirkungen auf objektbezogene Vergütungsbestandteile richten sich ausschließlich nach §§ 11 und 12 dieses Vertrages."
+    },
+    {
+      "k": "h1",
+      "t": "§ 5 Qualifikation und Bewacherregister"
+    },
+    {
+      "k": "normal",
+      "t": "(1) Vor Aufnahme einer Bewachungstätigkeit müssen die jeweils erforderlichen Voraussetzungen nach § 34a GewO und der Bewachungsverordnung erfüllt sein. Der Arbeitgeber nimmt die erforderliche Anmeldung der Wachperson für seinen Betrieb vor und prüft die behördliche Mitteilung über Zuverlässigkeit und zulässige Einsatzmöglichkeiten. Eine Bewacherregister-ID allein ersetzt diese Prüfung nicht."
+    },
+    {
+      "k": "normal",
+      "t": "(2) Der Arbeitnehmer legt rechtzeitig die erforderlichen Qualifikations- und Identitätsnachweise vor. Hierzu zählen Unterrichtung oder Sachkundeprüfung nach § 34a GewO, gültiges Ausweisdokument sowie gegebenenfalls Erste-Hilfe- und objektbezogene Qualifikationsnachweise."
+    },
+    {
+      "k": "normal",
+      "t": "(3) [[Vorliegende und für den konkreten Einsatz erforderliche Qualifikationsnachweise: {{qualifications}}. ]]Die aktuelle behördliche Mitteilung über Zuverlässigkeit und zulässige Einsatzarten ist vor dem Ersteinsatz zu prüfen. Andere Einsatzarten oder leitende Funktionen dürfen erst nach Nachweis aller dafür erforderlichen Voraussetzungen übertragen werden."
+    },
+    {
+      "k": "normal",
+      "t": "(4) Der Arbeitnehmer informiert den Arbeitgeber unverzüglich über den Wegfall oder die Einschränkung erforderlicher Berechtigungen und über andere aktuelle Registrierungen bei Bewachungsunternehmen, soweit dies für die rechtmäßige Beschäftigung erforderlich ist. Er nimmt an erforderlichen Unterweisungen und Einweisungen teil."
+    },
+    {
+      "k": "normal",
+      "t": "(5) Fehlen notwendige Voraussetzungen, darf die betreffende Bewachungstätigkeit nicht ausgeübt werden. Der Arbeitgeber prüft zulässige andere Einsatzmöglichkeiten und gegebenenfalls weitere arbeitsrechtliche Maßnahmen. Eine automatische Beendigung wegen fehlender Unterlagen oder einer Registerentscheidung wird nicht vereinbart."
+    },
+    {
+      "k": "h1",
+      "t": "§ 6 Beginn und Befristung"
+    },
+    {
+      "k": "normal",
+      "t": "(1) {{start_clause}} {{duration_clause}}"
+    },
+    {
+      "k": "normal",
+      "t": "(2) {{fixed_term_basis_clause}}"
+    },
+    {
+      "k": "normal",
+      "t": "(3) Dieser Vertrag ist für die beiderseitige eigenhändige Unterzeichnung vorgesehen. Bei einer Befristung ist die Befristungsabrede vor Aufnahme der Arbeit in der gesetzlich erforderlichen Form abzuschließen."
+    },
+    {
+      "k": "h1",
+      "t": "§ 7 Probezeit und Kündigung"
+    },
+    {
+      "k": "normal",
+      "t": "(1) {{probation_clause}}"
+    },
+    {
+      "k": "normal",
+      "t": "(2) Das Arbeitsverhältnis kann von beiden Seiten ordentlich gekündigt werden, auch bei vereinbarter Befristung und bereits vor Arbeitsbeginn (§ 15 Abs. 4 TzBfG). Die Kündigungsfrist beginnt mit Zugang der Kündigung."
+    },
+    {
+      "k": "normal",
+      "t": "(3) {{notice_clause}}"
+    },
+    {
+      "k": "normal",
+      "t": "(4) Das Recht zur außerordentlichen Kündigung aus wichtigem Grund gemäß § 626 BGB bleibt unberührt. Kündigungen bedürfen nach § 623 BGB der Schriftform; die elektronische Form ist ausgeschlossen. Eine E-Mail, eine Textnachricht oder ein eingescanntes Schreiben genügt nicht."
+    },
+    {
+      "k": "normal",
+      "t": "(5) Wer die Unwirksamkeit einer Kündigung geltend machen will, muss grundsätzlich innerhalb von drei Wochen nach deren Zugang Kündigungsschutzklage beim Arbeitsgericht erheben. Eine Befristungskontrollklage ist grundsätzlich innerhalb von drei Wochen nach dem vereinbarten Vertragsende zu erheben (§ 17 TzBfG). Gesetzliche Ausnahmen und besondere Schutzrechte bleiben unberührt."
+    },
+    {
+      "k": "h1",
+      "t": "§ 8 Arbeitszeit und Dienstplanung"
+    },
+    {
+      "k": "normal",
+      "t": "(1) {{regular_hours_clause}} Der Umfang wird nicht allein durch eine Änderung des Dienstplans erhöht oder verringert. Zwingendes Tarifrecht bleibt unberührt."
+    },
+    {
+      "k": "normal",
+      "t": "(2) Die Arbeit kann auf Montag bis Sonntag verteilt werden. Vereinbart ist ein wechselnder Schichtdienst mit Früh-, Spät- und Nachtdiensten sowie zulässigen Wochenend- und Feiertagsdiensten. Das konkrete Schichtsystem, die Schichtzeiten und der Schichtrhythmus des ersten Einsatzes sind vor Unterzeichnung in Anlage 4 zu ergänzen. Änderungen richten sich nach Absatz 3."
+    },
+    {
+      "k": "normal",
+      "t": "(3) Der Arbeitgeber gibt den Dienstplan in der Regel sieben Tage vor Beginn des Planungszeitraums bekannt. Änderungen kommen insbesondere bei unvorhergesehenen Ausfällen, Notfällen oder Änderungen des Kundenauftrags in Betracht. Sie setzen eine zulässige Weisung nach billigem Ermessen unter Berücksichtigung der berechtigten Interessen des Arbeitnehmers voraus. Verbindliche gesetzliche oder tarifliche Ankündigungsfristen und Mitbestimmungsrechte sind einzuhalten."
+    },
+    {
+      "k": "normal",
+      "t": "(4) Ein Schichttausch bedarf der vorherigen Zustimmung der Einsatzleitung. Bis zu dieser Zustimmung gilt der bisherige Dienstplan. Aus diesem Vertrag entsteht keine Pflicht zur ständigen Erreichbarkeit in der Freizeit und keine pauschale Verpflichtung zur Rufbereitschaft."
+    },
+    {
+      "k": "normal",
+      "t": "(5) Grundsätzlich gelten acht Stunden werktäglich; eine Verlängerung auf bis zu zehn Stunden setzt den gesetzlichen Ausgleich voraus. Bei mehr als sechs bis neun Stunden Arbeit sind mindestens 30 Minuten, bei mehr als neun Stunden mindestens 45 Minuten Ruhepause zu gewähren. Pausenabschnitte betragen grundsätzlich mindestens 15 Minuten. Zwischen zwei Arbeitseinsätzen liegen grundsätzlich elf Stunden ununterbrochene Ruhezeit. Abweichungen sind nur auf einer konkret anwendbaren gesetzlichen oder tariflichen Grundlage zulässig."
+    },
+    {
+      "k": "normal",
+      "t": "(6) Zulässige Sonn- und Feiertagsarbeit ist unter Gewährung der vorgeschriebenen Ersatzruhetage zu planen. Pausen müssen tatsächliche Arbeitsunterbrechungen sein; notwendige Ablösungen organisiert der Arbeitgeber. Arbeitsbereitschaft wird nicht als unbezahlte Ruhepause erfasst."
+    },
+    {
+      "k": "h1",
+      "t": "§ 9 Dienstantritt und Übergabe"
+    },
+    {
+      "k": "normal",
+      "t": "(1) Der Arbeitnehmer tritt den Dienst pünktlich, dienstfähig und in der vorgeschriebenen Dienstkleidung an. Die vorgesehenen 15 Minuten zur Vorbereitung und Übergabe vor dem eigentlichen Bewachungsbeginn werden als vergütete Arbeitszeit in den Dienstplan und die Arbeitszeiterfassung aufgenommen. Zusätzliche angeordnete Rüst- oder Übergabetätigkeiten sind ebenfalls zu erfassen und zu vergüten."
+    },
+    {
+      "k": "normal",
+      "t": "(2) Die Übergabe umfasst insbesondere besondere Vorkommnisse, offene Maßnahmen, Schlüssel, Zutrittsmittel, Geräte und Dokumentation. Das Objekt darf während des Dienstes nicht eigenmächtig verlassen werden."
+    },
+    {
+      "k": "normal",
+      "t": "(3) Erscheint die Ablösung nicht rechtzeitig, informiert der Arbeitnehmer unverzüglich die Einsatzleitung. Diese organisiert die weitere Besetzung. Ein Weiterdienst darf weder unzulässige Höchstarbeitszeiten noch Ruhezeitverstöße erzwingen. Bei unmittelbarer Gefahr für Leib oder Leben gehen notwendige Schutzmaßnahmen vor. Tatsächlich geleistete zusätzliche Zeit ist zu erfassen."
+    },
+    {
+      "k": "h1",
+      "t": "§ 10 Zeiterfassung und Mehrarbeit"
+    },
+    {
+      "k": "normal",
+      "t": "(1) Beginn, Ende und tatsächliche Pausen sind vollständig und wahrheitsgemäß im vorgegebenen System zu erfassen. Einsatzobjekt und gegebenenfalls Reise- und Übergabezeiten sind zuzuordnen. Fehler und technische Störungen sind unverzüglich zu melden und nach dem vorgegebenen Ersatzverfahren zu dokumentieren. Arbeitszeiten anderer Personen dürfen nicht unbefugt erfasst werden."
+    },
+    {
+      "k": "normal",
+      "t": "(2) Der Arbeitnehmer ist verpflichtet, für jeden Arbeitstag einen vollständigen und wahrheitsgemäßen Stundenzettel zu führen. Dabei sind insbesondere das jeweilige Objekt bzw. der Einsatzort, das Datum sowie die geleisteten Arbeitsstunden anzugeben."
+    },
+    {
+      "k": "normal",
+      "t": "Der Stundenzettel ist spätestens bis zum 5. Kalendertag des Folgemonats vollständig ausgefüllt und unterschrieben beim Arbeitgeber einzureichen."
+    },
+    {
+      "k": "normal",
+      "t": "Die Angaben im Stundenzettel müssen mit den tatsächlich geleisteten Arbeitszeiten und den jeweiligen Einsatzorten übereinstimmen. Der Stundenzettel dient dem Abgleich der geleisteten Arbeitsstunden und der ordnungsgemäßen Erstellung der monatlichen Lohnabrechnung."
+    },
+    {
+      "k": "normal",
+      "t": "(3) Mehrarbeit darf bei vorübergehend erhöhtem betrieblichem Bedarf, etwa bei Ausfällen, Alarmen oder dringenden Vertretungen, im gesetzlichen und tariflichen Rahmen nach billigem Ermessen angeordnet werden. Sie bedarf grundsätzlich einer vorherigen Anordnung oder Genehmigung. Bei einer tatsächlichen Notlage ist die Einsatzleitung unverzüglich nachträglich zu informieren."
+    },
+    {
+      "k": "normal",
+      "t": "(4) Angeordnete, genehmigte, geduldete oder zur Erledigung der zugewiesenen Arbeit notwendige Mehrarbeit wird nach den gesetzlichen und anwendbaren tariflichen Vorgaben vergütet oder über das vereinbarte Arbeitszeitkonto durch bezahlte Freizeit ausgeglichen. Etwaige Zuschläge werden zusätzlich berücksichtigt. Eine pauschale Abgeltung mit dem Grundlohn wird nicht vereinbart."
+    },
+    {
+      "k": "normal",
+      "t": "(5) Vorsätzliche Falscheintragungen oder Manipulationen können je nach Schwere arbeitsrechtliche Maßnahmen bis hin zur Kündigung rechtfertigen. Die gesetzlichen Voraussetzungen sind im Einzelfall zu prüfen."
+    },
+    {
+      "k": "h1",
+      "t": "§ 11 Vergütung und Tarifrecht"
+    },
+    {
+      "k": "normal",
+      "t": "(1) Der vertragliche Grundstundenlohn beträgt {{hourly_rate}} € brutto. {{monthly_pay_clause}} Ein höheres zwingendes gesetzliches oder tarifliches Entgelt tritt an die Stelle des niedrigeren vertraglichen Betrages. Der vertragliche Grundbetrag stellt daher keine Festlegung des tatsächlich maßgeblichen Tariflohns dar."
+    },
+    {
+      "k": "normal",
+      "t": "(2) Die maßgebliche Vergütung ergibt sich aus der tatsächlichen Tätigkeit, Qualifikation, Funktion, dem Einsatzort und dem konkret anwendbaren Tarifwerk. Der Arbeitgeber dokumentiert die Grundlage, Lohngruppe, Ortsklasse sowie die einzelnen Entgeltbestandteile in Anlage 4 und aktualisiert den Nachweis bei Änderungen."
+    },
+    {
+      "k": "normal",
+      "t": "(3) Bei einem Wechsel des Bundeslandes prüft der Arbeitgeber die tarifliche Geltung einschließlich räumlichem, fachlichem und persönlichem Geltungsbereich, Tarifbindung, Allgemeinverbindlichkeit sowie gegebenenfalls bestehender Nachbindung oder Nachwirkung. Der Einsatzort allein ersetzt diese Prüfung nicht. Höhere zwingende Ansprüche werden ab ihrem Entstehen berücksichtigt."
+    },
+    {
+      "k": "normal",
+      "t": "(4) Ein Objektwechsel erlaubt keine beliebige Lohnkürzung. Objekt- oder funktionsbezogene Mehrbeträge können nur entfallen, wenn ihre tariflichen oder wirksam vereinbarten Voraussetzungen entfallen. Der vertragliche Grundstundenlohn und günstigere individuelle Zusagen werden dadurch nicht unterschritten."
+    },
+    {
+      "k": "normal",
+      "t": "(5) Die Abrechnung erfolgt monatlich; die Zahlung ist am 15. des Folgemonats fällig und erfolgt auf das benannte Bankkonto. Vorrangige zwingende Fälligkeiten bleiben unberührt. Fehlende Zeitnachweise verschieben fällige Vergütungsansprüche nicht pauschal. Entgeltfortzahlung, Urlaubsentgelt, Feiertagsvergütung und Ansprüche bei Annahmeverzug richten sich nach den gesetzlichen und anwendbaren tariflichen Regeln."
+    },
+    {
+      "k": "h1",
+      "t": "§ 12 Zuschläge und zusätzliche Leistungen"
+    },
+    {
+      "k": "normal",
+      "t": "(1) Nacht-, Sonn- und Feiertagszuschläge sowie Mehrarbeits- und sonstige Zuschläge werden nach den jeweils anwendbaren Bestimmungen gezahlt. Soweit für Nachtarbeit keine tarifliche Ausgleichsregelung besteht, gilt § 6 Abs. 5 ArbZG. Die konkrete Höhe, Zeitspanne und Berechnungsgrundlage der einschlägigen Zuschläge sind in Anlage 4 einzutragen oder durch eine präzise zulässige Tarifverweisung nachzuweisen."
+    },
+    {
+      "k": "normal",
+      "t": "(2) Objekt- und Funktionszulagen werden für die Dauer der entsprechenden Tätigkeit nach ihrer jeweiligen Rechtsgrundlage gezahlt. Zwingende tarifliche Leistungen und fest zugesagte Entgeltbestandteile stehen nicht unter einem allgemeinen Freiwilligkeits- oder Widerrufsvorbehalt."
+    },
+    {
+      "k": "normal",
+      "t": "(3) Weitere Prämien oder Sonderzahlungen werden durch diesen Vertrag nicht eigenständig zugesagt. Ansprüche aus Tarifvertrag, Gesetz, individueller Vereinbarung oder betrieblicher Übung bleiben unberührt. Ein Vorbehalt für eine zusätzliche Einzelleistung muss bei deren Gewährung gesondert, transparent und wirksam vereinbart werden."
+    },
+    {
+      "k": "h1",
+      "t": "§ 13 Arbeitszeitkonto"
+    },
+    {
+      "k": "normal",
+      "t": "(1) Für angeordnete oder genehmigte Mehrarbeit wird ein Arbeitszeitkonto geführt, soweit kein zwingendes Tarifrecht entgegensteht. Der Arbeitgeber weist Guthaben, Zugänge und Ausgleich monatlich aus. Entgeltfortzahlung und Urlaub werden nach den einschlägigen Bestimmungen berücksichtigt."
+    },
+    {
+      "k": "normal",
+      "t": "(2) Zusätzlich geleistete Stunden dürfen pro Monat höchstens im Umfang von 50 Prozent der vereinbarten monatlichen Arbeitszeit, hier höchstens {{account_monthly_limit}} Stunden, auf das Konto eingestellt werden. Der Ausgleich erfolgt spätestens innerhalb von zwölf Kalendermonaten nach Erfassung durch bezahlte Freizeit oder Auszahlung. Strengere zwingende Vorgaben gehen vor; die Grenzen des Arbeitszeitgesetzes bleiben unabhängig davon verbindlich."
+    },
+    {
+      "k": "normal",
+      "t": "(3) Zeitpunkt und Umfang des Freizeitausgleichs legt der Arbeitgeber nach billigem Ermessen unter Berücksichtigung der Wünsche des Arbeitnehmers fest. Tarifliche Zuschläge werden nach den jeweils maßgeblichen Regeln abgerechnet. Das Konto berechtigt nicht dazu, fällige Entgeltbestandteile außerhalb einer wirksamen Ausgleichsregelung zurückzuhalten."
+    },
+    {
+      "k": "normal",
+      "t": "(4) Unterbleibt die vereinbarte Beschäftigung aus Gründen des Arbeitgebers, etwa wegen Auftragsmangels, entstehen daraus keine nachzuarbeitenden Minusstunden. Eine Belastung mit selbst veranlasster bezahlter Freizeit im Vorgriff auf künftige Arbeitsleistung bedarf einer ausdrücklichen Vereinbarung."
+    },
+    {
+      "k": "normal",
+      "t": "(5) Bei Beendigung werden Zeitguthaben spätestens im Folgemonat ausgeglichen. Ein negativer Saldo begründet nicht automatisch eine Rückzahlungspflicht; maßgeblich sind die konkrete Rechtsgrundlage und die Verantwortlichkeit für seine Entstehung."
+    },
+    {
+      "k": "h1",
+      "t": "§ 14 Urlaub"
+    },
+    {
+      "k": "normal",
+      "t": "(1) Urlaubsanspruch",
+      "b": [
+        "(1) Urlaubsanspruch"
+      ]
+    },
+    {
+      "k": "normal",
+      "t": "Der jährliche Erholungsurlaub beträgt bei einer regelmäßigen Verteilung der Arbeitszeit auf {{working_days_phrase}} {{vacation_days}} Arbeitstage. {{vacation_minimum_clause}} Bei einer abweichenden Verteilung der regelmäßigen Arbeitstage auf die Woche wird der Urlaubsanspruch entsprechend den maßgeblichen Arbeitstagen umgerechnet."
+    },
+    {
+      "k": "normal",
+      "t": "Soweit aufgrund eines auf das Arbeitsverhältnis anwendbaren Tarifvertrages oder aufgrund sonstiger zwingender gesetzlicher Bestimmungen ein höherer Urlaubsanspruch besteht, geht dieser dem vorstehenden Anspruch vor. Der jeweils anwendbare höhere Anspruch ist in Anlage 4 auszuweisen."
+    },
+    {
+      "k": "normal",
+      "t": "(2) Urlaubsgewährung",
+      "b": [
+        "(2) Urlaubsgewährung"
+      ]
+    },
+    {
+      "k": "normal",
+      "t": "Der Urlaub ist rechtzeitig beim Arbeitgeber zu beantragen und darf grundsätzlich erst nach vorheriger Genehmigung angetreten werden."
+    },
+    {
+      "k": "normal",
+      "t": "Bei der zeitlichen Festlegung des Urlaubs werden die Urlaubswünsche des Arbeitnehmers berücksichtigt, soweit dem nicht dringende betriebliche Belange oder Urlaubswünsche anderer Arbeitnehmer entgegenstehen, die unter sozialen Gesichtspunkten den Vorrang verdienen. Die gesetzlichen Bestimmungen des Bundesurlaubsgesetzes bleiben unberührt."
+    },
+    {
+      "k": "normal",
+      "t": "(3) Teilurlaub und Beendigung des Arbeitsverhältnisses",
+      "b": [
+        "(3) Teilurlaub und Beendigung des Arbeitsverhältnisses"
+      ]
+    },
+    {
+      "k": "normal",
+      "t": "Anspruch und Berechnung von Teilurlaub richten sich nach den jeweils geltenden gesetzlichen Bestimmungen, insbesondere nach dem Bundesurlaubsgesetz, sowie nach einem auf das Arbeitsverhältnis anwendbaren Tarifvertrag."
+    },
+    {
+      "k": "normal",
+      "t": "Eine pauschale Kürzung des Urlaubsanspruchs allein aufgrund einer Beendigung des Arbeitsverhältnisses im laufenden Kalenderjahr wird nicht vereinbart. Kann der Urlaub wegen der Beendigung des Arbeitsverhältnisses ganz oder teilweise nicht mehr gewährt werden, wird er nach Maßgabe der gesetzlichen Bestimmungen abgegolten."
+    },
+    {
+      "k": "normal",
+      "t": "(4) Übertragung und Verfall von Resturlaub",
+      "b": [
+        "(4) Übertragung und Verfall von Resturlaub"
+      ]
+    },
+    {
+      "k": "normal",
+      "t": "Nicht im laufenden Kalenderjahr gewährter Urlaub wird nur nach Maßgabe der gesetzlichen Bestimmungen auf das folgende Kalenderjahr übertragen."
+    },
+    {
+      "k": "normal",
+      "t": "Soweit Urlaub aus dem Vorjahr aufgrund gesetzlicher Vorschriften bis zum 31. März des Folgejahres zu nehmen ist, verfällt dieser nach Ablauf des Übertragungszeitraums nur, wenn die gesetzlichen Voraussetzungen für den Verfall erfüllt sind. Ein automatischer Verfall allein aufgrund des Ablaufs des 31. März wird nicht vereinbart."
+    },
+    {
+      "k": "normal",
+      "t": "Der Arbeitgeber erfüllt die gesetzlichen Informations-, Hinweis- und Mitwirkungspflichten hinsichtlich des Urlaubsanspruchs und des drohenden Urlaubsverfalls."
+    },
+    {
+      "k": "normal",
+      "t": "(5) Krankheit während des Urlaubs",
+      "b": [
+        "(5) Krankheit während des Urlaubs"
+      ]
+    },
+    {
+      "k": "normal",
+      "t": "Erkrankt der Arbeitnehmer während des Urlaubs, werden die durch ärztliches Zeugnis nachgewiesenen Tage der Arbeitsunfähigkeit nicht auf den Urlaub angerechnet. Im Übrigen gelten die gesetzlichen Bestimmungen."
+    },
+    {
+      "k": "normal",
+      "t": "Der Verfall von Urlaub bei länger andauernder Arbeitsunfähigkeit richtet sich ausschließlich nach den jeweils geltenden gesetzlichen Bestimmungen und der hierzu ergangenen Rechtsprechung."
+    },
+    {
+      "k": "h1",
+      "t": "§ 15 Arbeitsverhinderung und Krankheit"
+    },
+    {
+      "k": "normal",
+      "t": "(1) Jede Arbeitsverhinderung und ihre voraussichtliche Dauer sind der Einsatzleitung unverzüglich, möglichst vor Dienstbeginn, mitzuteilen. Die Meldung erfolgt grundsätzlich telefonisch. Ist dies nicht möglich oder wird niemand erreicht, ist unverzüglich ein geeigneter anderer Meldeweg zu nutzen und die telefonische Mitteilung nachzuholen, sobald dies möglich ist."
+    },
+    {
+      "k": "normal",
+      "t": "(2) Bei Krankheit verlangt der Arbeitgeber die ärztliche Feststellung der Arbeitsunfähigkeit bereits ab dem ersten Kalendertag. Gesetzlich Versicherte erfüllen die für das elektronische Nachweisverfahren geltenden Pflichten; soweit dieses Verfahren nicht greift, ist die erforderliche ärztliche Bescheinigung vorzulegen. Eine Fortdauer ist unverzüglich anzuzeigen und nachzuweisen."
+    },
+    {
+      "k": "normal",
+      "t": "(3) Dem Arbeitgeber sind die für Meldung, Nachweis und Entgeltabrechnung erforderlichen Angaben mitzuteilen. Eine allgemeine Pflicht zur Offenlegung der Diagnose besteht nicht. Planbare Arzttermine sind nach Möglichkeit außerhalb der Arbeitszeit wahrzunehmen; notwendige Behandlungen dürfen nicht verzögert werden."
+    },
+    {
+      "k": "normal",
+      "t": "(4) Arbeitsunfälle und dienstliche Gefahrenereignisse sind unverzüglich zu melden. Bei einer durch Dritte verursachten Arbeitsunfähigkeit unterstützt der Arbeitnehmer den gesetzlichen Forderungsübergang nach § 6 EntgFG durch die erforderlichen Angaben."
+    },
+    {
+      "k": "h1",
+      "t": "§ 16 Dienstpflichten und untersagtes Verhalten"
+    },
+    {
+      "k": "normal",
+      "t": "(1) Der Arbeitnehmer arbeitet aufmerksam und zuverlässig, behandelt Kunden, Beschäftigte, Bewohner und Besucher respektvoll und beachtet die rechtmäßigen allgemeinen und objektbezogenen Dienstanweisungen. Kundenanweisungen gelten nur innerhalb des übertragenen Aufgabenbereichs. Bei Widersprüchen entscheidet die Einsatzleitung im rechtlich zulässigen Rahmen."
+    },
+    {
+      "k": "normal",
+      "t": "(2) Untersagt sind insbesondere Schlafen während aktiver Dienstzeiten, unentschuldigtes Fernbleiben, eigenmächtiges Verlassen des Objekts, nicht genehmigter Schichttausch, falsche Kontrollnachweise, Arbeitszeitmanipulation, unbefugte Zutrittsgewährung, Diebstahl, Sachbeschädigung sowie unbefugte Weitergabe von Schlüsseln, Codes, Dienstausweisen oder vertraulichen Informationen. Gesetzliche Ruhepausen und ausdrücklich zugelassene Ruhephasen bleiben unberührt."
+    },
+    {
+      "k": "normal",
+      "t": "(3) Private Mobiltelefone und Unterhaltungsmedien dürfen während aktiver Dienstzeiten grundsätzlich nicht genutzt werden. Ausgenommen sind notwendige Notfallkontakte und ausdrücklich genehmigte Nutzungen. Die private Nutzung in echten Ruhepausen bleibt unter Wahrung von Sicherheits- und Datenschutzvorgaben möglich."
+    },
+    {
+      "k": "normal",
+      "t": "(4) Geschenke, Geld oder sonstige Vorteile im Zusammenhang mit der dienstlichen Tätigkeit dürfen nicht ohne vorherige Zustimmung angenommen werden. Unzulässige Einflussnahmen sind unverzüglich zu melden."
+    },
+    {
+      "k": "normal",
+      "t": "(5) Dienstausweis und gesetzlich vorgeschriebene Identitätsdokumente sind bei der Tätigkeit mitzuführen. Der Arbeitgeber unterrichtet den Arbeitnehmer über die gesetzlichen Mitführungs- und Vorlagepflichten."
+    },
+    {
+      "k": "h1",
+      "t": "§ 17 Dienstfähigkeit und Arbeitsschutz"
+    },
+    {
+      "k": "normal",
+      "t": "(1) Alkohol- und Drogenkonsum während des Dienstes sowie ein Dienstantritt unter beeinträchtigendem Einfluss berauschender Mittel sind untersagt. Auch durch Medikamente darf die sichere Dienstausübung nicht gefährdet werden. Bei einer erkennbaren Beeinträchtigung ist die Einsatzleitung zu informieren, ohne dass pauschal Diagnosen offengelegt werden müssen."
+    },
+    {
+      "k": "normal",
+      "t": "(2) Der Arbeitgeber organisiert den erforderlichen Arbeitsschutz, die Einweisungen und die notwendige persönliche Schutzausrüstung. Gesetzlich erforderliche Arbeitsschutzmaßnahmen werden nicht auf Kosten des Arbeitnehmers durchgeführt."
+    },
+    {
+      "k": "normal",
+      "t": "(3) Der Arbeitnehmer verwendet Schutzmittel bestimmungsgemäß, beachtet Sicherheitsvorgaben und meldet Gefahren, Mängel, Unfälle und Beinaheunfälle unverzüglich. Er nimmt an erforderlichen Unterweisungen teil. Gesetzliche Schutzrechte bei unmittelbarer erheblicher Gefahr bleiben unberührt."
+    },
+    {
+      "k": "h1",
+      "t": "§ 18 Notfälle und Befugnisse"
+    },
+    {
+      "k": "normal",
+      "t": "(1) Bei Alarm, Brand, Unfall, Einbruch, Gewalt oder anderen besonderen Vorkommnissen sind unverzüglich die vorgesehenen Meldewege zu nutzen und erforderlichenfalls Polizei oder Rettungsdienst zu verständigen. Eigenschutz, notwendige Hilfeleistung und die konkreten Notfallanweisungen sind zu beachten."
+    },
+    {
+      "k": "normal",
+      "t": "(2) Der Arbeitnehmer besitzt keine hoheitlichen Befugnisse. Er darf nur gesetzlich bestehende oder wirksam übertragene Rechte ausüben. Jede Maßnahme muss rechtlich zulässig, erforderlich und verhältnismäßig sein."
+    },
+    {
+      "k": "normal",
+      "t": "(3) Waffen dürfen nur bei Vorliegen sämtlicher gesetzlicher und behördlicher Voraussetzungen, ausreichender Qualifikation und ausdrücklicher dienstlicher Anordnung geführt werden. Dieser Vertrag enthält keine eigenständige Waffenerlaubnis."
+    },
+    {
+      "k": "normal",
+      "t": "(4) Personalausfälle und Kundenwünsche heben arbeitszeitrechtliche Schutzvorschriften nicht auf. Gesetzliche Notfallausnahmen dürfen nur bei tatsächlichem Vorliegen ihrer Voraussetzungen angewendet werden."
+    },
+    {
+      "k": "h1",
+      "t": "§ 19 Dokumentation und Kontrollen"
+    },
+    {
+      "k": "normal",
+      "t": "(1) Kontrollen, besondere Vorkommnisse, Alarme, Maßnahmen und Übergaben sind zeitnah, nachvollziehbar, vollständig und wahrheitsgemäß zu dokumentieren. Nachträgliche Berichtigungen müssen als solche erkennbar bleiben."
+    },
+    {
+      "k": "normal",
+      "t": "(2) Der Arbeitgeber darf zur Überprüfung der Vertragserfüllung insbesondere Wachbücher, Arbeitszeitnachweise, dienstliche Dokumentation und ausgegebene Arbeitsmittel kontrollieren. Personenbezogene Auswertungen müssen erforderlich und verhältnismäßig sein; Datenschutzvorschriften, Informationspflichten und Beteiligungsrechte gelten uneingeschränkt."
+    },
+    {
+      "k": "normal",
+      "t": "(3) Eine allgemeine Zustimmung zu verdeckter Überwachung oder zur Kontrolle privater Geräte wird nicht erteilt. Technische Kontrollsysteme sind gesondert zu beschreiben und auf eine tragfähige Rechtsgrundlage zu stützen."
+    },
+    {
+      "k": "h1",
+      "t": "§ 20 Dienstkleidung und Arbeitsmittel"
+    },
+    {
+      "k": "normal",
+      "t": "(1) Erforderliche Dienstkleidung, Dienstausweis, Schlüssel, Zutrittskarten, Funkgeräte, Diensttelefone, Ladegeräte, sonstige Arbeitsmittel und Schutzausrüstung werden gegen dokumentierte Ausgabe überlassen. Sie bleiben Eigentum des Arbeitgebers oder des jeweiligen Berechtigten."
+    },
+    {
+      "k": "normal",
+      "t": "(2) Die Gegenstände sind sorgfältig, sicher und bestimmungsgemäß zu verwenden. Dienstkleidung ist sauber und entsprechend den Vorgaben zu tragen. Arbeitsmittel dürfen nur im Rahmen einer genehmigten dienstlichen Übergabe an berechtigte Personen weitergegeben werden."
+    },
+    {
+      "k": "normal",
+      "t": "(3) Schlüssel und Zutrittsmittel sind gegen Verlust und unbefugten Zugriff zu sichern. Verlust, Diebstahl, Beschädigung oder eine mögliche Kenntnisnahme von Zugangsdaten durch Unbefugte sind sofort zu melden. Eigenmächtige Nachfertigungen sind untersagt."
+    },
+    {
+      "k": "h1",
+      "t": "§ 21 Rückgabe und Haftung"
+    },
+    {
+      "k": "normal",
+      "t": "(1) Spätestens bei Beendigung des Arbeitsverhältnisses sind sämtliche überlassenen Gegenstände, dienstlichen Unterlagen und Datenträger vollständig zurückzugeben. Bei Objektwechsel oder Wegfall des Bedarfs kann der Arbeitgeber eine frühere Rückgabe verlangen. Ort, Zeitpunkt und Empfang werden nachvollziehbar festgehalten."
+    },
+    {
+      "k": "normal",
+      "t": "(2) Dienstliche Daten sind geordnet zu übergeben. Nicht zulässige private Kopien sind nach gesicherter Übergabe und rechtmäßiger Anweisung zu löschen. Eigene Vertrags- und Entgeltunterlagen sowie Unterlagen, die zur zulässigen Rechtsverfolgung aufbewahrt werden dürfen, werden hiervon nicht erfasst."
+    },
+    {
+      "k": "normal",
+      "t": "(3) Für Schäden aus betrieblich veranlasster Tätigkeit gelten die Grundsätze der beschränkten Arbeitnehmerhaftung. Bei leichter Fahrlässigkeit besteht grundsätzlich keine Haftung; bei mittlerer Fahrlässigkeit wird der Schaden unter Abwägung der Umstände verteilt. Bei grober Fahrlässigkeit kommt grundsätzlich eine volle, im Einzelfall begrenzbare Haftung in Betracht. Bei Vorsatz gelten die gesetzlichen Grundsätze."
+    },
+    {
+      "k": "normal",
+      "t": "(4) Auch bei Schlüsselverlust oder verspäteter Rückgabe ist ein tatsächlich entstandener, zurechenbarer Schaden nachzuweisen. Ein pauschaler Ersatz zum Neuwert oder automatischer Lohnabzug wird nicht vereinbart. Aufrechnungen dürfen nur innerhalb der gesetzlichen Grenzen, insbesondere unter Beachtung des Pfändungsschutzes, erfolgen."
+    },
+    {
+      "k": "h1",
+      "t": "§ 22 Pflichtverletzungen und Abmahnung"
+    },
+    {
+      "k": "normal",
+      "t": "(1) Pflichtverletzungen können je nach Art, Schwere, Verschulden und Umständen des Einzelfalls zu Ermahnung, Abmahnung, zulässiger Umsetzung, Schadensersatz oder Kündigung führen. Eine Maßnahme muss die dafür geltenden rechtlichen Voraussetzungen erfüllen."
+    },
+    {
+      "k": "normal",
+      "t": "(2) In einer Abmahnung werden das beanstandete Verhalten, die erwartete Vertragserfüllung und mögliche Folgen einer Wiederholung konkret bezeichnet. Stellungnahmen des Arbeitnehmers werden zur Personalakte genommen. Gesetzliche Einsichts-, Berichtigungs- und Entfernungsrechte bleiben unberührt."
+    },
+    {
+      "k": "normal",
+      "t": "(3) Bei schwerwiegenden Pflichtverletzungen kann eine Kündigung ohne vorherige Abmahnung zulässig sein. Eine automatische Kündigung als Folge eines bestimmten Vorwurfs wird nicht vereinbart."
+    },
+    {
+      "k": "h1",
+      "t": "§ 23 Vertragsstrafe"
+    },
+    {
+      "k": "normal",
+      "t": "(1) Eine Vertragsstrafe ist nur für folgende schuldhafte Vertragsverletzungen vereinbart: Der Arbeitnehmer verweigert endgültig die vereinbarte Arbeitsaufnahme, obwohl der Vertrag nicht wirksam beendet ist; oder er stellt die Arbeit endgültig ein, um sich ohne wirksame Beendigung vor Ablauf der maßgeblichen Kündigungsfrist vom Vertrag zu lösen. Eine berechtigte außerordentliche Kündigung, ein gesetzliches Leistungsverweigerungsrecht, Krankheit oder eine sonstige unverschuldete Verhinderung lösen keine Vertragsstrafe aus."
+    },
+    {
+      "k": "normal",
+      "t": "(2) Die Strafe beträgt für jeden Kalendertag der dadurch nicht eingehaltenen Bindungsdauer ein Dreißigstel des regelmäßigen Bruttomonatsgrundentgelts. Maßgeblich ist die Zeit ab der endgültigen Verweigerung bis zum frühesten Termin, zu dem der Arbeitnehmer durch eine zu diesem Zeitpunkt zugehende ordentliche Kündigung ausscheiden könnte, längstens bis zum vereinbarten Vertragsende. Eine bereits wirksam erklärte frühere Kündigung verkürzt diesen Zeitraum."
+    },
+    {
+      "k": "normal",
+      "t": "(3) Die Vertragsstrafe ist insgesamt auf ein regelmäßiges Bruttomonatsgrundentgelt begrenzt und darf außerdem das Grundentgelt für die konkret nicht eingehaltene Kündigungsfrist nicht überschreiten. Bei einer zweiwöchigen Kündigungsfrist beträgt sie daher höchstens 14/30 eines regelmäßigen Bruttomonatsgrundentgelts. Das Monatsgrundentgelt berechnet sich aus {{monthly_hours}} Monatsstunden multipliziert mit dem für die betreffende Tätigkeit geschuldeten Grundstundenlohn; variable Zuschläge und Sonderzahlungen bleiben unberücksichtigt. Bei vereinbarter Wochenarbeitszeit sind die genannten Monatsstunden ein rechnerischer Durchschnitt (Wochenstunden × 52 ÷ 12)."
+    },
+    {
+      "k": "normal",
+      "t": "(4) Für denselben Vorgang fällt nur eine Vertragsstrafe an. Bloßes verspätetes Erscheinen, eine einzelne Fehlzeit oder eine vom Arbeitgeber ausgesprochene Kündigung lösen für sich genommen keine Vertragsstrafe aus. Nachweisbare weitergehende Schadensersatzansprüche bleiben nach den gesetzlichen Voraussetzungen möglich; die Vertragsstrafe wird auf den Ersatz desselben Schadens angerechnet."
+    },
+    {
+      "k": "h1",
+      "t": "§ 24 Verschwiegenheit und Datenschutz"
+    },
+    {
+      "k": "normal",
+      "t": "(1) Der Arbeitnehmer schützt nicht öffentlich bekannte, berechtigt geheimhaltungsbedürftige Informationen, insbesondere Sicherheitskonzepte, Alarm- und Zugangssysteme, Schlüssel und Codes, nicht öffentliche Kundenkonditionen sowie personenbezogene Daten. Er darf sie nur für zulässige dienstliche Zwecke verarbeiten und nur berechtigten Empfängern zugänglich machen."
+    },
+    {
+      "k": "normal",
+      "t": "(2) Ob eine Information ein Geschäftsgeheimnis ist, richtet sich nach den gesetzlichen Voraussetzungen, insbesondere den tatsächlichen Geheimhaltungsmaßnahmen. Eine pauschale Erklärung aller betrieblichen Informationen zu Geschäftsgeheimnissen wird nicht vereinbart. Allgemeine berufliche Kenntnisse und Erfahrungen bleiben nutzbar."
+    },
+    {
+      "k": "normal",
+      "t": "(3) Die Pflicht zum Schutz fortbestehender Geschäftsgeheimnisse und personenbezogener Daten gilt auch nach Vertragsende. Gesetzlich geschützte Meldungen, zulässige Rechtsverfolgung und gesetzliche Auskunftspflichten bleiben unberührt. Ein nachvertragliches Wettbewerbsverbot wird nicht vereinbart."
+    },
+    {
+      "k": "normal",
+      "t": "(4) Der Arbeitgeber verarbeitet Beschäftigtendaten auf der jeweils erforderlichen gesetzlichen Grundlage. Die Datenschutzinformation ist in Anlage 1 enthalten und vor Aushändigung anhand der tatsächlichen Verfahren zu vervollständigen. Änderungen erforderlicher Personal- und Kontaktdaten sind unverzüglich mitzuteilen. Mögliche Datenschutzverletzungen sind sofort der zuständigen betrieblichen Stelle zu melden."
+    },
+    {
+      "k": "h1",
+      "t": "§ 25 IT und Aufnahmen"
+    },
+    {
+      "k": "normal",
+      "t": "(1) Betriebliche Geräte, Zugänge und IT-Systeme werden dienstlich genutzt, soweit keine ausdrückliche anderweitige Erlaubnis vorliegt. Passwörter sind geheim zu halten. Unzulässige Softwareinstallationen und die Speicherung dienstlicher Daten in privaten Konten oder privaten Cloud-Diensten sind untersagt."
+    },
+    {
+      "k": "normal",
+      "t": "(2) Foto-, Film- und Tonaufnahmen an Kundenobjekten bedürfen einer dienstlichen Berechtigung und müssen datenschutzrechtlich zulässig sein. Dienstliche Inhalte dürfen nicht unbefugt in sozialen Netzwerken veröffentlicht werden. Gesetzliche Pflichten und geschützte Meldungen bleiben unberührt."
+    },
+    {
+      "k": "normal",
+      "t": "(3) Fehlversand, Geräteverlust, verdächtige Nachrichten oder sonstige Sicherheitsvorfälle sind unverzüglich zu melden. Bei Vertragsende sind dienstliche Zugänge und Daten geordnet zu übergeben; private Passwörter sind nicht herauszugeben."
+    },
+    {
+      "k": "h1",
+      "t": "§ 26 Nebentätigkeit und Fortbildung"
+    },
+    {
+      "k": "normal",
+      "t": "(1) Entgeltliche Nebentätigkeiten und andere Tätigkeiten, die Arbeitszeit, Leistungsfähigkeit oder berechtigte Wettbewerbsinteressen berühren können, sind vor Aufnahme in Textform anzuzeigen. Die Anzeige enthält die zur Prüfung erforderlichen Angaben zu Art und zeitlichem Umfang. Die Arbeitszeiten mehrerer Arbeitsverhältnisse sind bei den gesetzlichen Grenzen zusammenzurechnen."
+    },
+    {
+      "k": "normal",
+      "t": "(2) Der Arbeitgeber darf eine Nebentätigkeit nur untersagen oder mit angemessenen Auflagen versehen, wenn berechtigte Interessen konkret entgegenstehen. Unzulässige Konkurrenztätigkeit während des Arbeitsverhältnisses bleibt untersagt. Eine pauschale Untersagung jeder Freizeitbetätigung wird nicht vereinbart."
+    },
+    {
+      "k": "normal",
+      "t": "(3) Erforderliche betriebliche Unterweisungen, Objekteinweisungen und Pflichtfortbildungen sind zu absolvieren. Soweit der Arbeitgeber gesetzlich, tariflich oder durch Betriebsvereinbarung zur Bereitstellung einer erforderlichen Fortbildung verpflichtet ist, trägt er die Kosten; die zeitliche Behandlung richtet sich nach § 111 GewO. Angeordnete Unterweisungen werden als Arbeitszeit behandelt."
+    },
+    {
+      "k": "normal",
+      "t": "(4) Für eine darüber hinausgehende Fortbildung mit eigenständigem beruflichem Vorteil kann vor Beginn eine gesonderte Vereinbarung geschlossen werden. Eine etwaige Rückzahlung muss Kosten, Bindungsdauer, zeitanteilige Verringerung und zulässige Auslöser konkret regeln. Dieser Arbeitsvertrag begründet selbst keine Rückzahlungspflicht."
+    },
+    {
+      "k": "h1",
+      "t": "§ 27 Ausschlussfristen"
+    },
+    {
+      "k": "normal",
+      "t": "(1) Vorbehaltlich Absatz 3 und vorrangiger zwingender tariflicher Regelungen müssen Ansprüche aus dem Arbeitsverhältnis innerhalb von drei Monaten nach Fälligkeit gegenüber der anderen Vertragspartei in Textform geltend gemacht werden. Der Anspruch ist nach Grund und Höhe hinreichend zu bezeichnen. Die Regelung gilt für beide Vertragsparteien."
+    },
+    {
+      "k": "normal",
+      "t": "(2) Lehnt die Gegenpartei den Anspruch in Textform ab oder erklärt sie sich nicht innerhalb von zwei Wochen nach Zugang der Geltendmachung, muss der Anspruch innerhalb weiterer drei Monate gerichtlich geltend gemacht werden. Diese Frist beginnt mit Zugang der Ablehnung, bei ausbleibender Erklärung mit Ablauf der Zweiwochenfrist. Bei Versäumung verfällt der Anspruch vorbehaltlich Absatz 3."
+    },
+    {
+      "k": "normal",
+      "t": "(3) Ausgenommen sind Ansprüche auf gesetzlichen Mindestlohn und sonstige zwingende Mindestentgelte, Ansprüche wegen vorsätzlicher oder grob fahrlässiger Pflichtverletzung, Ansprüche wegen Verletzung von Leben, Körper oder Gesundheit sowie alle weiteren Ansprüche, deren Ausschluss gesetzlich unzulässig ist. Zwingende Sonderfristen werden nicht verkürzt oder erweitert. Die gesetzlichen Fristen für Kündigungs- und Befristungskontrollklagen gelten unabhängig hiervon."
+    },
+    {
+      "k": "h1",
+      "t": "§ 28 Freistellung und Vertragsende"
+    },
+    {
+      "k": "normal",
+      "t": "(1) Nach Ausspruch einer Kündigung kann der Arbeitgeber den Arbeitnehmer bei einem überwiegenden berechtigten Interesse unter Fortzahlung der geschuldeten Vergütung freistellen. Dabei sind insbesondere der Beschäftigungsanspruch und etwaige Schutzinteressen beider Seiten abzuwägen."
+    },
+    {
+      "k": "normal",
+      "t": "(2) Urlaub kann nur durch eine entsprechend eindeutige unwiderrufliche Freistellung und unter Erfüllung der gesetzlichen Voraussetzungen gewährt werden. Der Arbeitgeber bezeichnet die angerechneten Urlaubstage ausdrücklich. Ein Abbau von Zeitguthaben ist gesondert auszuweisen; dieselben Zeiträume dürfen nicht doppelt angerechnet werden."
+    },
+    {
+      "k": "normal",
+      "t": "(3) Bei Beendigung sind Arbeitszeitkonto, Vergütung und verbleibender Urlaub ordnungsgemäß abzurechnen. Der Arbeitnehmer erfüllt die noch geschuldeten Dokumentations- und Übergabepflichten während der vergüteten Arbeitszeit. Gesetzliche Ansprüche auf Zeugnis und erforderliche Bescheinigungen bleiben unberührt."
+    },
+    {
+      "k": "h1",
+      "t": "§ 29 Schlussbestimmungen und Anlagen"
+    },
+    {
+      "k": "normal",
+      "t": "(1) Zwingendes Gesetzes- und Tarifrecht geht entgegenstehenden Bestimmungen dieses Vertrages vor. Individuelle Vertragsabreden haben gemäß § 305b BGB Vorrang. Änderungen und Ergänzungen werden zu Nachweiszwecken dokumentiert; gesetzlich vorgeschriebene Formen bleiben verbindlich."
+    },
+    {
+      "k": "normal",
+      "t": "(2) Ist eine Bestimmung unwirksam, gelten an ihrer Stelle die gesetzlichen Vorschriften. Im Übrigen bleibt der Vertrag nach Maßgabe des Gesetzes bestehen. Es gilt deutsches Recht; der Gerichtsstand richtet sich nach den gesetzlichen Bestimmungen."
+    },
+    {
+      "k": "normal",
+      "t": "(3) Beigefügt sind Anlage 1 (Datenschutzinformation), Anlage 2 (Verpflichtung zur Vertraulichkeit), Anlage 3 (Allgemeine Dienstanweisung) und Anlage 4 (Einsatzdaten und Nachweis der objektbezogenen Unterweisung). Dienstanweisungen konkretisieren die Tätigkeit innerhalb dieses Vertrages und erweitern nicht einseitig den vereinbarten Vertragsinhalt."
+    },
+    {
+      "k": "normal",
+      "t": "(4) Eine Empfangsbestätigung erfasst ausschließlich tatsächlich ausgehändigte Unterlagen. Sie ersetzt weder fehlende Angaben noch die Erfüllung der gesetzlichen Nachweispflichten."
+    },
+    {
+      "k": "gap"
+    },
+    {
+      "k": "h2",
+      "t": "Unterzeichnung"
+    },
+    {
+      "k": "normal",
+      "t": "{{signing_place}}, den {{signing_date}}"
+    },
+    {
+      "k": "signatures",
+      "t": "Arbeitnehmer\n{{full_name}}",
+      "r": "Arbeitgeber\n{{employer_name}}\n{{employer_representative}}"
+    },
+    {
+      "k": "pagebreak"
+    },
+    {
+      "k": "h2",
+      "t": "Anlage 1 – Datenschutzinformationen"
+    },
+    {
+      "k": "subtitle",
+      "t": "Für Beschäftigte · tatsächliche betriebliche Angaben vor Aushändigung vervollständigen"
+    },
+    {
+      "k": "normal",
+      "t": "Arbeitnehmer: {{full_name}}"
+    },
+    {
+      "k": "h2",
+      "t": "Verantwortlicher"
+    },
+    {
+      "k": "normal",
+      "t": "{{employer_name}}, {{employer_street}}, {{employer_postal_code}} {{employer_city}}, vertreten durch {{employer_representative}}. Datenschutzkontakt: {{privacy_contact}}. Datenschutzbeauftragte Person: {{privacy_officer}}."
+    },
+    {
+      "k": "h2",
+      "t": "Daten und Zwecke"
+    },
+    {
+      "k": "normal",
+      "t": "Verarbeitet werden erforderliche Stamm-, Kontakt-, Bank-, Steuer- und Sozialversicherungsdaten sowie Arbeitszeit-, Abwesenheits-, Qualifikations- und Einsatzdaten. Die Verarbeitung dient der Begründung, Durchführung und Beendigung des Arbeitsverhältnisses, der Lohnabrechnung, Einsatzorganisation und Erfüllung gesetzlicher Melde- und Nachweispflichten. Gesundheitsdaten werden nur im erforderlichen, besonders geschützten Umfang verarbeitet."
+    },
+    {
+      "k": "h2",
+      "t": "Rechtsgrundlagen und Empfänger"
+    },
+    {
+      "k": "normal",
+      "t": "Maßgeblich sind je nach Zweck § 26 BDSG und Art. 6 Abs. 1 Buchst. b und c DSGVO; bei besonderen Datenkategorien zusätzlich die einschlägigen Voraussetzungen des Art. 9 DSGVO. Zugriff erhalten nur zuständige interne Stellen und erforderliche externe Empfänger, beispielsweise Abrechnungsdienstleister, Sozialversicherungsträger, Finanzbehörden und zuständige Bewachungsbehörden. Kunden erhalten nur die für einen rechtmäßigen Einsatz erforderlichen Daten."
+    },
+    {
+      "k": "normal",
+      "t": "Tatsächliche Empfänger und Dienstleister: {{privacy_recipients}}. Drittlandübermittlungen und Schutzmaßnahmen: {{privacy_transfers}}."
+    },
+    {
+      "k": "h2",
+      "t": "Speicherung und Rechte"
+    },
+    {
+      "k": "normal",
+      "t": "Daten werden nur für die erforderliche Dauer und unter Beachtung gesetzlicher Aufbewahrungsfristen gespeichert. Es bestehen nach den jeweiligen gesetzlichen Voraussetzungen Rechte auf Auskunft, Berichtigung, Löschung, Einschränkung und Datenübertragbarkeit sowie auf Widerspruch. Eine Einwilligung kann für die Zukunft widerrufen werden. Beschwerden können bei einer Datenschutzaufsichtsbehörde eingereicht werden. Zuständige Aufsicht und Kontakt: {{privacy_authority}}."
+    },
+    {
+      "k": "pagebreak"
+    },
+    {
+      "k": "h2",
+      "t": "Anlage 1 – Fortsetzung"
+    },
+    {
+      "k": "subtitle",
+      "t": "Betriebliche Angaben zur Datenschutzinformation"
+    },
+    {
+      "k": "table_row",
+      "t": "Aufbewahrung Personalakte",
+      "r": "{{retention_personnel}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Aufbewahrung Lohn und Steuer",
+      "r": "{{retention_payroll}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Aufbewahrung Arbeitszeiten",
+      "r": "{{retention_time}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Aufbewahrung Qualifikation",
+      "r": "{{retention_qualification}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Löschkonzept und Kontakt",
+      "r": "{{retention_contact}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Automatisierte Entscheidungen",
+      "r": "{{privacy_automation}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Weitere Systeminformationen",
+      "r": "{{privacy_information}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Weitere Zwecke / Rechtsgrundlagen",
+      "r": "____________________________"
+    },
+    {
+      "k": "table_row",
+      "t": "Pflichtangaben und Folgen fehlender Bereitstellung",
+      "r": "____________________________"
+    },
+    {
+      "k": "normal",
+      "t": "Fehlende Angaben sind anhand der tatsächlichen Verarbeitung zu ergänzen. Ein Leerfeld bedeutet nicht, dass keine Verarbeitung stattfindet. Die Unterschrift bestätigt nur den Erhalt der tatsächlich vervollständigten Information."
+    },
+    {
+      "k": "employee_signature",
+      "t": "Erhalten: {{full_name}} / Datum / Unterschrift"
+    },
+    {
+      "k": "pagebreak"
+    },
+    {
+      "k": "h2",
+      "t": "Anlage 2 – Verpflichtung zur Vertraulichkeit"
+    },
+    {
+      "k": "subtitle",
+      "t": "Verpflichtung zur Vertraulichkeit und zum Datenschutz"
+    },
+    {
+      "k": "normal",
+      "t": "Arbeitnehmer: {{full_name}} · Arbeitgeber: {{employer_name}}"
+    },
+    {
+      "k": "normal",
+      "t": "Ich verpflichte mich, personenbezogene Daten und berechtigt geheimhaltungsbedürftige dienstliche Informationen nur im Rahmen meiner Aufgaben und rechtmäßiger Weisungen zu verwenden. Ich mache sie ausschließlich berechtigten Personen zugänglich und schütze Unterlagen, Geräte, Datenträger und Zugangsmittel vor unbefugtem Zugriff."
+    },
+    {
+      "k": "normal",
+      "t": "Dies betrifft insbesondere Daten von Beschäftigten, Bewohnern, Besuchern und Kunden sowie Sicherheitskonzepte, Alarm- und Zugangssysteme, Schlüssel, Codes und nicht öffentliche Kundenkonditionen. Ob ein Geschäftsgeheimnis vorliegt, richtet sich nach den gesetzlichen Voraussetzungen."
+    },
+    {
+      "k": "normal",
+      "t": "Ich verwende die bereitgestellten Kommunikations- und Ablagewege, fertige keine unzulässigen privaten Kopien an und entsorge Unterlagen ausschließlich über zugelassene Verfahren. Den Verlust von Daten oder Geräten, Fehlversand und andere mögliche Datenschutzverletzungen melde ich unverzüglich."
+    },
+    {
+      "k": "normal",
+      "t": "Nach Ende des Arbeitsverhältnisses bleiben personenbezogene Daten und fortbestehende Geschäftsgeheimnisse geschützt. Meine allgemeinen beruflichen Kenntnisse und Erfahrungen darf ich weiter nutzen. Gesetzliche Auskunftspflichten, geschützte Meldungen und zulässige Rechtsverfolgung bleiben unberührt."
+    },
+    {
+      "k": "normal",
+      "t": "Verstöße können bei Vorliegen der jeweiligen gesetzlichen Voraussetzungen arbeitsrechtliche Maßnahmen, Schadensersatz oder straf- beziehungsweise bußgeldrechtliche Folgen haben. Eine automatische Sanktion wird hierdurch nicht festgelegt."
+    },
+    {
+      "k": "employee_signature",
+      "t": "{{full_name}} / Datum / Unterschrift"
+    },
+    {
+      "k": "employee_signature",
+      "t": "Unterweisende Person / Name / Datum / Unterschrift"
+    },
+    {
+      "k": "pagebreak"
+    },
+    {
+      "k": "h2",
+      "t": "Anlage 3 – Allgemeine Dienstanweisung"
+    },
+    {
+      "k": "subtitle",
+      "t": "Ergänzend gilt die ausgehändigte objektbezogene Dienstanweisung."
+    },
+    {
+      "k": "h2",
+      "t": "1 Dienstbeginn"
+    },
+    {
+      "k": "normal",
+      "t": "Dienstplan prüfen, pünktlich dienstfähig erscheinen, vorgeschriebene Kleidung und Ausweise mitführen, Vorbereitungszeit erfassen sowie Schlüssel, Geräte und offene Meldungen übernehmen."
+    },
+    {
+      "k": "h2",
+      "t": "2 Kontrollen und Zutritt"
+    },
+    {
+      "k": "normal",
+      "t": "Vorgeschriebene Kontrollgänge und Zutrittsprüfungen tatsächlich durchführen. Identität und Berechtigung nur im zulässigen Umfang prüfen. Keine Kontrollnachweise vorab oder ohne Durchführung bestätigen."
+    },
+    {
+      "k": "h2",
+      "t": "3 Verhalten gegenüber Personen"
+    },
+    {
+      "k": "normal",
+      "t": "Ruhig, respektvoll und deeskalierend handeln. Keine hoheitlichen Befugnisse beanspruchen. Körperliche Maßnahmen nur innerhalb bestehender gesetzlicher Rechte und unter Beachtung der Verhältnismäßigkeit vornehmen."
+    },
+    {
+      "k": "h2",
+      "t": "4 Meldungen und Notfälle"
+    },
+    {
+      "k": "normal",
+      "t": "Bei unmittelbarer Gefahr notwendige Hilfe veranlassen und erforderlichenfalls 110 oder 112 wählen. Danach beziehungsweise gleichzeitig nach Lage die Einsatzleitung informieren. Alarm- und Notfallwege des Objekts beachten."
+    },
+    {
+      "k": "h2",
+      "t": "5 Schlüssel und Arbeitsmittel"
+    },
+    {
+      "k": "normal",
+      "t": "Ausgabe und Rücknahme dokumentieren. Schlüssel, Codes und Geräte gegen unbefugte Nutzung sichern. Verlust, Defekt oder Verdacht auf Missbrauch sofort melden."
+    },
+    {
+      "k": "h2",
+      "t": "6 Dokumentation"
+    },
+    {
+      "k": "normal",
+      "t": "Ereignisse, Uhrzeiten, Maßnahmen, Beteiligte und Übergaben sachlich und nachvollziehbar erfassen. Nur erforderliche personenbezogene Daten aufnehmen. Korrekturen kenntlich machen."
+    },
+    {
+      "k": "h2",
+      "t": "7 Dienstfähigkeit und Medien"
+    },
+    {
+      "k": "normal",
+      "t": "Kein Alkohol- oder Drogenkonsum im Dienst. Keine beeinträchtigte Dienstausübung. Keine private Unterhaltung während aktiver Dienstzeit und keine unbefugten Aufnahmen oder Veröffentlichungen. Die vertraglichen Ausnahmen gelten."
+    },
+    {
+      "k": "h2",
+      "t": "8 Pausen und Ablösung"
+    },
+    {
+      "k": "normal",
+      "t": "Pausen nach Dienstplan tatsächlich nehmen und korrekt erfassen. Fehlende Ablösung sofort melden. Keine eigenmächtige Dienstaufgabe; gesetzliche Arbeitszeitgrenzen und notwendige Gefahrenabwehr beachten."
+    },
+    {
+      "k": "h2",
+      "t": "9 Dienstende"
+    },
+    {
+      "k": "normal",
+      "t": "Vorkommnisse und offene Aufgaben an die berechtigte Ablösung übergeben, Geräte und Schlüssel abstimmen, Aufzeichnungen vervollständigen und tatsächliches Arbeitsende erfassen."
+    },
+    {
+      "k": "employee_signature",
+      "t": "Erhalten und erläutert: {{full_name}} / Datum / Unterschrift"
+    },
+    {
+      "k": "pagebreak"
+    },
+    {
+      "k": "h2",
+      "t": "Anlage 4 – Einsatzdaten und Unterweisung"
+    },
+    {
+      "k": "subtitle",
+      "t": "Teil A · Einsatz und Vergütung"
+    },
+    {
+      "k": "table_row",
+      "t": "Arbeitnehmer",
+      "r": "{{full_name}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Erstes Objekt und Anschrift",
+      "r": "{{first_object}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Zuständiger Betrieb / Betriebsabteilung",
+      "r": "____________________________"
+    },
+    {
+      "k": "table_row",
+      "t": "Tätigkeit",
+      "r": "{{role}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Einsatzberechtigung und Nachweise",
+      "r": "{{qualifications}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Tarifwerke / Fassung",
+      "r": "{{tariff_identity}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Grund der Tarifgeltung",
+      "r": "{{tariff_basis}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Zusätzliche Tarifbezugnahme",
+      "r": "{{tariff_reference}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Lohngruppe / Ortsklasse",
+      "r": "{{tariff_assignment}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Vertraglicher Grundstundenlohn",
+      "r": "{{hourly_rate}} € brutto; höhere zwingende Ansprüche gehen vor."
+    },
+    {
+      "k": "table_row",
+      "t": "Objekt- und Funktionszulagen",
+      "r": "{{other_allowances}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Nachtzuschlag",
+      "r": "{{night_supplement}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Sonntagszuschlag",
+      "r": "{{sunday_supplement}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Feiertagszuschlag",
+      "r": "{{holiday_supplement}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Mehrarbeitszuschlag",
+      "r": "{{overtime_supplement}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Sonderzahlungen",
+      "r": "{{special_payments}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Jahresurlaub",
+      "r": "{{vacation_days}} Tage bei {{working_days}} Arbeitstagen pro Woche; höhere zwingende Ansprüche gehen vor."
+    },
+    {
+      "k": "table_row",
+      "t": "Tarifliche Kündigungsfristen",
+      "r": "{{tariff_notice}}"
+    },
+    {
+      "k": "normal",
+      "t": "Ein Leerfeld bedeutet nicht, dass kein Anspruch besteht. Die Angaben müssen den tatsächlich geltenden Bedingungen entsprechen. Zwingende Ansprüche entstehen unabhängig vom Ausfüllen."
+    },
+    {
+      "k": "pagebreak"
+    },
+    {
+      "k": "h2",
+      "t": "Anlage 4 – Fortsetzung"
+    },
+    {
+      "k": "subtitle",
+      "t": "Teil B · Dienstplanung und Unterweisung"
+    },
+    {
+      "k": "table_row",
+      "t": "Schichtsystem und Zeiten",
+      "r": "{{shift_times}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Schichtrhythmus",
+      "r": "{{shift_rhythm}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Pausen und Ablösung",
+      "r": "____________________________"
+    },
+    {
+      "k": "table_row",
+      "t": "Einsatzleitung und Kontakt",
+      "r": "{{absence_contact}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Vertretung / Ersatzmeldeweg",
+      "r": "{{absence_backup}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Anreise / Unterkunft / Kosten",
+      "r": "____________________________"
+    },
+    {
+      "k": "table_row",
+      "t": "Objektbezogene Dienstanweisung",
+      "r": "Fassung / Datum: ____________________________\nAusgehändigt am: ____________________________"
+    },
+    {
+      "k": "table_row",
+      "t": "Zusätzliche Fortbildungsansprüche",
+      "r": "{{training}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Betriebsvereinbarungen",
+      "r": "{{works_agreements}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Betriebliche Altersversorgung",
+      "r": "{{pension}}"
+    },
+    {
+      "k": "normal",
+      "t": "Gegenstände der Unterweisung: Kontrollbereiche und Kontrollintervalle; Zutritts- und Besucherregeln; Lieferantenkontrollen; Öffnungs- und Schließdienste; Schlüsselverwaltung; Alarmverfahren; Brandschutz und Fluchtwege; medizinische Notfälle; Gewaltvorfälle; Ansprechpartner und Meldewege; Dokumentation; Datenschutz; persönliche Schutzausrüstung; Pausen und Ablösung."
+    },
+    {
+      "k": "normal",
+      "t": "Besondere Gefahren und zusätzliche Maßnahmen: ____________________________"
+    },
+    {
+      "k": "normal",
+      "t": "Die tatsächliche Unterweisung und Aushändigung sind zu dokumentieren. Diese Übersicht ersetzt keine konkrete objektbezogene Dienstanweisung."
+    },
+    {
+      "k": "employee_signature",
+      "t": "Unterweisung am / durch / Name und Unterschrift"
+    },
+    {
+      "k": "employee_signature",
+      "t": "Erhalt und Unterweisung bestätigt: {{full_name}} / Datum / Unterschrift"
+    }
+  ]
+}

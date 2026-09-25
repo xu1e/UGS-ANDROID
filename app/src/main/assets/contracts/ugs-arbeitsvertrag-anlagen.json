@@ -1,0 +1,435 @@
+{
+  "items": [
+    {
+      "k": "pagebreak"
+    },
+    {
+      "k": "h2",
+      "t": "Anlage 1 – Datenschutzinformationen"
+    },
+    {
+      "k": "subtitle",
+      "t": "Für Beschäftigte · tatsächliche betriebliche Angaben vor Aushändigung vervollständigen"
+    },
+    {
+      "k": "normal",
+      "t": "Arbeitnehmer: {{full_name}}"
+    },
+    {
+      "k": "h2",
+      "t": "Verantwortlicher"
+    },
+    {
+      "k": "normal",
+      "t": "{{employer_name}}, {{employer_street}}, {{employer_postal_code}} {{employer_city}}, vertreten durch {{employer_representative}}. Datenschutzkontakt: {{privacy_contact}}. Datenschutzbeauftragte Person: {{privacy_officer}}."
+    },
+    {
+      "k": "h2",
+      "t": "Daten und Zwecke"
+    },
+    {
+      "k": "normal",
+      "t": "Verarbeitet werden erforderliche Stamm-, Kontakt-, Bank-, Steuer- und Sozialversicherungsdaten sowie Arbeitszeit-, Abwesenheits-, Qualifikations- und Einsatzdaten. Die Verarbeitung dient der Begründung, Durchführung und Beendigung des Arbeitsverhältnisses, der Lohnabrechnung, Einsatzorganisation und Erfüllung gesetzlicher Melde- und Nachweispflichten. Gesundheitsdaten werden nur im erforderlichen, besonders geschützten Umfang verarbeitet."
+    },
+    {
+      "k": "h2",
+      "t": "Rechtsgrundlagen und Empfänger"
+    },
+    {
+      "k": "normal",
+      "t": "Maßgeblich sind je nach Zweck § 26 BDSG und Art. 6 Abs. 1 Buchst. b und c DSGVO; bei besonderen Datenkategorien zusätzlich die einschlägigen Voraussetzungen des Art. 9 DSGVO. Zugriff erhalten nur zuständige interne Stellen und erforderliche externe Empfänger, beispielsweise Abrechnungsdienstleister, Sozialversicherungsträger, Finanzbehörden und zuständige Bewachungsbehörden. Kunden erhalten nur die für einen rechtmäßigen Einsatz erforderlichen Daten."
+    },
+    {
+      "k": "normal",
+      "t": "Tatsächliche Empfänger und Dienstleister: {{privacy_recipients}}. Drittlandübermittlungen und Schutzmaßnahmen: {{privacy_transfers}}."
+    },
+    {
+      "k": "h2",
+      "t": "Speicherung und Rechte"
+    },
+    {
+      "k": "normal",
+      "t": "Daten werden nur für die erforderliche Dauer und unter Beachtung gesetzlicher Aufbewahrungsfristen gespeichert. Es bestehen nach den jeweiligen gesetzlichen Voraussetzungen Rechte auf Auskunft, Berichtigung, Löschung, Einschränkung und Datenübertragbarkeit sowie auf Widerspruch. Eine Einwilligung kann für die Zukunft widerrufen werden. Beschwerden können bei einer Datenschutzaufsichtsbehörde eingereicht werden. Zuständige Aufsicht und Kontakt: {{privacy_authority}}."
+    },
+    {
+      "k": "pagebreak"
+    },
+    {
+      "k": "h2",
+      "t": "Anlage 1 – Fortsetzung"
+    },
+    {
+      "k": "subtitle",
+      "t": "Betriebliche Angaben zur Datenschutzinformation"
+    },
+    {
+      "k": "table_row",
+      "t": "Aufbewahrung Personalakte",
+      "r": "{{retention_personnel}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Aufbewahrung Lohn und Steuer",
+      "r": "{{retention_payroll}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Aufbewahrung Arbeitszeiten",
+      "r": "{{retention_time}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Aufbewahrung Qualifikation",
+      "r": "{{retention_qualification}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Löschkonzept und Kontakt",
+      "r": "{{retention_contact}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Automatisierte Entscheidungen",
+      "r": "{{privacy_automation}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Weitere Systeminformationen",
+      "r": "{{privacy_information}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Weitere Zwecke / Rechtsgrundlagen",
+      "r": "____________________________"
+    },
+    {
+      "k": "table_row",
+      "t": "Pflichtangaben und Folgen fehlender Bereitstellung",
+      "r": "____________________________"
+    },
+    {
+      "k": "normal",
+      "t": "Fehlende Angaben sind anhand der tatsächlichen Verarbeitung zu ergänzen. Ein Leerfeld bedeutet nicht, dass keine Verarbeitung stattfindet. Die Unterschrift bestätigt nur den Erhalt der tatsächlich vervollständigten Information."
+    },
+    {
+      "k": "employee_signature",
+      "t": "Erhalten: {{full_name}} / Datum / Unterschrift"
+    },
+    {
+      "k": "pagebreak"
+    },
+    {
+      "k": "h2",
+      "t": "Anlage 2 – Verpflichtung zur Vertraulichkeit"
+    },
+    {
+      "k": "subtitle",
+      "t": "Verpflichtung zur Vertraulichkeit und zum Datenschutz"
+    },
+    {
+      "k": "normal",
+      "t": "Arbeitnehmer: {{full_name}} · Arbeitgeber: {{employer_name}}"
+    },
+    {
+      "k": "normal",
+      "t": "Ich verpflichte mich, personenbezogene Daten und berechtigt geheimhaltungsbedürftige dienstliche Informationen nur im Rahmen meiner Aufgaben und rechtmäßiger Weisungen zu verwenden. Ich mache sie ausschließlich berechtigten Personen zugänglich und schütze Unterlagen, Geräte, Datenträger und Zugangsmittel vor unbefugtem Zugriff."
+    },
+    {
+      "k": "normal",
+      "t": "Dies betrifft insbesondere Daten von Beschäftigten, Bewohnern, Besuchern und Kunden sowie Sicherheitskonzepte, Alarm- und Zugangssysteme, Schlüssel, Codes und nicht öffentliche Kundenkonditionen. Ob ein Geschäftsgeheimnis vorliegt, richtet sich nach den gesetzlichen Voraussetzungen."
+    },
+    {
+      "k": "normal",
+      "t": "Ich verwende die bereitgestellten Kommunikations- und Ablagewege, fertige keine unzulässigen privaten Kopien an und entsorge Unterlagen ausschließlich über zugelassene Verfahren. Den Verlust von Daten oder Geräten, Fehlversand und andere mögliche Datenschutzverletzungen melde ich unverzüglich."
+    },
+    {
+      "k": "normal",
+      "t": "Nach Ende des Arbeitsverhältnisses bleiben personenbezogene Daten und fortbestehende Geschäftsgeheimnisse geschützt. Meine allgemeinen beruflichen Kenntnisse und Erfahrungen darf ich weiter nutzen. Gesetzliche Auskunftspflichten, geschützte Meldungen und zulässige Rechtsverfolgung bleiben unberührt."
+    },
+    {
+      "k": "normal",
+      "t": "Verstöße können bei Vorliegen der jeweiligen gesetzlichen Voraussetzungen arbeitsrechtliche Maßnahmen, Schadensersatz oder straf- beziehungsweise bußgeldrechtliche Folgen haben. Eine automatische Sanktion wird hierdurch nicht festgelegt."
+    },
+    {
+      "k": "employee_signature",
+      "t": "{{full_name}} / Datum / Unterschrift"
+    },
+    {
+      "k": "employee_signature",
+      "t": "Unterweisende Person / Name / Datum / Unterschrift"
+    },
+    {
+      "k": "pagebreak"
+    },
+    {
+      "k": "h2",
+      "t": "Anlage 3 – Allgemeine Dienstanweisung"
+    },
+    {
+      "k": "subtitle",
+      "t": "Ergänzend gilt die ausgehändigte objektbezogene Dienstanweisung."
+    },
+    {
+      "k": "h2",
+      "t": "1 Dienstbeginn"
+    },
+    {
+      "k": "normal",
+      "t": "Dienstplan prüfen, pünktlich dienstfähig erscheinen, vorgeschriebene Kleidung und Ausweise mitführen, Vorbereitungszeit erfassen sowie Schlüssel, Geräte und offene Meldungen übernehmen."
+    },
+    {
+      "k": "h2",
+      "t": "2 Kontrollen und Zutritt"
+    },
+    {
+      "k": "normal",
+      "t": "Vorgeschriebene Kontrollgänge und Zutrittsprüfungen tatsächlich durchführen. Identität und Berechtigung nur im zulässigen Umfang prüfen. Keine Kontrollnachweise vorab oder ohne Durchführung bestätigen."
+    },
+    {
+      "k": "h2",
+      "t": "3 Verhalten gegenüber Personen"
+    },
+    {
+      "k": "normal",
+      "t": "Ruhig, respektvoll und deeskalierend handeln. Keine hoheitlichen Befugnisse beanspruchen. Körperliche Maßnahmen nur innerhalb bestehender gesetzlicher Rechte und unter Beachtung der Verhältnismäßigkeit vornehmen."
+    },
+    {
+      "k": "h2",
+      "t": "4 Meldungen und Notfälle"
+    },
+    {
+      "k": "normal",
+      "t": "Bei unmittelbarer Gefahr notwendige Hilfe veranlassen und erforderlichenfalls 110 oder 112 wählen. Danach beziehungsweise gleichzeitig nach Lage die Einsatzleitung informieren. Alarm- und Notfallwege des Objekts beachten."
+    },
+    {
+      "k": "h2",
+      "t": "5 Schlüssel und Arbeitsmittel"
+    },
+    {
+      "k": "normal",
+      "t": "Ausgabe und Rücknahme dokumentieren. Schlüssel, Codes und Geräte gegen unbefugte Nutzung sichern. Verlust, Defekt oder Verdacht auf Missbrauch sofort melden."
+    },
+    {
+      "k": "h2",
+      "t": "6 Dokumentation"
+    },
+    {
+      "k": "normal",
+      "t": "Ereignisse, Uhrzeiten, Maßnahmen, Beteiligte und Übergaben sachlich und nachvollziehbar erfassen. Nur erforderliche personenbezogene Daten aufnehmen. Korrekturen kenntlich machen."
+    },
+    {
+      "k": "h2",
+      "t": "7 Dienstfähigkeit und Medien"
+    },
+    {
+      "k": "normal",
+      "t": "Kein Alkohol- oder Drogenkonsum im Dienst. Keine beeinträchtigte Dienstausübung. Keine private Unterhaltung während aktiver Dienstzeit und keine unbefugten Aufnahmen oder Veröffentlichungen. Die vertraglichen Ausnahmen gelten."
+    },
+    {
+      "k": "h2",
+      "t": "8 Pausen und Ablösung"
+    },
+    {
+      "k": "normal",
+      "t": "Pausen nach Dienstplan tatsächlich nehmen und korrekt erfassen. Fehlende Ablösung sofort melden. Keine eigenmächtige Dienstaufgabe; gesetzliche Arbeitszeitgrenzen und notwendige Gefahrenabwehr beachten."
+    },
+    {
+      "k": "h2",
+      "t": "9 Dienstende"
+    },
+    {
+      "k": "normal",
+      "t": "Vorkommnisse und offene Aufgaben an die berechtigte Ablösung übergeben, Geräte und Schlüssel abstimmen, Aufzeichnungen vervollständigen und tatsächliches Arbeitsende erfassen."
+    },
+    {
+      "k": "employee_signature",
+      "t": "Erhalten und erläutert: {{full_name}} / Datum / Unterschrift"
+    },
+    {
+      "k": "pagebreak"
+    },
+    {
+      "k": "h2",
+      "t": "Anlage 4 – Einsatzdaten und Unterweisung"
+    },
+    {
+      "k": "subtitle",
+      "t": "Teil A · Einsatz und Vergütung"
+    },
+    {
+      "k": "table_row",
+      "t": "Arbeitnehmer",
+      "r": "{{full_name}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Erstes Objekt und Anschrift",
+      "r": "{{first_object}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Zuständiger Betrieb / Betriebsabteilung",
+      "r": "____________________________"
+    },
+    {
+      "k": "table_row",
+      "t": "Tätigkeit",
+      "r": "{{role}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Einsatzberechtigung und Nachweise",
+      "r": "{{qualifications}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Tarifwerke / Fassung",
+      "r": "{{tariff_identity}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Grund der Tarifgeltung",
+      "r": "{{tariff_basis}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Zusätzliche Tarifbezugnahme",
+      "r": "{{tariff_reference}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Lohngruppe / Ortsklasse",
+      "r": "{{tariff_assignment}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Vertraglicher Grundstundenlohn",
+      "r": "{{hourly_rate}} € brutto; höhere zwingende Ansprüche gehen vor."
+    },
+    {
+      "k": "table_row",
+      "t": "Objekt- und Funktionszulagen",
+      "r": "{{other_allowances}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Nachtzuschlag",
+      "r": "{{night_supplement}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Sonntagszuschlag",
+      "r": "{{sunday_supplement}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Feiertagszuschlag",
+      "r": "{{holiday_supplement}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Mehrarbeitszuschlag",
+      "r": "{{overtime_supplement}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Sonderzahlungen",
+      "r": "{{special_payments}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Jahresurlaub",
+      "r": "{{vacation_days}} Tage bei {{working_days}} Arbeitstagen pro Woche; höhere zwingende Ansprüche gehen vor."
+    },
+    {
+      "k": "table_row",
+      "t": "Tarifliche Kündigungsfristen",
+      "r": "{{tariff_notice}}"
+    },
+    {
+      "k": "normal",
+      "t": "Ein Leerfeld bedeutet nicht, dass kein Anspruch besteht. Die Angaben müssen den tatsächlich geltenden Bedingungen entsprechen. Zwingende Ansprüche entstehen unabhängig vom Ausfüllen."
+    },
+    {
+      "k": "pagebreak"
+    },
+    {
+      "k": "h2",
+      "t": "Anlage 4 – Fortsetzung"
+    },
+    {
+      "k": "subtitle",
+      "t": "Teil B · Dienstplanung und Unterweisung"
+    },
+    {
+      "k": "table_row",
+      "t": "Schichtsystem und Zeiten",
+      "r": "{{shift_times}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Schichtrhythmus",
+      "r": "{{shift_rhythm}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Pausen und Ablösung",
+      "r": "____________________________"
+    },
+    {
+      "k": "table_row",
+      "t": "Einsatzleitung und Kontakt",
+      "r": "{{absence_contact}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Vertretung / Ersatzmeldeweg",
+      "r": "{{absence_backup}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Anreise / Unterkunft / Kosten",
+      "r": "____________________________"
+    },
+    {
+      "k": "table_row",
+      "t": "Objektbezogene Dienstanweisung",
+      "r": "Fassung / Datum: ____________________________\nAusgehändigt am: ____________________________"
+    },
+    {
+      "k": "table_row",
+      "t": "Zusätzliche Fortbildungsansprüche",
+      "r": "{{training}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Betriebsvereinbarungen",
+      "r": "{{works_agreements}}"
+    },
+    {
+      "k": "table_row",
+      "t": "Betriebliche Altersversorgung",
+      "r": "{{pension}}"
+    },
+    {
+      "k": "normal",
+      "t": "Gegenstände der Unterweisung: Kontrollbereiche und Kontrollintervalle; Zutritts- und Besucherregeln; Lieferantenkontrollen; Öffnungs- und Schließdienste; Schlüsselverwaltung; Alarmverfahren; Brandschutz und Fluchtwege; medizinische Notfälle; Gewaltvorfälle; Ansprechpartner und Meldewege; Dokumentation; Datenschutz; persönliche Schutzausrüstung; Pausen und Ablösung."
+    },
+    {
+      "k": "normal",
+      "t": "Besondere Gefahren und zusätzliche Maßnahmen: ____________________________"
+    },
+    {
+      "k": "normal",
+      "t": "Die tatsächliche Unterweisung und Aushändigung sind zu dokumentieren. Diese Übersicht ersetzt keine konkrete objektbezogene Dienstanweisung."
+    },
+    {
+      "k": "employee_signature",
+      "t": "Unterweisung am / durch / Name und Unterschrift"
+    },
+    {
+      "k": "employee_signature",
+      "t": "Erhalt und Unterweisung bestätigt: {{full_name}} / Datum / Unterschrift"
+    }
+  ]
+}

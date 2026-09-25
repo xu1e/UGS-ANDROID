@@ -1,0 +1,141 @@
+{
+  "source": "https://dl.google.com/dl/android/maven2/androidx/compose/material/material-icons-extended-android/1.7.8/material-icons-extended-android-1.7.8-sources.jar",
+  "license": "Apache-2.0",
+  "files": [
+    {
+      "name": "filled/Approval",
+      "source": "commonMain/androidx/compose/material/icons/filled/Approval.kt",
+      "sha256": "12cf07c011eef40866079483194a836dfd3bcde4b38963c01fd8fbe7d058e9d0"
+    },
+    {
+      "name": "filled/Assignment",
+      "source": "commonMain/androidx/compose/material/icons/filled/Assignment.kt",
+      "sha256": "b2fc6f3834ec0d5e9e3a1c0f70a6e1d5b1be046c3b196249399b365e18dbc402"
+    },
+    {
+      "name": "filled/Backup",
+      "source": "commonMain/androidx/compose/material/icons/filled/Backup.kt",
+      "sha256": "7e0e60fdcf0e41f9bc4baebee97e06f3a8c786f289e8f03e93f888b57f92a3a5"
+    },
+    {
+      "name": "filled/Badge",
+      "source": "commonMain/androidx/compose/material/icons/filled/Badge.kt",
+      "sha256": "38fe4eb6b39c7778e2a3a64257bfcc7733ad81b955cdb2fed515c5dabee5b379"
+    },
+    {
+      "name": "filled/BarChart",
+      "source": "commonMain/androidx/compose/material/icons/filled/BarChart.kt",
+      "sha256": "9d01ab3f0c14490bf0a6e27967cb9474745b9daa07eba7d70c607a26eaccdc01"
+    },
+    {
+      "name": "filled/BeachAccess",
+      "source": "commonMain/androidx/compose/material/icons/filled/BeachAccess.kt",
+      "sha256": "51f76c774dde1a46c0043e0eab9f811d3a0adc96d2f90746468cdfe32bae7240"
+    },
+    {
+      "name": "filled/Business",
+      "source": "commonMain/androidx/compose/material/icons/filled/Business.kt",
+      "sha256": "c4da759dcfcaf3dc4be04e3e78b4bc797fa8ca12c059de9d3b5a6d0c94ba75bc"
+    },
+    {
+      "name": "filled/CalendarMonth",
+      "source": "commonMain/androidx/compose/material/icons/filled/CalendarMonth.kt",
+      "sha256": "6a7b7e1c61e38eb85d88d2efaf3076e0692e66db90ff625c652be0ef35e00e0d"
+    },
+    {
+      "name": "filled/Checklist",
+      "source": "commonMain/androidx/compose/material/icons/filled/Checklist.kt",
+      "sha256": "7667ecd829786ad871ae95a35984616242e761ccb1500afb32751fe1858db2ef"
+    },
+    {
+      "name": "filled/ChevronLeft",
+      "source": "commonMain/androidx/compose/material/icons/filled/ChevronLeft.kt",
+      "sha256": "eb7949f1b502a4eecfe3048d6bed1d00d3fb4454e6cb65a41592752c4662d81c"
+    },
+    {
+      "name": "filled/ChevronRight",
+      "source": "commonMain/androidx/compose/material/icons/filled/ChevronRight.kt",
+      "sha256": "79590609bb2498dd9d7fb71806e644df168725d032a1f8be9ef05ceee12b302d"
+    },
+    {
+      "name": "filled/Dashboard",
+      "source": "commonMain/androidx/compose/material/icons/filled/Dashboard.kt",
+      "sha256": "5b36587c32678625534475b10fbd3a306035f281c5a0b226fd3d50e52ab01246"
+    },
+    {
+      "name": "filled/Description",
+      "source": "commonMain/androidx/compose/material/icons/filled/Description.kt",
+      "sha256": "088f286598c441a973a24446f54f46b6a3283fbf3a755c3c70b318ff159c1d80"
+    },
+    {
+      "name": "filled/DocumentScanner",
+      "source": "commonMain/androidx/compose/material/icons/filled/DocumentScanner.kt",
+      "sha256": "2d82be23114373262023aba795a90321cba5b00d58a03bc8d34e384df9f2912b"
+    },
+    {
+      "name": "filled/Download",
+      "source": "commonMain/androidx/compose/material/icons/filled/Download.kt",
+      "sha256": "101ba73be15cc1acf76b247269630aa01ccb9461a9c298dfdc87fab12833ed50"
+    },
+    {
+      "name": "filled/EventBusy",
+      "source": "commonMain/androidx/compose/material/icons/filled/EventBusy.kt",
+      "sha256": "90d57dd49042647d6a49571c362de3db38cd2a728cbd6ee87fc5a593a98f19a3"
+    },
+    {
+      "name": "filled/Folder",
+      "source": "commonMain/androidx/compose/material/icons/filled/Folder.kt",
+      "sha256": "018244945c5b6ba250a7b1affbb2cbbdf76f4dc24766fd77fd70f482494148fa"
+    },
+    {
+      "name": "filled/Inbox",
+      "source": "commonMain/androidx/compose/material/icons/filled/Inbox.kt",
+      "sha256": "a39d977c155b22055b92116a166e0ba972c98c0e502c2e20f92e86ff39706ca2"
+    },
+    {
+      "name": "filled/ManageAccounts",
+      "source": "commonMain/androidx/compose/material/icons/filled/ManageAccounts.kt",
+      "sha256": "9131d28e31ae2187470b207eb975fbfaee479795a9a0fed2b548691692a354cf"
+    },
+    {
+      "name": "filled/Payments",
+      "source": "commonMain/androidx/compose/material/icons/filled/Payments.kt",
+      "sha256": "2f010ea73b95fbf8bdadbbdfb82fd562df02ea3ee4171ff2c2ed0f1f703ccd64"
+    },
+    {
+      "name": "filled/People",
+      "source": "commonMain/androidx/compose/material/icons/filled/People.kt",
+      "sha256": "d083b633894acd81bd37395ee9acd5ab88e2dbed89d907ac29355e0c860e183c"
+    },
+    {
+      "name": "filled/PictureAsPdf",
+      "source": "commonMain/androidx/compose/material/icons/filled/PictureAsPdf.kt",
+      "sha256": "32b046ec5c3affb8c8828642a64e2f9ae152b4f25c597035d4c59010f86ff363"
+    },
+    {
+      "name": "filled/Schedule",
+      "source": "commonMain/androidx/compose/material/icons/filled/Schedule.kt",
+      "sha256": "d19836f5a9777c9ee13cb929d74d050ee51c5d57ba655ea00012ad9580deb3eb"
+    },
+    {
+      "name": "filled/Security",
+      "source": "commonMain/androidx/compose/material/icons/filled/Security.kt",
+      "sha256": "060f6e941c3c985df73c4cfee3bf558dde7112661ddb664002599025d6469daf"
+    },
+    {
+      "name": "filled/UploadFile",
+      "source": "commonMain/androidx/compose/material/icons/filled/UploadFile.kt",
+      "sha256": "66f6485eab8c00e845f0bf9389ba571fc7a68b3abce62eadd3e981719fad79b1"
+    },
+    {
+      "name": "filled/Visibility",
+      "source": "commonMain/androidx/compose/material/icons/filled/Visibility.kt",
+      "sha256": "4f0492467b31ab8a690e33af6021b91c25976a82b2aaca78c54505251a66e53f"
+    },
+    {
+      "name": "filled/VisibilityOff",
+      "source": "commonMain/androidx/compose/material/icons/filled/VisibilityOff.kt",
+      "sha256": "f21d8a3ca1c1d37aeb88e1abf44ed7fae4953da20ab347e7ffcef3176436d43c"
+    }
+  ]
+}

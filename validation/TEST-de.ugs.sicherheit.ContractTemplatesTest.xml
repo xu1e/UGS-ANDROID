@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="de.ugs.sicherheit.ContractTemplatesTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-09-15T10:02:16.646Z" hostname="localhost" time="0.319">
+  <properties/>
+  <testcase name="agreementGatesAndTokensResolve" classname="de.ugs.sicherheit.ContractTemplatesTest" time="0.178"/>
+  <testcase name="calendarFixedTermNeedsNoPreviousEmployment" classname="de.ugs.sicherheit.ContractTemplatesTest" time="0.067"/>
+  <testcase name="instructionTokensResolve" classname="de.ugs.sicherheit.ContractTemplatesTest" time="0.003"/>
+  <testcase name="purposeRequiresReviewAndTemporaryFacts" classname="de.ugs.sicherheit.ContractTemplatesTest" time="0.039"/>
+  <testcase name="allContractTemplateTokensResolve" classname="de.ugs.sicherheit.ContractTemplatesTest" time="0.03"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

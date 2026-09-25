@@ -1,0 +1,16 @@
+{
+  "normal": {
+    "einsatzgebiet_clause": "Das Einsatzgebiet umfasst Bayern sowie, nach Maßgabe dieses Arbeitsvertrages und der jeweiligen betrieblichen Erfordernisse, das gesamte Bundesgebiet. Der konkrete Einsatzort kann entsprechend den betrieblichen Anforderungen und den vertraglichen Vereinbarungen festgelegt werden.",
+    "einsatzort_clause": "Der Arbeitnehmer wird an wechselnden Kundenobjekten beschäftigt. Ausgangspunkt der Einsatzplanung ist sein Wohnort {{city}}. Einsätze sind innerhalb Bayerns und im gesamten Bundesgebiet möglich. Ein Anspruch auf ein bestimmtes Objekt, Team oder einen dauerhaften Einsatz ausschließlich am Wohnort besteht vorbehaltlich individueller Vereinbarungen nicht.",
+    "einsatzwechsel_clause": "Bundesweite Einsätze können insbesondere bei neuen oder entfallenden Aufträgen, Objektübernahmen, Krankheits- und Urlaubsvertretungen, Personalengpässen, Veranstaltungen sowie besonderen Sicherheitslagen angeordnet werden. Jeder Einsatz muss im Einzelfall billigem Ermessen entsprechen.",
+    "objektwechsel_clause": "Objektwechsel werden in der Regel mindestens drei Kalendertage vorher angekündigt. Bei unvorhersehbaren dringenden betrieblichen Gründen kann die Ankündigung kürzer ausfallen, soweit die konkrete Weisung unter Abwägung der beiderseitigen Interessen zumutbar ist. Längere verbindliche Ankündigungsfristen und Beteiligungsrechte bleiben unberührt.",
+    "auftragsverlust_clause": "Ein Kundenwunsch nach Austausch einer Wachperson oder der Verlust eines Auftrages beendet das Arbeitsverhältnis nicht. Der Arbeitgeber prüft eine geeignete anderweitige Beschäftigung und darf einen zumutbaren Folgeeinsatz innerhalb dieses Vertrages zuweisen."
+  },
+  "purpose": {
+    "einsatzgebiet_clause": "Die Beschäftigung erfolgt ausschließlich für den in § 6 bestimmten vorübergehenden Bewachungszweck am Objekt {{object}}. Eine allgemeine bundesweite Einsatzpflicht wird für diese Vertragsvariante nicht vereinbart.",
+    "einsatzort_clause": "Vereinbarter Einsatzort ist das in § 6 bezeichnete Objekt {{object}}. Die Tätigkeit ist auf den dort beschriebenen vorübergehenden Bewachungszweck beschränkt.",
+    "einsatzwechsel_clause": "Eine einseitige Zuweisung zu anderen Kundenaufträgen wird nicht vereinbart. Eine Beschäftigung über den vereinbarten Zweck hinaus setzt eine gesonderte Vereinbarung unter Beachtung der gesetzlichen Anforderungen voraus.",
+    "objektwechsel_clause": "Ein Wechsel des vereinbarten Objekts oder Bewachungszwecks kann nicht durch eine bloße Einsatzanweisung erfolgen. Vor einer Vertragsänderung sind insbesondere die Befristungsvoraussetzungen erneut zu prüfen.",
+    "auftragsverlust_clause": "Ein Kundenwunsch nach Austausch, die bloße Kündigung oder Nichtverlängerung des Auftrags oder eine Abberufung beendet das Arbeitsverhältnis nicht. Die Beendigung bei tatsächlicher Erreichung des konkret vereinbarten Bewachungszwecks richtet sich ausschließlich nach § 6 und § 15 Abs. 2 TzBfG. Anderenfalls sind geeignete Weiterbeschäftigungsmöglichkeiten und die gesetzlichen Voraussetzungen weiterer Maßnahmen zu prüfen; gesetzlicher Bestandsschutz bleibt unberührt."
+  }
+}
