@@ -14,6 +14,8 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import java.time.LocalDate
 import java.time.YearMonth
@@ -743,64 +745,102 @@ fun UserEditor(
 fun ControlScreen(vm: UGSViewModel) {
     var history by remember { mutableStateOf(emptyList<String>()) }
     var trash by remember { mutableStateOf(emptyList<Entry>()) }
-    var tab by remember { mutableIntStateOf(0) }
-    LaunchedEffect(Unit) {
+    var tab by rememberSaveable { mutableIntStateOf(0) }
+    var purge by remember { mutableStateOf<Entry?>(null) }
+    var search by rememberSaveable { mutableStateOf("") }
+    fun reload() =
         vm.run {
             history = withContext(Dispatchers.IO) { vm.repo.history() }
             trash = withContext(Dispatchers.IO) { vm.repo.entries(true).filter { it.deleted } }
         }
-    }
+    LaunchedEffect(Unit) { reload() }
+    val integrity = remember(vm.entries) { OperationsCheck.integrity(vm.entries) }
+    val compliance = remember(vm.entries) { OperationsCheck.compliance(vm.entries) }
+    val conflicts = remember(vm.entries) { OperationsCheck.dutyConflicts(vm.entries) }
     Column(Modifier.fillMaxSize()) {
-        Row(Modifier.padding(16.dp)) {
-            FilterChip(tab == 0, { tab = 0 }, label = { Text("Protokoll") })
-            Spacer(Modifier.width(8.dp))
-            FilterChip(tab == 1, { tab = 1 }, label = { Text("Papierkorb") })
-            Spacer(Modifier.width(8.dp))
-            TextButton(
-                onClick = {
-                    vm.run {
-                        val result = withContext(Dispatchers.IO) { vm.repo.integrity() }
-                        vm.notice = "Datenbankprüfung: $result"
+        Row(Modifier.padding(16.dp).horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+            listOf("Übersicht", "Protokoll", "Papierkorb (${trash.size})").forEachIndexed { i, t -> FilterChip(tab == i, { tab = i }, label = { Text(t) }) }
+            TextButton(onClick = {
+                vm.run {
+                    val result = withContext(Dispatchers.IO) { vm.repo.integrity() }
+                    vm.notice = "Datenbankprüfung: $result"
+                }
+            }) { Text("Datenbank prüfen") }
+        }
+        LazyColumn(contentPadding = PaddingValues(20.dp, 0.dp, 20.dp, 20.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+            when (tab) {
+                0 -> {
+                    item { SectionHeader("Integrität") }
+                    if (integrity.isEmpty()) item { Text("✓ Keine Integritätsprobleme gefunden", color = Color(0xFF34C759)) }
+                    items(integrity) { OperationsIssueRow(vm, it) }
+                    item { SectionHeader("Personal und Dokumente (${compliance.size})") }
+                    if (compliance.isEmpty()) item { Text("✓ Keine offenen Hinweise", color = Color(0xFF34C759)) }
+                    items(compliance.take(100)) { OperationsIssueRow(vm, it) }
+                    item { SectionHeader("Planung (${conflicts.size})") }
+                    if (conflicts.isEmpty()) item { Text("✓ Keine Konflikte im laufenden und nächsten Monat", color = Color(0xFF34C759)) }
+                    items(conflicts.take(100)) { c ->
+                        Text("${DateText.german(c.date)} · ${c.workerName} · ${c.message}", color = if (c.critical) MaterialTheme.colorScheme.error else Color.Unspecified, style = MaterialTheme.typography.bodyMedium)
                     }
                 }
-            ) {
-                Text("Prüfen")
-            }
-        }
-        LazyColumn(
-            contentPadding = PaddingValues(20.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-        ) {
-            if (tab == 0)
-                items(history) {
-                    Text(it, style = MaterialTheme.typography.bodySmall)
-                    HorizontalDivider()
+                1 -> {
+                    item { OutlinedTextField(search, { search = it }, placeholder = { Text("Protokoll durchsuchen") }, singleLine = true, modifier = Modifier.fillMaxWidth()) }
+                    items(history.filter { search.isBlank() || it.contains(search, true) }) {
+                        Text(it, style = MaterialTheme.typography.bodySmall)
+                        HorizontalDivider()
+                    }
                 }
-            else
-                items(trash) { e ->
-                    Card(Modifier.fillMaxWidth()) {
-                        Row(
-                            Modifier.padding(12.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            Text(e.title, Modifier.weight(1f))
-                            TextButton(
-                                onClick = {
-                                    vm.run {
-                                        withContext(Dispatchers.IO) { vm.repo.restoreEntry(e) }
-                                        vm.refresh()
-                                        trash =
-                                            withContext(Dispatchers.IO) {
-                                                vm.repo.entries(true).filter { it.deleted }
-                                            }
-                                    }
+                else -> {
+                    if (trash.isEmpty()) item { EmptyState("Papierkorb ist leer", "Gelöschte Einträge erscheinen hier und können wiederhergestellt werden.") }
+                    items(trash.sortedBy { it.kind.ordinal }) { e ->
+                        Card(Modifier.fillMaxWidth()) {
+                            Row(Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
+                                Column(Modifier.weight(1f)) {
+                                    Text(e.title)
+                                    Text(e.kind.title, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                                 }
-                            ) {
-                                Text("Wiederherstellen")
+                                TextButton(
+                                    onClick = {
+                                        vm.run {
+                                            withContext(Dispatchers.IO) { vm.repo.restoreEntry(e) }
+                                            vm.refresh()
+                                            trash = withContext(Dispatchers.IO) { vm.repo.entries(true).filter { it.deleted } }
+                                        }
+                                    },
+                                    enabled = vm.can(AccessAction.EDIT, "operations"),
+                                ) { Text("Wiederherstellen") }
+                                if (vm.can(AccessAction.DELETE, "operations")) TextButton(onClick = { purge = e }) { Text("Löschen", color = MaterialTheme.colorScheme.error) }
                             }
                         }
                     }
                 }
+            }
+        }
+    }
+    purge?.let { e ->
+        AlertDialog(
+            onDismissRequest = { purge = null },
+            title = { Text("Endgültig löschen?") },
+            text = { Text("„${e.title}“ und eine zugehörige Datei werden unwiderruflich gelöscht.") },
+            confirmButton = {
+                TextButton(onClick = {
+                    vm.run {
+                        withContext(Dispatchers.IO) { vm.repo.purge(e) }
+                        purge = null
+                        reload()
+                    }
+                }) { Text("Endgültig löschen", color = MaterialTheme.colorScheme.error) }
+            },
+            dismissButton = { TextButton(onClick = { purge = null }) { Text("Abbrechen") } },
+        )
+    }
+}
+
+@Composable
+private fun OperationsIssueRow(vm: UGSViewModel, issue: OperationsCheck.Issue) {
+    Card(onClick = { vm.navigation = issue.page }, modifier = Modifier.fillMaxWidth()) {
+        Column(Modifier.padding(12.dp)) {
+            Text(issue.title, fontWeight = FontWeight.SemiBold, color = if (issue.critical) MaterialTheme.colorScheme.error else Color.Unspecified)
+            Text(issue.detail, style = MaterialTheme.typography.bodySmall)
         }
     }
 }

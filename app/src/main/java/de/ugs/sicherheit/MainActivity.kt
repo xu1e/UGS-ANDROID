@@ -10,6 +10,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.*
@@ -18,6 +19,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.*
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -579,103 +582,114 @@ fun Workspace(vm: UGSViewModel) {
 
 @Composable
 fun Dashboard(vm: UGSViewModel, navigate: (String) -> Unit) {
-    val active = vm.rows(Kind.WORKER).count { it["status"] != "Inaktiv" }
-    val shifts = vm.rows(Kind.SHIFT).count { it["date"] == today && it["status"] != "Abgesagt" }
-    val tasks = vm.rows(Kind.TODO).count { it["status"] != "Erledigt" }
-    val expiring =
-        vm.rows(Kind.DOCUMENT).filter {
-            it["expiryDate"].isNotBlank() &&
-                Rules.date(it["expiryDate"]) <= LocalDate.now().plusDays(30)
-        }
-    LazyColumn(
-        Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(20.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-    ) {
+    val figures = remember(vm.entries) { DashboardFigures.of(vm.entries) }
+    val todos = vm.rows(Kind.TODO)
+    val openTodos = todos.filterNot { TodoModel.done(it) }
+    val todayTodos = openTodos.filter { it["date"] == today }.sortedWith(TodoModel.order)
+    val priority = openTodos.filter { TodoModel.high(it) || (it["date"].isNotBlank() && it["date"] < today) }.sortedWith(TodoModel.order)
+    val wide = LocalConfiguration.current.screenWidthDp >= 600
+    val metrics =
+        listOfNotNull(
+            Triple("Mitarbeiter", figures.workers.toString(), "workers"),
+            Triple("Aktiv", figures.active.toString(), "workers"),
+            Triple("Urlaub", figures.leave.toString(), "absences"),
+            Triple("Inaktiv / gekündigt", figures.inactive.toString(), "workers"),
+            Triple("Offene To Dos", figures.openTodos.toString(), "todos").takeIf { vm.permitted("todo") },
+            Triple("Abwesenheiten offen", figures.pendingAbsences.toString(), "absences"),
+            Triple("Dokumente abgelaufen", figures.expiredDocuments.toString(), "documents"),
+            Triple("Zertifikate kritisch", figures.criticalCertificates.toString(), "documents"),
+            Triple("Dokumente bald fällig", figures.soonDocuments.toString(), "documents"),
+            Triple("Lohn aktueller Monat", money(figures.monthlyPayroll), "payroll").takeIf { vm.permitted("payrolls") },
+            Triple("Ø Gehalt + Zulagen", money(figures.averageSalary), "payroll").takeIf { vm.permitted("payrolls") },
+            Triple("Abteilungen", figures.departments.size.toString(), "workers"),
+        )
+    LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(20.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
         item {
-            Card(
-                colors =
-                    CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.primaryContainer
-                    )
-            ) {
-                Row(
-                    Modifier.fillMaxWidth().padding(22.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
+            Card(colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)) {
+                Row(Modifier.fillMaxWidth().padding(22.dp), verticalAlignment = Alignment.CenterVertically) {
                     Column(Modifier.weight(1f)) {
-                        Text(
-                            "Guten Tag, ${vm.user?.username}",
-                            style = MaterialTheme.typography.headlineSmall,
-                            fontWeight = FontWeight.Bold,
-                        )
-                        Text(Rules.german(today), Modifier.padding(top = 8.dp))
+                        Text("Guten Tag, ${vm.user?.username}", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
+                        Text(DateText.long(today), Modifier.padding(top = 8.dp))
                         Text("Dein Team. Deine Übersicht.", Modifier.padding(top = 18.dp))
                     }
-                    Image(
-                        painterResource(
-                            if (MaterialTheme.colorScheme.background.luminance() < .5f)
-                                R.drawable.ugs_logo_dark
-                            else R.drawable.ugs_logo_light
-                        ),
-                        "UGS",
-                        Modifier.size(110.dp),
-                    )
+                    Image(painterResource(if (MaterialTheme.colorScheme.background.luminance() < .5f) R.drawable.ugs_logo_dark else R.drawable.ugs_logo_light), "UGS", Modifier.size(110.dp))
                 }
             }
         }
-        item {
+        if (vm.permitted("todo"))
+            item {
+                // To-Do-Leiste: heutige Einträge und nächstes Gebet.
+                Card(onClick = { navigate("todos") }, modifier = Modifier.fillMaxWidth()) {
+                    Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Text("Heute", Modifier.weight(1f), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                            if (vm.company["prayerTimes"] != "false") {
+                                val p = rememberPrayerSchedule()
+                                Text("${p.nextName} ${PrayerTimes.clock(p.nextMinutes)} · ${p.countdown}", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.primary)
+                            }
+                        }
+                        if (todayTodos.isEmpty()) Text("Für heute steht nichts an.", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        todayTodos.take(5).forEach { t ->
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Box(Modifier.size(8.dp).clip(CircleShape).background(TodoModel.color(t)))
+                                Text(listOf(t["dueTime"], t["title"]).filter { it.isNotBlank() }.joinToString(" · "), Modifier.padding(start = 8.dp), maxLines = 1)
+                            }
+                        }
+                        if (todayTodos.size > 5) Text("+ ${todayTodos.size - 5} weitere", style = MaterialTheme.typography.bodySmall)
+                    }
+                }
+            }
+        items(metrics.chunked(if (wide) 4 else 2)) { row ->
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                Metric("Mitarbeiter", active.toString(), Modifier.weight(1f)) {
-                    navigate("workers")
-                }
-                Metric("Dienste heute", shifts.toString(), Modifier.weight(1f)) { navigate("duty") }
+                row.forEach { (label, value, page) -> Metric(label, value, Modifier.weight(1f)) { navigate(page) } }
+                repeat((if (wide) 4 else 2) - row.size) { Spacer(Modifier.weight(1f)) }
             }
         }
-        item {
-            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                Metric("Offene Aufgaben", tasks.toString(), Modifier.weight(1f)) {
-                    navigate("tasks")
+        if (vm.permitted("todo") && priority.isNotEmpty())
+            item {
+                Card(Modifier.fillMaxWidth()) {
+                    Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                        Text("Priorität", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                        priority.take(6).forEach { t ->
+                            Row(Modifier.fillMaxWidth().clickable { navigate("todos") }, verticalAlignment = Alignment.CenterVertically) {
+                                Box(Modifier.size(8.dp).clip(CircleShape).background(TodoModel.color(t)))
+                                Text(t["title"], Modifier.weight(1f).padding(start = 8.dp), maxLines = 1)
+                                if (t["date"].isNotBlank()) Text(DateText.german(t["date"]), style = MaterialTheme.typography.labelSmall, color = if (t["date"] < today) MaterialTheme.colorScheme.error else Color.Unspecified)
+                            }
+                        }
+                    }
                 }
-                Metric("Dokumentfristen", expiring.size.toString(), Modifier.weight(1f)) {
-                    navigate("documents")
+            }
+        if (vm.permitted("expenses")) item { DashboardExpenses(vm) { navigate("expenses") } }
+        item {
+            Card(Modifier.fillMaxWidth()) {
+                Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                    Text("Personalstatus", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                    val total = figures.statuses.values.sum().coerceAtLeast(1)
+                    figures.statuses.entries.sortedByDescending { it.value }.forEach { (status, count) ->
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Text(status, Modifier.width(140.dp), maxLines = 1)
+                            LinearProgressIndicator(progress = { count.toFloat() / total }, Modifier.weight(1f).padding(horizontal = 8.dp))
+                            Text("$count", fontWeight = FontWeight.SemiBold)
+                        }
+                    }
+                    if (figures.departments.isNotEmpty()) {
+                        HorizontalDivider()
+                        Text("Abteilungen", style = MaterialTheme.typography.titleSmall)
+                        figures.departments.entries.take(8).forEach { (d, n) -> Text("$d · $n", style = MaterialTheme.typography.bodyMedium) }
+                    }
                 }
             }
         }
-        item {
-            Text(
-                "Schnellzugriff",
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold,
-            )
-        }
+        item { Text("Schnellzugriff", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold) }
         item {
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                OutlinedButton(onClick = { navigate("contract") }, modifier = Modifier.weight(1f)) {
-                    Text("Arbeitsvertrag")
-                }
-                OutlinedButton(onClick = { navigate("exports") }, modifier = Modifier.weight(1f)) {
-                    Text("PDF-Exporte")
-                }
+                OutlinedButton(onClick = { navigate("contract") }, modifier = Modifier.weight(1f)) { Text("Arbeitsvertrag") }
+                OutlinedButton(onClick = { navigate("stamp") }, modifier = Modifier.weight(1f)) { Text("Vertrag stempeln") }
+                OutlinedButton(onClick = { navigate("exports") }, modifier = Modifier.weight(1f)) { Text("PDF-Exporte") }
             }
         }
-        item {
-            Text(
-                "Als Nächstes",
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold,
-            )
-        }
-        val upcoming =
-            vm.rows(Kind.SHIFT)
-                .filter { it["date"] >= today && it["status"] != "Abgesagt" }
-                .sortedBy { it["date"] + it["startTime"] }
-                .take(5)
-        if (upcoming.isEmpty())
-            item {
-                EmptyState("Noch keine Dienste geplant", "Lege zuerst Mitarbeiter und Objekte an.")
-            }
-        items(upcoming) { e -> RecordCard(e, vm) { navigate("duty") } }
+        val expiring = vm.rows(Kind.DOCUMENT).filter { it["archived"] != "true" && it["expiryDate"].isNotBlank() && it["expiryDate"] <= LocalDate.now().plusDays(30).toString() }.sortedBy { it["expiryDate"] }
         if (expiring.isNotEmpty()) {
             item { Text("Nachweise prüfen", style = MaterialTheme.typography.titleMedium) }
             items(expiring.take(6)) { e -> RecordCard(e, vm) { navigate("documents") } }
