@@ -141,6 +141,15 @@ object ClockTime {
 }
 
 object DateText {
+    private val months = listOf("Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember")
+    private val weekdays = listOf("Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag")
+
+    fun monthName(month: Int) = months.getOrElse(month - 1) { month.toString() }
+
+    /** "2026-09-26" → "Samstag, 26. September 2026". */
+    fun long(iso: String): String =
+        runCatching { java.time.LocalDate.parse(iso) }.getOrNull()?.let { "${weekdays[it.dayOfWeek.value - 1]}, ${it.dayOfMonth}. ${monthName(it.monthValue)} ${it.year}" } ?: iso
+
     /** "2026-09-01" → "01.09.2026"; Unlesbares bleibt unverändert. */
     fun german(iso: String): String {
         val p = iso.split("-")
