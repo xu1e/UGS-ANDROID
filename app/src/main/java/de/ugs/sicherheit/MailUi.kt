@@ -92,7 +92,7 @@ fun InboxPoller(vm: UGSViewModel) {
 
 fun notifyNewMail(c: Context, count: Int) {
     if (Build.VERSION.SDK_INT >= 33 && ContextCompat.checkSelfPermission(c, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) return
-    val manager = c.getSystemService(NotificationManager::class.java)
+    val manager = c.getSystemService(NotificationManager::class.java) ?: return
     manager.createNotificationChannel(NotificationChannel("inbox", "Posteingang", NotificationManager.IMPORTANCE_DEFAULT))
     // Keine Absender oder Betreffzeilen auf dem Sperrbildschirm.
     val n =
