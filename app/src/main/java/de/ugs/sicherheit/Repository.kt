@@ -848,6 +848,59 @@ class Repository(private val context: Context) {
         audit(label)
     }
 
+    // MARK: Portables Archiv vom Mac/iPhone (ergänzt den Datenbestand, ersetzt nichts)
+
+    /** Legt Datensätze in einer Transaktion an; ungültige werden übersprungen und gemeldet. */
+    @Synchronized
+    fun importRecords(batch: List<Entry>, label: String): Pair<List<Entry>, List<String>> {
+        authorize(AccessAction.EDIT, "backup")
+        check(session?.role != "Lesen") { "Dieses Konto hat Leserechte." }
+        require(batch.size <= 200000) { "Das Archiv enthält zu viele Datensätze." }
+        val saved = mutableListOf<Entry>()
+        val errors = mutableListOf<String>()
+        db.beginTransaction()
+        try {
+            val all = records(true).toMutableList()
+            for (e in batch) {
+                try {
+                    val x = store(e, all)
+                    all.removeAll { it.id == x.id }
+                    all.add(x)
+                    saved += x
+                } catch (ex: Exception) {
+                    errors += "${e.kind.title} „${e.title}“: ${ex.message}"
+                }
+            }
+            audit("$label: ${saved.size} Datensätze übernommen, ${errors.size} übersprungen")
+            db.setTransactionSuccessful()
+        } finally {
+            db.endTransaction()
+        }
+        return saved to errors
+    }
+
+    /** Dokument aus einem Datenstrom, der nur einmal gelesen werden kann (Prüfsumme beim Verschlüsseln). */
+    @Synchronized
+    fun importDocument(e: Entry, input: InputStream, mime: String): Entry {
+        authorize(AccessAction.EDIT, "backup")
+        val md = MessageDigest.getInstance("SHA-256")
+        val (blob, bytes) = putBlob(java.security.DigestInputStream(input, md))
+        val hash = md.digest().joinToString("") { "%02x".format(it) }
+        try {
+            require(bytes > 0) { "Leere Datei." }
+            val all = records()
+            all.firstOrNull { it.kind == Kind.DOCUMENT && it["workerId"] == e["workerId"] && it["sha256"] == hash }?.let {
+                File(docs, blob).delete()
+                return it
+            }
+            val x = store(e.copy(fields = e.fields + mapOf("blob" to blob, "mime" to mime.ifBlank { "application/octet-stream" }, "size" to bytes.toString(), "sha256" to hash)), all)
+            return x
+        } catch (ex: Exception) {
+            File(docs, blob).delete()
+            throw ex
+        }
+    }
+
     // MARK: Datensicherung (Android-Format UGSB01; Dokumente bis 250 MB je Datei)
 
     @Synchronized

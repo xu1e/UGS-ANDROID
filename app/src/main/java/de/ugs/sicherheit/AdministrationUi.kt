@@ -877,6 +877,8 @@ fun BackupScreen(vm: UGSViewModel) {
             "Bewahre das Sicherungspasswort getrennt auf. Ohne dieses Passwort ist keine Entschlüsselung möglich.",
             style = MaterialTheme.typography.bodySmall,
         )
+        HorizontalDivider()
+        PortableArchiveImport(vm)
     }
     if (replace)
         AlertDialog(
@@ -919,6 +921,55 @@ fun BackupScreen(vm: UGSViewModel) {
                 }
             },
         )
+}
+
+/** Portables Archiv (".ugsarchive") vom Mac oder iPhone übernehmen – ergänzt, ersetzt nichts. */
+@Composable
+fun PortableArchiveImport(vm: UGSViewModel) {
+    var uri by remember { mutableStateOf<android.net.Uri?>(null) }
+    var info by remember { mutableStateOf<PortableArchive.Info?>(null) }
+    var password by remember { mutableStateOf("") }
+    var result by remember { mutableStateOf<PortableImport.Result?>(null) }
+    val pick =
+        rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { picked ->
+            if (picked != null)
+                vm.run {
+                    info = withContext(Dispatchers.IO) { PortableImport.info(vm.app.contentResolver.openInputStream(picked) ?: error("Datei kann nicht gelesen werden.")) }
+                    uri = picked
+                    result = null
+                }
+        }
+    Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+        Text("Archiv vom Mac oder iPhone übernehmen", style = MaterialTheme.typography.titleMedium)
+        Text(
+            "Portable Archive („.ugsarchive“) aus UGS für Mac oder iPhone: Mitarbeiter, Dokumente, Fotos, Abwesenheiten, Zeiten, Gehalt, Statusmeldungen, Urlaubskonten, Dienstpläne, To Do und Firma-Ausgaben werden ergänzt. Vorhandene Daten bleiben erhalten; Mitarbeiter mit gleicher Bewacher-ID werden zusammengeführt. Benutzerkonten und Posteingang werden nicht übernommen.",
+            style = MaterialTheme.typography.bodySmall,
+        )
+        OutlinedButton(onClick = { pick.launch(arrayOf("*/*")) }, enabled = vm.can(AccessAction.EDIT, "backup")) { Text(if (uri == null) "Archiv auswählen" else "Anderes Archiv auswählen") }
+        info?.let { i ->
+            Text("Archiv von ${i.platform.ifBlank { "unbekannt" }} · erstellt ${i.createdAt.replace("T", " ").take(16)}${if (i.appVersion.isNotBlank()) " · Version ${i.appVersion}" else ""}", style = MaterialTheme.typography.bodySmall)
+            PasswordInput(password, { password = it }, "Backup-Passwort des Archivs")
+            Button(
+                onClick = {
+                    val source = uri ?: return@Button
+                    vm.run {
+                        val r = withContext(Dispatchers.IO) { PortableImport.run(vm.app, vm, { vm.app.contentResolver.openInputStream(source) ?: error("Datei kann nicht gelesen werden.") }, password) }
+                        vm.refresh()
+                        Photos.invalidate()
+                        password = ""
+                        result = r
+                        vm.notice = r.summary
+                    }
+                },
+                enabled = password.length >= PortableArchive.MIN_PASSWORD && !vm.busy,
+            ) { Text("Archiv übernehmen") }
+        }
+        result?.let { r ->
+            Text(r.summary, fontWeight = androidx.compose.ui.text.font.FontWeight.SemiBold)
+            r.skipped.take(20).forEach { Text("· $it", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error) }
+            if (r.skipped.size > 20) Text("… und ${r.skipped.size - 20} weitere.", style = MaterialTheme.typography.bodySmall)
+        }
+    }
 }
 
 @Composable
