@@ -38,6 +38,8 @@ val contractFields =
         ),
         num("workingDays", "Arbeitstage pro Woche", "5", true),
         num("probationMonths", "Probezeit in Monaten (0 = keine)", "6", true),
+        choice("tariffRegion", "Tarifgebiet (BDSW)", Tariffs.NONE, *Tariffs.regionNames.toTypedArray()),
+        choice("tariffGroup", "Tätigkeit / Entgeltgruppe", Tariffs.NO_GROUP, *Tariffs.groupTitles.toTypedArray()),
         choice("hoursMode", "Arbeitszeitbasis", "Wöchentlich", "Monatlich"),
         num("monthlyHours", "Monatsstunden"),
         choice(
@@ -193,6 +195,7 @@ object Contracts {
             JSONObject(
                 c.assets.open("contracts/deployment.json").bufferedReader().use { it.readText() }
             ),
+            Tariffs.catalog(c),
         )
 
     internal fun tokens(
@@ -201,6 +204,7 @@ object Contracts {
         v: Map<String, String>,
         details: List<Field>,
         deployments: JSONObject,
+        tariffs: Tariffs.Catalog = Tariffs.empty,
     ): Map<String, String> {
         validateForm(contractFields, v)
         val m = base(w, company, v)
@@ -228,6 +232,10 @@ object Contracts {
             m[f.key] = x
         }
         fun n(d: Double) = String.format(Locale.GERMANY, "%.2f", d)
+        val region = v["tariffRegion"].orEmpty()
+        val group = v["tariffGroup"].orEmpty()
+        Tariffs.validate(tariffs, region, group, hourly)
+        Tariffs.tokens(tariffs, region, group).forEach { (k, t) -> if (k != "tariff_assignment" || m[k].isNullOrBlank()) m[k] = t }
         m["hourly_rate"] = n(hourly)
         m["working_days"] = days.toString()
         m["vacation_days"] = vacation.toString()

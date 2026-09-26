@@ -608,6 +608,14 @@ fun ContractScreen(vm: UGSViewModel, mode: String) {
         }
         if (mode == "contract") {
             item {
+                val catalog = remember { Tariffs.catalog(vm.app) }
+                Text(
+                    Tariffs.summary(catalog, values["tariffRegion"].orEmpty(), values["tariffGroup"].orEmpty()),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+            item {
                 TextButton(onClick = { details = !details }) {
                     Text(
                         if (details) "Weitere Vertragsangaben schließen"
