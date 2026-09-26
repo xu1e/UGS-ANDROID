@@ -413,4 +413,33 @@ class PdfService(private val context: Context) {
             Intent.createChooser(intent, "Teilen / E-Mail").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         )
     }
+
+    /** Öffnet eine Adresse (mailto:, tel:, https:) in der passenden App. */
+    fun dial(uri: String) {
+        runCatching {
+            context.startActivity(
+                Intent(Intent.ACTION_VIEW, android.net.Uri.parse(uri)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            )
+        }
+    }
+
+    /** Öffnet eine exportierte Datei (Bild, Office …) in einer passenden App. */
+    fun open(file: File, mime: String) {
+        val uri = FileProvider.getUriForFile(context, "${context.packageName}.files", file)
+        val intent =
+            Intent(Intent.ACTION_VIEW)
+                .setDataAndType(uri, mime)
+                .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_ACTIVITY_NEW_TASK)
+        try {
+            context.startActivity(Intent.createChooser(intent, "Öffnen mit").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+        } catch (e: android.content.ActivityNotFoundException) {
+            share(file, mime)
+        }
+    }
+
+    /** Leerer Exportordner-Pfad für große Dateien. */
+    fun exportFile(name: String): File {
+        val dir = File(context.cacheDir, "exports").apply { mkdirs() }
+        return File(dir, name.replace(Regex("[^\\p{L}\\p{N}._ -]"), "_").take(120).ifBlank { "Datei" })
+    }
 }

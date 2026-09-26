@@ -16,6 +16,7 @@ import androidx.compose.material.icons.automirrored.filled.*
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
@@ -80,12 +81,20 @@ class UGSViewModel(val app: UGSApplication) : ViewModel() {
     var company by mutableStateOf(mapOf("name" to "UGS Sicherheit GmbH"))
         private set
 
+    var lookups by mutableStateOf(Lookups.defaults)
+        private set
+
     var busy by mutableStateOf(false)
         private set
 
     var error by mutableStateOf<String?>(null)
     var notice by mutableStateOf<String?>(null)
     var preview by mutableStateOf<File?>(null)
+
+    /** Seitenwechsel aus anderen Bereichen (Suche, Sprachassistent, Posteingang). */
+    var navigation by mutableStateOf<String?>(null)
+    /** Übergabe eines Anhangs aus dem Posteingang an „Vertrag stempeln“. */
+    var stampHandoff by mutableStateOf<StampHandoff?>(null)
 
     init {
         run { setup = withContext(Dispatchers.IO) { repo.needsSetup() } }
@@ -107,11 +116,24 @@ class UGSViewModel(val app: UGSApplication) : ViewModel() {
         }
     }
 
+    /** Hintergrundarbeit ohne Sperrbildschirm (Posteingang, Sprachassistent). */
+    fun launch(action: suspend () -> Unit) =
+        viewModelScope.launch {
+            try {
+                action()
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                error = e.message ?: "Vorgang fehlgeschlagen."
+            }
+        }
+
     suspend fun refresh() {
         val e = withContext(Dispatchers.IO) { repo.entries() }
         val s = withContext(Dispatchers.IO) { repo.settings() }
         entries = e
         company = mapOf("name" to "UGS Sicherheit GmbH") + s
+        lookups = Lookups.all(s)
     }
 
     fun auth(name: String, password: String, confirm: String) {
@@ -131,7 +153,9 @@ class UGSViewModel(val app: UGSApplication) : ViewModel() {
         entries = emptyList()
         company = mapOf("name" to "UGS Sicherheit GmbH")
         preview = null
+        stampHandoff = null
         repo.logout()
+        Voice.stop()
     }
 
     fun save(e: Entry, done: () -> Unit) {
@@ -150,20 +174,55 @@ class UGSViewModel(val app: UGSApplication) : ViewModel() {
         }
     }
 
-    suspend fun showPdf(title: String, create: () -> ByteArray) {
+    /**
+     * Erzeugt ein PDF, protokolliert den Export und zeigt es an. Mit [archiveTo] wird es zuvor
+     * in der Personalakte dieses Mitarbeiters abgelegt; ein Fehler dabei bricht ab, statt
+     * einen Erfolg vorzutäuschen.
+     */
+    suspend fun showPdf(
+        title: String,
+        archiveTo: String? = null,
+        category: String = "",
+        create: () -> ByteArray,
+    ) {
         val f =
             withContext(Dispatchers.IO) {
                 val bytes = create()
+                if (archiveTo != null) repo.archive(archiveTo, category, title, bytes)
                 repo.exported(title)
                 pdf.export(bytes, "$title.pdf")
             }
+        if (archiveTo != null) refresh()
         preview = f
     }
 
     fun rows(kind: Kind) = entries.filter { it.kind == kind }.sortedBy { it.title.lowercase() }
 
-    val canEdit
-        get() = user?.role != "Lesen"
+    fun worker(id: String) = entries.find { it.id == id && it.kind == Kind.WORKER }
+
+    fun status(w: Entry) = Workers.currentStatus(w, entries)
+
+    fun can(action: AccessAction, page: String) = AccessControl.allows(user, action, page)
+
+    fun permitted(page: String) = can(AccessAction.VIEW, page)
+
+    fun canCreate(kind: Kind) = can(AccessAction.CREATE, AccessControl.page(kind))
+
+    fun canEdit(kind: Kind) = can(AccessAction.EDIT, AccessControl.page(kind))
+
+    fun canDelete(kind: Kind) = can(AccessAction.DELETE, AccessControl.page(kind))
+
+    fun canExport(page: String) = can(AccessAction.EXPORT, page)
+
+    /** Auswahlwerte einer Liste; Dokumentkategorien ergänzen eigene Kategorien. */
+    fun options(group: String): List<String> =
+        if (group == "expense_categories")
+            (expenseCategories + rows(Kind.EXPENSE).map { it["category"] }.filter { it.isNotBlank() }).distinct()
+        else if (group == "document_categories")
+            DocumentCategories.options(
+                lookups["document_types"].orEmpty() + rows(Kind.DOCUMENT).map { it["category"] }
+            )
+        else lookups[group].orEmpty()
 
     val admin
         get() = user?.role == "Administrator"
@@ -173,34 +232,44 @@ data class Destination(
     val id: String,
     val title: String,
     val icon: ImageVector,
+    val page: String,
+    val section: String,
     val kind: Kind? = null,
 )
 
 val destinations =
     listOf(
-        Destination("dashboard", "Übersicht", Icons.Default.Dashboard),
-        Destination("workers", "Mitarbeiter", Icons.Default.People, Kind.WORKER),
-        Destination("import", "Personalimport", Icons.Default.UploadFile),
-        Destination("ocr", "Ausweis einlesen", Icons.Default.DocumentScanner),
-        Destination("sites", "Objekte", Icons.Default.Business, Kind.SITE),
-        Destination("duty", "Dienstplan", Icons.Default.CalendarMonth, Kind.SHIFT),
-        Destination("times", "Zeiten", Icons.Default.Schedule, Kind.TIME),
-        Destination("absences", "Abwesenheiten", Icons.Default.EventBusy, Kind.ABSENCE),
-        Destination("vacation", "Urlaubskonto", Icons.Default.BeachAccess),
-        Destination("documents", "Dokumente", Icons.Default.Folder, Kind.DOCUMENT),
-        Destination("contract", "Arbeitsvertrag", Icons.Default.Description),
-        Destination("stamp", "Vertrag stempeln", Icons.Default.Approval),
-        Destination("agreement", "Aufhebungsvertrag", Icons.Default.Assignment),
-        Destination("exports", "Exportzentrum", Icons.Default.PictureAsPdf),
-        Destination("registrations", "Anmeldungen", Icons.Default.Badge, Kind.REGISTRATION),
-        Destination("payroll", "Gehalt", Icons.Default.Payments, Kind.PAYROLL),
-        Destination("tasks", "Aufgaben", Icons.Default.Checklist, Kind.TODO),
-        Destination("reports", "Berichte", Icons.Default.BarChart),
-        Destination("mail", "E-Mail", Icons.Default.Email),
-        Destination("control", "Kontrollzentrum", Icons.Default.Security),
-        Destination("settings", "Einstellungen", Icons.Default.Settings),
-        Destination("users", "Benutzerverwaltung", Icons.Default.ManageAccounts),
-        Destination("backup", "Datensicherung", Icons.Default.Backup),
+        Destination("dashboard", "Übersicht", Icons.Default.Dashboard, "dashboard", ""),
+        Destination("workers", "Mitarbeiter", Icons.Default.People, "workers", "Personal", Kind.WORKER),
+        Destination("import", "Import", Icons.Default.UploadFile, "import", "Personal"),
+        Destination("ocr", "Ausweis einlesen", Icons.Default.DocumentScanner, "workers", "Personal"),
+        Destination("status", "Anmeldung", Icons.Default.Badge, "registrations", "Personal", Kind.STATUS),
+        Destination("sofortmeldung", "Sofortmeldung", Icons.Default.Email, "sofortmeldung", "Personal"),
+        Destination("registrations", "Meldungen", Icons.Default.Approval, "registrations", "Personal", Kind.REGISTRATION),
+        Destination("absences", "Abwesenheiten", Icons.Default.EventBusy, "absences", "Personal", Kind.ABSENCE),
+        Destination("vacation", "Urlaubskonto", Icons.Default.BeachAccess, "absences", "Personal"),
+        Destination("documents", "Dokumente", Icons.Default.Folder, "documents", "Personal", Kind.DOCUMENT),
+        Destination("contract", "Arbeitsvertrag", Icons.Default.Description, "contract", "Verträge und Dokumente"),
+        Destination("stamp", "Vertrag stempeln", UgsIcons.Signature, "contract", "Verträge und Dokumente"),
+        Destination("agreement", "Aufhebungsvertrag", Icons.Default.Assignment, "contract", "Verträge und Dokumente"),
+        Destination("exports", "Exportzentrum", Icons.Default.PictureAsPdf, "exports", "Verträge und Dokumente"),
+        Destination("penalties", "Strafe", UgsIcons.Euro, "exports", "Verträge und Dokumente"),
+        Destination("cooperation", "Kooperationsverträge", UgsIcons.Handshake, "exports", "Verträge und Dokumente"),
+        Destination("offers", "Angebote", UgsIcons.Receipt, "exports", "Verträge und Dokumente"),
+        Destination("inbox", "Posteingang", Icons.Default.Inbox, "inbox", "Kommunikation"),
+        Destination("sentMail", "Gesendete E-Mails", Icons.Default.Send, "sent_mail", "Kommunikation"),
+        Destination("duty", "Dienstplan", Icons.Default.CalendarMonth, "duty", "Planung"),
+        Destination("shifts", "Dienste", Icons.Default.DateRange, "duty", "Planung", Kind.SHIFT),
+        Destination("sites", "Objekte", Icons.Default.Business, "duty", "Planung", Kind.SITE),
+        Destination("times", "Zeiten", Icons.Default.Schedule, "time_entries", "Planung", Kind.TIME),
+        Destination("todos", "To Do", Icons.Default.Checklist, "todo", "Planung"),
+        Destination("expenses", "Firma Ausgaben", UgsIcons.Receipt, "expenses", "Finanzen"),
+        Destination("payroll", "Gehalt", Icons.Default.Payments, "payrolls", "Finanzen", Kind.PAYROLL),
+        Destination("reports", "Berichte", Icons.Default.BarChart, "reports", "Finanzen"),
+        Destination("control", "Kontrollzentrum", Icons.Default.Security, "operations", "Verwaltung"),
+        Destination("settings", "Einstellungen", Icons.Default.Settings, "settings", "Verwaltung"),
+        Destination("users", "Benutzerverwaltung", Icons.Default.ManageAccounts, "users", "Verwaltung"),
+        Destination("backup", "Datensicherung", Icons.Default.Backup, "backup", "Verwaltung"),
     )
 
 @Composable
@@ -332,42 +401,25 @@ fun LoginScreen(vm: UGSViewModel) {
 
 @Composable
 fun Workspace(vm: UGSViewModel) {
-    var selected by remember { mutableStateOf("dashboard") }
-    var expanded by remember { mutableStateOf(true) }
+    var selected by rememberSaveable { mutableStateOf("dashboard") }
+    var expanded by rememberSaveable { mutableStateOf(true) }
     var drawer by remember { mutableStateOf(false) }
-    var accountPassword by remember { mutableStateOf(false) }
-    if (accountPassword)
-        FormDialog(
-            "Passwort ändern",
-            listOf(
-                Field("old", "Bisheriges Passwort", Input.PASSWORD, true),
-                Field("new", "Neues Passwort", Input.PASSWORD, true),
-                Field("confirm", "Wiederholen", Input.PASSWORD, true),
-            ),
-            emptyMap(),
-            vm,
-            { accountPassword = false },
-        ) { v ->
-            vm.run {
-                require(v["new"] == v["confirm"]) { "Passwörter stimmen nicht überein." }
-                withContext(Dispatchers.IO) {
-                    vm.repo.password(v["old"].orEmpty(), v["new"].orEmpty())
-                }
-                accountPassword = false
-                vm.notice = "Passwort geändert."
-            }
+    var profile by remember { mutableStateOf(false) }
+    LaunchedEffect(vm.navigation) {
+        vm.navigation?.let {
+            if (destinations.any { d -> d.id == it }) selected = it
+            vm.navigation = null
         }
-    val destination = destinations.first { it.id == selected }
-    val visible =
-        destinations.filter {
-            vm.admin || it.id !in listOf("users", "control", "backup", "settings")
-        }
+    }
+    val visible = destinations.filter { vm.permitted(it.page) }
+    val destination = visible.firstOrNull { it.id == selected } ?: visible.first()
+    if (profile) ProfileDialog(vm) { profile = false }
     BoxWithConstraints(Modifier.fillMaxSize()) {
         val wide = maxWidth >= 800.dp
         Row(Modifier.fillMaxSize()) {
             if (wide)
                 Surface(
-                    Modifier.width(if (expanded) 238.dp else 76.dp).fillMaxHeight(),
+                    Modifier.width(if (expanded) 248.dp else 76.dp).fillMaxHeight(),
                     color = MaterialTheme.colorScheme.surface,
                 ) {
                     Column(Modifier.systemBarsPadding()) {
@@ -392,14 +444,25 @@ fun Workspace(vm: UGSViewModel) {
                                 )
                         }
                         LazyColumn(Modifier.weight(1f)) {
-                            items(visible) { d ->
-                                NavigationDrawerItem(
-                                    label = { if (expanded) Text(d.title) },
-                                    selected = d.id == selected,
-                                    onClick = { selected = d.id },
-                                    icon = { Icon(d.icon, d.title) },
-                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp),
-                                )
+                            visible.groupBy { it.section }.forEach { (section, items) ->
+                                if (section.isNotEmpty() && expanded)
+                                    item(key = "h-$section") {
+                                        Text(
+                                            section,
+                                            Modifier.padding(start = 24.dp, top = 12.dp, bottom = 4.dp),
+                                            style = MaterialTheme.typography.labelMedium,
+                                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                        )
+                                    }
+                                items(items, key = { it.id }) { d ->
+                                    NavigationDrawerItem(
+                                        label = { if (expanded) Text(d.title) },
+                                        selected = d.id == destination.id,
+                                        onClick = { selected = d.id },
+                                        icon = { Icon(d.icon, d.title) },
+                                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 1.dp),
+                                    )
+                                }
                             }
                         }
                         IconButton(
@@ -418,16 +481,20 @@ fun Workspace(vm: UGSViewModel) {
                 modifier = Modifier.weight(1f),
                 topBar = {
                     TopAppBar(
-                        title = { Text(destination.title) },
+                        title = { Text(destination.title, maxLines = 1) },
                         navigationIcon = {
-                            if (!wide)
-                                IconButton(onClick = { drawer = true }) {
-                                    Icon(Icons.Default.Menu, "Navigation")
-                                }
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                if (!wide)
+                                    IconButton(onClick = { drawer = true }) {
+                                        Icon(Icons.Default.Menu, "Navigation")
+                                    }
+                                PrayerChip(vm, compact = !wide)
+                            }
                         },
                         actions = {
-                            IconButton(onClick = { accountPassword = true }) {
-                                Icon(Icons.Default.AccountCircle, "Eigenes Passwort ändern")
+                            VoiceButton(vm)
+                            IconButton(onClick = { profile = true }) {
+                                UserAvatar(vm, 30.dp)
                             }
                             IconButton(onClick = { vm.lock() }) {
                                 Icon(Icons.Default.Lock, "Sperren")
@@ -437,21 +504,30 @@ fun Workspace(vm: UGSViewModel) {
                 },
             ) { padding ->
                 Box(Modifier.padding(padding).fillMaxSize()) {
-                    when (selected) {
+                    when (destination.id) {
                         "dashboard" -> Dashboard(vm) { selected = it }
-                        "workers",
+                        "workers" -> WorkersScreen(vm)
                         "sites",
-                        "duty",
+                        "shifts",
                         "times",
                         "absences",
-                        "tasks",
                         "payroll",
                         "registrations",
-                        "documents" -> RecordsScreen(vm, destination.kind!!)
+                        "status" -> RecordsScreen(vm, destination.kind!!)
+                        "documents" -> DocumentsScreen(vm)
+                        "sofortmeldung" -> SofortmeldungScreen(vm)
                         "contract" -> ContractScreen(vm, "contract")
                         "agreement" -> ContractScreen(vm, "agreement")
                         "exports" -> ExportsScreen(vm)
                         "stamp" -> StampScreen(vm)
+                        "penalties" -> PenaltyScreen(vm)
+                        "cooperation" -> BusinessScreen(vm, BusinessKind.COOPERATION)
+                        "offers" -> BusinessScreen(vm, BusinessKind.OFFER)
+                        "inbox" -> InboxScreen(vm)
+                        "sentMail" -> SentMailScreen(vm)
+                        "duty" -> DutyPlanScreen(vm)
+                        "todos" -> TodoScreen(vm)
+                        "expenses" -> ExpensesScreen(vm)
                         "import" -> ImportScreen(vm)
                         "ocr" -> OcrScreen(vm)
                         "vacation" -> VacationScreen(vm)
@@ -460,24 +536,35 @@ fun Workspace(vm: UGSViewModel) {
                         "users" -> UsersScreen(vm)
                         "control" -> ControlScreen(vm)
                         "backup" -> BackupScreen(vm)
-                        "mail" -> MailScreen(vm)
                     }
+                    VoiceAnswerCard(vm, Modifier.align(Alignment.BottomEnd))
                 }
             }
         }
         if (drawer && !wide)
             ModalBottomSheet(onDismissRequest = { drawer = false }) {
                 LazyColumn {
-                    items(visible) { d ->
-                        ListItem(
-                            headlineContent = { Text(d.title) },
-                            leadingContent = { Icon(d.icon, null) },
-                            modifier =
-                                Modifier.clickable {
-                                    selected = d.id
-                                    drawer = false
-                                },
-                        )
+                    visible.groupBy { it.section }.forEach { (section, items) ->
+                        if (section.isNotEmpty())
+                            item(key = "h-$section") {
+                                Text(
+                                    section,
+                                    Modifier.padding(start = 16.dp, top = 12.dp),
+                                    style = MaterialTheme.typography.labelMedium,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                )
+                            }
+                        items(items, key = { it.id }) { d ->
+                            ListItem(
+                                headlineContent = { Text(d.title) },
+                                leadingContent = { Icon(d.icon, null) },
+                                modifier =
+                                    Modifier.clickable {
+                                        selected = d.id
+                                        drawer = false
+                                    },
+                            )
+                        }
                     }
                     item { Spacer(Modifier.height(24.dp)) }
                 }
@@ -652,8 +739,9 @@ fun RecordCard(e: Entry, vm: UGSViewModel, onClick: () -> Unit) {
                                 e["startTime"].let {
                                     if (it.isBlank()) "" else "$it–${e["endTime"]}"
                                 },
-                                e["type"],
+                                if (e.kind == Kind.STATUS) statusKinds[e["type"]].orEmpty() else e["type"],
                                 e["category"],
+                                if (e.kind == Kind.EXPENSE) money(Rules.number(e["amount"].ifBlank { "0" })) else "",
                                 vm.entries.find { it.id == e["siteId"] }?.title.orEmpty(),
                             )
                             .filter { it.isNotBlank() }

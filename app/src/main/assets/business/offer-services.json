@@ -1,0 +1,30 @@
+[
+  {
+    "id": "object",
+    "title": "Objektschutz",
+    "details": "Zutrittskontrolle, vereinbarte Kontrollgänge und Ereignisdokumentation gemäß Einsatzblatt. Besetzung, Kontrollintervalle und Alarmwege vor Einsatzbeginn festlegen.",
+    "unit": "Stunden",
+    "included": true
+  },
+  {
+    "id": "reception",
+    "title": "Empfang und Pfortendienst",
+    "details": "Besucherregistrierung und Zugangskontrolle nach freigegebenen Objektregeln; Schlüsselübergabe und Meldung besonderer Vorkommnisse. Datenschutz und Übergabeprozess im Einsatzblatt festlegen.",
+    "unit": "Stunden",
+    "included": true
+  },
+  {
+    "id": "patrol",
+    "title": "Revier- und Kontrollfahrten",
+    "details": "Kontrolle der ausdrücklich vereinbarten Prüfpunkte mit dokumentierter Anfahrt und Meldung von Auffälligkeiten. Tour, Zeitfenster und Interventionsgrenzen im Einsatzblatt festlegen.",
+    "unit": "Kontrollen",
+    "included": false
+  },
+  {
+    "id": "event",
+    "title": "Veranstaltungsschutz",
+    "details": "Zugangs- und Besucherlenkung im vereinbarten Verantwortungsbereich. Besetzung, erforderliche Qualifikationen, Einsatzleitung und Notfallkommunikation im Einsatzblatt festlegen.",
+    "unit": "Stunden",
+    "included": false
+  }
+]

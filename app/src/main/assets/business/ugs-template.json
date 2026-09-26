@@ -1,0 +1,64 @@
+{
+  "title": "Kooperationsrahmenvertrag",
+  "subtitle": "UGS Sicherheit · Sicherheitsdienstleistungen",
+  "separateCover": false,
+  "jurisdiction": "",
+  "clauses": [
+    {
+      "id": "ugs-1",
+      "title": "§ 1 Zusammenarbeit und Einzelaufträge",
+      "text": "{{AG}} (Auftraggeber) und {{AN}} (Auftragnehmer) vereinbaren einen Rahmen für eigenständig organisierte Sicherheitsdienstleistungen. Ein Einzelauftrag kommt erst durch übereinstimmende Bestätigung beider Parteien in Textform zustande. Er bestimmt mindestens Objekt, Leistungsumfang, Zeitraum, Besetzung, Qualifikation und Vergütung. Dieser Rahmenvertrag begründet weder Exklusivität noch einen Anspruch auf ein Mindestauftragsvolumen. Individuell vereinbarte Regelungen gehen den vorformulierten Bedingungen vor."
+    },
+    {
+      "id": "ugs-2",
+      "title": "§ 2 Einsatzplanung und Leistungsabgrenzung",
+      "text": "Der Auftragnehmer plant, besetzt und beaufsichtigt die vereinbarten Leistungen in eigener Verantwortung. Er benennt eine Einsatzleitung und sorgt bei Ausfällen rechtzeitig für geeigneten Ersatz. Objektbezogene Sicherheits-, Zutritts- und Notfallregeln des Auftraggebers sind zu beachten; arbeitsrechtliche Weisungen, Personalauswahl und Dienstplanung verbleiben beim Auftragnehmer. Änderungen des Leistungsumfangs werden einschließlich Preis- und Terminfolgen vor ihrer Ausführung in Textform bestätigt. Eine Eingliederung fremden Personals in den Betrieb des Auftraggebers mit dessen Personalweisungen ist nicht Gegenstand dieses Vertrags; eine abweichende tatsächliche Durchführung ist vor Beginn gesondert rechtlich zu klären."
+    },
+    {
+      "id": "ugs-3",
+      "title": "§ 3 Erlaubnis, Personal und Versicherung",
+      "text": "Der Auftragnehmer verfügt während der Ausführung über die erforderliche Erlaubnis nach § 34a GewO und setzt ausschließlich zuverlässige, für die konkrete Tätigkeit ausreichend qualifizierte und ordnungsgemäß angemeldete Wachpersonen ein. Gesetzlich erforderliche Sachkunde ist für die jeweils betroffenen Tätigkeiten nachzuweisen. Er hält die erforderliche Haftpflichtversicherung aufrecht und legt auf Anforderung geeignete aktuelle Nachweise vor. Wegfall, Einschränkung oder Aussetzung einer für den Einsatz erforderlichen Voraussetzung wird unverzüglich mitgeteilt; betroffenes Personal darf bis zur Klärung nicht eingesetzt werden."
+    },
+    {
+      "id": "ugs-4",
+      "title": "§ 4 Beschäftigung und weitere Nachunternehmer",
+      "text": "Jede Partei erfüllt die sie treffenden arbeits-, sozialversicherungs- und steuerrechtlichen Pflichten. Der Auftragnehmer gewährleistet insbesondere die gesetzlich oder verbindlich geltenden Mindestarbeitsbedingungen. Auf begründete Anforderung stellt er geeignete, verhältnismäßige Nachweise bereit; nicht benötigte personenbezogene Angaben sind zu schwärzen. Ein weiterer Nachunternehmereinsatz bedarf der vorherigen Zustimmung des Auftraggebers in Textform. Der Auftragnehmer bleibt für seine Leistung verantwortlich und verpflichtet eingesetzte Nachunternehmer entsprechend. Gesetzliche Haftungsansprüche Dritter werden durch diese Vereinbarung nicht eingeschränkt."
+    },
+    {
+      "id": "ugs-5",
+      "title": "§ 5 Übergabe, Ausstattung und Zusammenarbeit",
+      "text": "Vor Einsatzbeginn stimmen die Parteien Dienstanweisung, Ansprechpartner, Alarmwege und erforderliche Einweisungen ab. Der Einzelauftrag legt fest, wer Schlüssel, Ausweise, Funkgeräte, Schutz- und sonstige Arbeitsmittel bereitstellt. Übergaben und Rückgaben werden dokumentiert. Der Auftraggeber stellt die vereinbarten objektbezogenen Informationen und Zugänge rechtzeitig zur Verfügung. Erkennbare Sicherheitslücken, fehlende Voraussetzungen und Leistungsbehinderungen werden unverzüglich an die vereinbarten Ansprechpartner gemeldet."
+    },
+    {
+      "id": "ugs-6",
+      "title": "§ 6 Dokumentation und Qualitätskontrolle",
+      "text": "Dienstzeiten und vereinbarte Kontrollrunden werden nachvollziehbar dokumentiert. Besondere Vorkommnisse sind sachlich mit Zeitpunkt, Ort, Beobachtung und getroffenen Maßnahmen festzuhalten; Notfälle werden sofort über den vereinbarten Alarmweg gemeldet. Beanstandungen werden konkret beschrieben und dem Auftragnehmer zur Stellungnahme übermittelt. Soweit zumutbar, erhält er Gelegenheit zur Abhilfe innerhalb einer angemessenen Frist. Ein Kontrollprotokoll allein begründet keine pauschale Zahlungspflicht."
+    },
+    {
+      "id": "ugs-7",
+      "title": "§ 7 Preise und Abrechnung",
+      "text": "Es gelten ausschließlich die im bestätigten Einzelauftrag vereinbarten Preise, Einheiten und Zuschläge. Nicht vereinbarte Zusatzleistungen und Preisänderungen bedürfen einer gesonderten Vereinbarung. Abgerechnet werden die nachgewiesenen, vertragsgemäß erbrachten Leistungen; vereinbarte Pauschalen bleiben unberührt. Die prüffähige Abrechnung enthält Auftragsbezug, Leistungszeitraum, Leistungsnachweise und die steuerlich erforderlichen Angaben. Zahlungen sind 30 Kalendertage nach Zugang der prüffähigen Rechnung fällig, sofern im Einzelauftrag nichts anderes vereinbart ist. Die Zahlung ist nicht vom Zahlungseingang eines Dritten abhängig. Gesetzliche Einwendungen und Rechte bleiben bestehen."
+    },
+    {
+      "id": "ugs-8",
+      "title": "§ 8 Vertraulichkeit und Datenschutz",
+      "text": "Vertrauliche Objekt-, Kunden- und Betriebsinformationen dürfen nur zur Durchführung des Auftrags verwendet und nur befugten Personen zugänglich gemacht werden. Beide Parteien verpflichten ihr Personal entsprechend. Personenbezogene Daten werden nur im erforderlichen Umfang, auf einer tragfähigen Rechtsgrundlage und mit angemessenen Schutzmaßnahmen verarbeitet. Die Parteien klären vor Beginn ihre tatsächlichen Datenschutzrollen und schließen erforderlichenfalls eine gesonderte Vereinbarung zur Auftragsverarbeitung. Sicherheits- oder Datenschutzvorfälle werden unverzüglich an den benannten Kontakt gemeldet. Nach Vertragsende werden nicht mehr benötigte Daten und Unterlagen unter Beachtung gesetzlicher Aufbewahrungspflichten zurückgegeben oder gelöscht."
+    },
+    {
+      "id": "ugs-9",
+      "title": "§ 9 Haftung und Vertragsstrafen",
+      "text": "Für Pflichtverletzungen und Schäden gelten die gesetzlichen Voraussetzungen und Grenzen. Schadensereignisse werden unverzüglich gemeldet und gemeinsam sachlich aufgeklärt; zumutbare Maßnahmen zur Schadensminderung sind zu treffen. Dieser Rahmenvertrag enthält keine pauschalen Vertragsstrafen. Eine beabsichtigte Vertragsstrafe muss vor dem betreffenden Verstoß gesondert und wirksam vereinbart werden; Anlass, Verschuldensvoraussetzungen, Berechnung und Höchstbetrag sind transparent festzulegen. Kontrollfeststellungen oder interne Kataloge ersetzen eine solche Vereinbarung nicht. Ansprüche gegen Beschäftigte richten sich ausschließlich nach den für sie geltenden Rechtsgrundlagen."
+    },
+    {
+      "id": "ugs-10",
+      "title": "§ 10 Beginn und Beendigung",
+      "text": "Der Rahmenvertrag beginnt mit Unterzeichnung durch beide Parteien und läuft auf unbestimmte Zeit. Er kann mit einer Frist von vier Wochen zum Monatsende in Textform gekündigt werden. Bereits bestätigte Einzelaufträge werden nach ihren vereinbarten Laufzeiten und Beendigungsregelungen abgewickelt. Das Recht zur außerordentlichen Kündigung aus wichtigem Grund bleibt unberührt. Bei Beendigung stimmen die Parteien eine geordnete Übergabe, Rückgabe von Arbeitsmitteln sowie die abschließende Abrechnung ab."
+    },
+    {
+      "id": "ugs-11",
+      "title": "§ 11 Vereinbarungen und Schlussbestimmungen",
+      "text": "Vertragsänderungen und Einzelaufträge sollen aus Nachweisgründen in Textform festgehalten werden; der Vorrang wirksamer Individualabreden bleibt unberührt. Es gilt deutsches Recht. Für die gerichtliche Zuständigkeit gelten die gesetzlichen Regelungen. Sollte eine Bestimmung unwirksam sein, richten sich deren Folgen nach den gesetzlichen Vorschriften. Weitere Anlagen werden nur Bestandteil des Vertrags, soweit sie den Parteien vorliegen und ausdrücklich einbezogen sind."
+    }
+  ],
+  "annexes": "Anlage 1: Einsatzblatt / Einzelauftrag (sofern ausgefüllt und von beiden Parteien bestätigt).\nWeitere Anlagen nur nach ausdrücklicher Vereinbarung."
+}

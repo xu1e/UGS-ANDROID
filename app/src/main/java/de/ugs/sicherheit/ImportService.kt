@@ -16,7 +16,40 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import org.w3c.dom.Element
 
 object ImportService {
-    fun read(c: Context, uri: Uri, limit: Int = 20 * 1024 * 1024): ByteArray =
+    /** Größe laut Anbieter (−1 wenn unbekannt). */
+    fun size(c: Context, uri: Uri): Long =
+        runCatching {
+                c.contentResolver.query(uri, arrayOf(android.provider.OpenableColumns.SIZE), null, null, null)?.use {
+                    if (it.moveToFirst() && !it.isNull(0)) it.getLong(0) else -1L
+                }
+            }
+            .getOrNull() ?: -1L
+
+    /** Anzeigename der gewählten Datei. */
+    fun name(c: Context, uri: Uri): String =
+        runCatching {
+                c.contentResolver.query(uri, arrayOf(android.provider.OpenableColumns.DISPLAY_NAME), null, null, null)?.use {
+                    if (it.moveToFirst()) it.getString(0) else null
+                }
+            }
+            .getOrNull() ?: uri.lastPathSegment.orEmpty()
+
+    /** Legt die gewählte Datei (bis 250 MB) als Dokument ab, ohne sie ganz in den Speicher zu laden. */
+    fun attach(vm: UGSViewModel, uri: Uri, values: Map<String, String>): Entry {
+        val c = vm.app
+        val size = size(c, uri)
+        require(size <= FileLimits.FILE_BYTES) { "Maximal ${FileLimits.FILE_LABEL} erlaubt." }
+        val mime = c.contentResolver.getType(uri) ?: "application/octet-stream"
+        val named = values + ("originalName" to name(c, uri))
+        return vm.repo.attachStream(
+            Entry(kind = Kind.DOCUMENT, fields = named),
+            { c.contentResolver.openInputStream(uri) ?: error("Datei kann nicht geöffnet werden.") },
+            mime,
+            size,
+        )
+    }
+
+    fun read(c: Context, uri: Uri, limit: Int = FileLimits.FILE_BYTES): ByteArray =
         c.contentResolver.openInputStream(uri)?.use { input ->
             val b = java.io.ByteArrayOutputStream()
             val buf = ByteArray(8192)

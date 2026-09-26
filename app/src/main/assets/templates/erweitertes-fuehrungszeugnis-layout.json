@@ -1,0 +1,96 @@
+{
+  "pageWidth": 595,
+  "pageHeight": 842,
+  "fields": [
+    {
+      "key": "date",
+      "title": "Datum",
+      "x": 420,
+      "top": 75,
+      "width": 98,
+      "height": 16,
+      "fontSize": 11,
+      "minimumFontSize": 7
+    },
+    {
+      "key": "requester",
+      "title": "Firma",
+      "x": 61,
+      "top": 165,
+      "width": 451,
+      "height": 16,
+      "fontSize": 11,
+      "minimumFontSize": 7
+    },
+    {
+      "key": "requesterAddress",
+      "title": "Firmenanschrift",
+      "x": 61,
+      "top": 201,
+      "width": 451,
+      "height": 17,
+      "fontSize": 11,
+      "minimumFontSize": 7
+    },
+    {
+      "key": "lastName",
+      "title": "Nachname",
+      "x": 61,
+      "top": 266,
+      "width": 150,
+      "height": 15,
+      "fontSize": 11,
+      "minimumFontSize": 7
+    },
+    {
+      "key": "firstName",
+      "title": "Vorname",
+      "x": 221,
+      "top": 266,
+      "width": 151,
+      "height": 15,
+      "fontSize": 11,
+      "minimumFontSize": 7
+    },
+    {
+      "key": "birthDate",
+      "title": "Geburtsdatum",
+      "x": 382,
+      "top": 266,
+      "width": 130,
+      "height": 15,
+      "fontSize": 11,
+      "minimumFontSize": 7
+    },
+    {
+      "key": "address",
+      "title": "Mitarbeiteranschrift",
+      "x": 61,
+      "top": 304,
+      "width": 451,
+      "height": 16,
+      "fontSize": 11,
+      "minimumFontSize": 7
+    },
+    {
+      "key": "activity",
+      "title": "Tätigkeit",
+      "x": 61,
+      "top": 570,
+      "width": 451,
+      "height": 12,
+      "fontSize": 9,
+      "minimumFontSize": 7
+    },
+    {
+      "key": "client",
+      "title": "Auftraggeber / Einsatzobjekt",
+      "x": 61,
+      "top": 607,
+      "width": 451,
+      "height": 14,
+      "fontSize": 10,
+      "minimumFontSize": 7
+    }
+  ]
+}

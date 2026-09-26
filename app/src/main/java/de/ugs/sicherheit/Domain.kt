@@ -6,17 +6,27 @@ import java.time.temporal.ChronoUnit
 import java.util.UUID
 import org.json.JSONObject
 
-enum class Kind(val title: String) {
+enum class Kind(val title: String, val generic: Boolean = true) {
     WORKER("Mitarbeiter"),
     SITE("Objekte"),
-    SHIFT("Dienstplan"),
+    SHIFT("Dienste"),
     TIME("Zeiten"),
     ABSENCE("Abwesenheiten"),
-    TODO("Aufgaben"),
+    TODO("To Do"),
     PAYROLL("Gehalt"),
     REGISTRATION("Anmeldungen"),
     DOCUMENT("Dokumente"),
-    DRAFT("Entwürfe"),
+    DRAFT("Entwürfe", false),
+    /** Tagesmeldungen wie am Mac: Krank, Nicht erschienen, Verspätet, Urlaub, Ersatz, Gekündigt. */
+    STATUS("Statusmeldungen"),
+    SOFORTMELDUNG("Sofortmeldungen", false),
+    EXPENSE("Firma Ausgaben"),
+    VACATION_ACCOUNT("Urlaubskonten", false),
+    DUTY_PLAN("Monatsdienstpläne", false),
+    PENALTY("Strafen", false),
+    INSPECTION("Kontrollprotokolle", false),
+    BUSINESS("Angebote und Kooperationsverträge", false),
+    SENT_MAIL("Gesendete E-Mails", false),
 }
 
 data class Entry(
@@ -57,7 +67,13 @@ data class Entry(
     }
 }
 
-data class Account(val id: String, val username: String, val role: String)
+data class Account(
+    val id: String,
+    val username: String,
+    val role: String,
+    val permissions: String = "[]",
+    val active: Boolean = true,
+)
 
 enum class Input {
     TEXT,
@@ -70,6 +86,8 @@ enum class Input {
     TIME,
     MULTILINE,
     PASSWORD,
+    /** Freitext mit Vorschlägen aus einer Auswahlliste (Einstellungen → Auswahllisten). */
+    LOOKUP,
 }
 
 data class Field(
@@ -79,6 +97,10 @@ data class Field(
     val required: Boolean = false,
     val options: List<String> = emptyList(),
     val initial: String = "",
+    /** Auswahlliste für Input.LOOKUP. */
+    val group: String = "",
+    /** Abschnittsüberschrift, die im Formular vor diesem Feld erscheint. */
+    val section: String = "",
 )
 
 fun field(key: String, label: String, required: Boolean = false) =
@@ -104,6 +126,42 @@ fun check(key: String, label: String) = Field(key, label, Input.CHECK, initial =
 fun longText(key: String, label: String, required: Boolean = false) =
     Field(key, label, Input.MULTILINE, required)
 
+fun lookup(key: String, label: String, group: String, initial: String = "", required: Boolean = false) =
+    Field(key, label, Input.LOOKUP, required, initial = initial, group = group)
+
+fun Field.inSection(title: String) = copy(section = title)
+
+/** Fragebogen-Angaben (Bank, Steuer, Versicherung, Vergütung) wie am Mac. */
+val questionnaireFields =
+    listOf(
+        field("iban", "IBAN").inSection("Fragebogen · Bank"),
+        field("bic", "BIC"),
+        field("taxId", "Steuer-ID").inSection("Fragebogen · Steuer"),
+        field("taxClass", "Steuerklasse (1–6)"),
+        field("religion", "Religion / Konfession"),
+        field("childAllowance", "Kinderfreibeträge"),
+        field("socialId", "Sozialversicherungsnummer").inSection("Fragebogen · Versicherung"),
+        field("healthInsurance", "Krankenkasse"),
+        field("birthCountry", "Geburtsland (nur ohne SV-Nummer nötig)"),
+        field("birthName", "Geburtsname (nur ohne SV-Nummer nötig)"),
+        num("weeklyHours", "Std. / Woche", "40").inSection("Fragebogen · Vergütung"),
+        num("vacationDays", "Urlaubstage pro Jahr", "24"),
+        field("grossPay", "Festlohn oder Stundenlohn (Brutto)"),
+        choice("secondaryJob", "Nebenbeschäftigung", "Nein", "Ja"),
+        field("secondaryEmployer", "Arbeitgeber (Nebenbeschäftigung)"),
+    )
+
+/** Statusmeldungen: gespeicherter Schlüssel → Anzeige. */
+val statusKinds =
+    linkedMapOf(
+        "sick" to "Krank",
+        "no_show" to "Nicht erschienen",
+        "late" to "Verspätet",
+        "leave" to "Urlaub",
+        "replacement" to "Ersatz",
+        "terminated" to "Gekündigt",
+    )
+
 val today
     get() = LocalDate.now().toString()
 val personField = Field("workerId", "Mitarbeiter", Input.WORKER, true)
@@ -111,30 +169,38 @@ val schemas: Map<Kind, List<Field>> =
     mapOf(
         Kind.WORKER to
             listOf(
-                field("personnelNumber", "Personalnummer", true),
+                field("bewacherId", "Bewacher-ID").inSection("Personal"),
+                field(
+                    "personnelNumber",
+                    "Personalnummer (leer = automatisch dreistellig)",
+                ),
                 field("firstName", "Vorname", true),
                 field("lastName", "Nachname", true),
+                choice("gender", "Geschlecht", "keine Angabe", "männlich", "weiblich", "divers"),
                 date("birthDate", "Geburtsdatum"),
-                field("street", "Straße und Hausnummer"),
+                field("birthPlace", "Geburtsort"),
+                lookup("nationality", "Staatsangehörigkeit", "nationalities"),
+                field("identityNumber", "Ausweisnummer"),
+                field("street", "Straße und Hausnummer").inSection("Kontakt"),
                 field("postalCode", "PLZ"),
                 field("city", "Ort"),
                 field("email", "E-Mail"),
-                field("phone", "Telefon"),
-                field("bewacherId", "Bewacher-ID"),
-                field("nationality", "Staatsangehörigkeit"),
-                field("taxId", "Steuer-ID"),
-                field("socialId", "Sozialversicherungsnummer"),
-                field("healthInsurance", "Krankenkasse"),
-                field("iban", "IBAN"),
+                field("phone", "Mobil / Telefon"),
+                lookup("department", "Abteilung", "departments").inSection("Beschäftigung"),
+                lookup("position", "Tätigkeit", "positions"),
+                lookup("location", "Standort", "locations"),
+                lookup("object", "Objekt / Ersatz", "objects"),
+                lookup("contractType", "Vertragsart", "contract_types"),
                 choice("employmentType", "Beschäftigung", "Vollzeit", "Teilzeit", "Minijob"),
-                date("startDate", "Vertragsbeginn", true),
+                date("startDate", "Eintritt / Vertragsbeginn", true),
                 date("endDate", "Vertragsende"),
-                num("weeklyHours", "Wochenstunden", "40"),
+                lookup("status", "Status", "worker_statuses", "Aktiv", true),
                 num("hourlyRate", "Stundenlohn €"),
-                num("vacationDays", "Urlaubstage pro Jahr", "24"),
-                choice("status", "Status", "Aktiv", "Inaktiv"),
-                longText("notes", "Notizen"),
-            ),
+                num("baseSalary", "Grundgehalt €"),
+                num("allowances", "Zulagen €"),
+            ) +
+                questionnaireFields +
+                listOf(longText("notes", "Notizen").inSection("Notizen")),
         Kind.SITE to
             listOf(
                 field("title", "Objektname", true),
@@ -167,16 +233,18 @@ val schemas: Map<Kind, List<Field>> =
         Kind.ABSENCE to
             listOf(
                 personField,
-                choice("type", "Art", "Urlaub", "Krankheit", "Unbezahlt", "Sonstiges"),
+                lookup("type", "Art", "absence_types", "Jahresurlaub", true),
                 date("date", "Von", true),
                 date("endDate", "Bis", true),
-                choice("status", "Status", "Beantragt", "Genehmigt", "Abgelehnt"),
+                lookup("status", "Status", "absence_statuses", "In Bearbeitung", true),
                 longText("notes", "Notizen"),
             ),
         Kind.TODO to
             listOf(
-                field("title", "Aufgabe", true),
+                field("title", "Titel", true),
+                choice("todoKind", "Art", "Aufgabe", "Termin"),
                 date("date", "Fällig am"),
+                Field("dueTime", "Uhrzeit (nur Termin)", Input.TIME),
                 choice("priority", "Priorität", "Normal", "Hoch", "Niedrig"),
                 choice("status", "Status", "Offen", "In Arbeit", "Erledigt"),
                 longText("notes", "Beschreibung"),
@@ -188,8 +256,10 @@ val schemas: Map<Kind, List<Field>> =
                 num("hours", "Vergütete Stunden", required = true),
                 num("rate", "Stundenlohn €", required = true),
                 num("allowances", "Zulagen €", "0"),
+                num("bonus", "Bonus €", "0"),
                 num("deductions", "Abzüge €", "0"),
                 choice("status", "Status", "Entwurf", "Geprüft", "Bezahlt"),
+                lookup("paymentStatus", "Zahlungsstatus", "payment_statuses", "Ausstehend"),
                 longText("notes", "Notizen – keine automatische Steuerberechnung"),
             ),
         Kind.REGISTRATION to
@@ -205,17 +275,38 @@ val schemas: Map<Kind, List<Field>> =
             listOf(
                 field("title", "Dokumentname", true),
                 Field("workerId", "Mitarbeiter (optional)", Input.WORKER),
-                choice(
-                    "category",
-                    "Kategorie",
-                    "Vertrag",
-                    "Ausweis",
-                    "Qualifikation",
-                    "Bescheinigung",
-                    "Sonstiges",
-                ),
-                date("date", "Dokumentdatum"),
+                Field("category", "Kategorie", Input.LOOKUP, true, initial = "Sonstiges", group = "document_categories"),
+                field("documentNumber", "Dokumentnummer"),
+                date("date", "Ausgestellt am"),
                 date("expiryDate", "Gültig bis"),
+                check("extendedCertificate", "Erweitertes Führungszeugnis (Frist: Basisdatum + Erneuerung)"),
+                date("renewalRequestedOn", "Neu beantragt am (Frist: + 6 Monate)"),
+                check("archived", "Archiviert"),
+                longText("notes", "Notizen"),
+            ),
+        Kind.STATUS to
+            listOf(
+                personField,
+                Field(
+                    "type",
+                    "Meldung",
+                    Input.CHOICE,
+                    true,
+                    options = statusKinds.keys.toList(),
+                    initial = "sick",
+                ),
+                date("date", "Beginn", true),
+                date("endDate", "Ende (bei Gekündigt ohne Ende)"),
+                num("quantity", "Menge", "1"),
+                field("unit", "Einheit"),
+                longText("notes", "Notizen"),
+            ),
+        Kind.EXPENSE to
+            listOf(
+                field("title", "Bezeichnung", true),
+                Field("category", "Wofür? (Kategorie)", Input.LOOKUP, true, initial = "IT / Software", group = "expense_categories"),
+                field("amount", "Betrag €, z. B. 49,90", true),
+                date("date", "Datum", true),
                 longText("notes", "Notizen"),
             ),
     )
@@ -264,15 +355,28 @@ object Rules {
         }
         if (e.kind == Kind.WORKER) {
             require(
-                all.none {
-                    it.kind == Kind.WORKER &&
-                        !it.deleted &&
-                        it.id != e.id &&
-                        it["personnelNumber"].equals(e["personnelNumber"], true)
-                }
+                e["personnelNumber"].isBlank() ||
+                    all.none {
+                        it.kind == Kind.WORKER &&
+                            it.id != e.id &&
+                            it["personnelNumber"].equals(e["personnelNumber"], true)
+                    }
             ) {
                 "Personalnummer bereits vergeben."
             }
+            require(
+                e["bewacherId"].isBlank() ||
+                    all.none {
+                        it.kind == Kind.WORKER &&
+                            !it.deleted &&
+                            it.id != e.id &&
+                            it["bewacherId"].trim().equals(e["bewacherId"].trim(), true)
+                    }
+            ) {
+                "Bewacher-ID bereits vergeben."
+            }
+            if (e["email"].isNotBlank())
+                require(Mail.isAddress(e["email"].trim())) { "E-Mail-Adresse ist ungültig." }
             if (e["birthDate"].isNotBlank())
                 require(date(e["birthDate"]) <= LocalDate.now()) {
                     "Geburtsdatum liegt in der Zukunft."
@@ -282,8 +386,14 @@ object Rules {
                     "Vertragsende liegt vor dem Beginn."
                 }
         }
-        if (e.kind == Kind.ABSENCE)
+        if (e.kind == Kind.ABSENCE || e.kind == Kind.STATUS && e["endDate"].isNotBlank())
             require(date(e["endDate"]) >= date(e["date"])) { "Ende liegt vor Beginn." }
+        if (e.kind == Kind.EXPENSE) {
+            require(parseAmount(e["amount"]) != null) { "Bitte einen gültigen Betrag eingeben, z. B. 49,90 oder 1.234,56." }
+            require(e["category"].length <= 60) { "Die Kategorie ist zu lang (höchstens 60 Zeichen)." }
+        }
+        if (e.kind == Kind.TODO && e["dueTime"].isNotBlank())
+            require(e["todoKind"] == "Termin") { "Eine Uhrzeit gibt es nur bei einem Termin." }
         if (e.kind == Kind.SHIFT || e.kind == Kind.TIME) {
             val (s, t) = interval(e)
             val raw = ChronoUnit.MINUTES.between(s, t)
@@ -370,5 +480,327 @@ object Rules {
             .replace(Regex(" {2,}"), " ")
             .replace(Regex(" +([.,;:])"), "$1")
             .trim()
+    }
+}
+
+val expenseCategories =
+    listOf(
+        "IT / Software",
+        "Hardware",
+        "Hotel / Übernachtung",
+        "Auto / Leasing",
+        "Tanken / Fahrtkosten",
+        "Dienstkleidung",
+        "Ausrüstung",
+        "Telefon / Internet",
+        "Versicherung",
+        "Büro / Material",
+        "Miete / Räume",
+        "Weiterbildung / Schulung",
+        "Marketing",
+        "Beratung / Steuer",
+        "Sonstiges",
+    )
+
+/** Kategorien der Mitarbeiterdokumente (auch für ältere Datenbestände). */
+object DocumentCategories {
+    val standard =
+        listOf(
+            "Arbeitsvertrag",
+            "Anweisung",
+            "Abmahnung",
+            "Kündigung",
+            "Arbeitskleidung",
+            "Vertragsstrafe",
+            "Kontrollprotokoll",
+            "Krankmeldung",
+            "Fragebogen",
+            "Lebenslauf",
+            "Freigabe",
+            "Sofortmeldung",
+            "Dienstplan",
+            "Stundenzettel",
+            "Erweitertes Führungszeugnis",
+            "Ausweis",
+            "Qualifikation",
+            "Bescheinigung",
+            "Sonstiges",
+        )
+
+    fun canonical(value: String): String {
+        val clean = value.trim()
+        return when (clean.lowercase()) {
+            "cv",
+            "lebenslauf",
+            "cv / lebenslauf",
+            "lebenslauf / cv" -> "Lebenslauf"
+            "kundigung",
+            "kuendigung",
+            "kündigung" -> "Kündigung"
+            "fragenbogen",
+            "personalfragebogen",
+            "fragebogen" -> "Fragebogen"
+            "dinstplan",
+            "dienstplan" -> "Dienstplan"
+            "vertrag" -> "Arbeitsvertrag"
+            else -> standard.firstOrNull { it.equals(clean, true) } ?: clean
+        }
+    }
+
+    fun title(category: String) = if (category == "Lebenslauf") "CV / Lebenslauf" else category
+
+    fun options(custom: List<String>): List<String> =
+        standard +
+            custom
+                .map(::canonical)
+                .filter { it.isNotEmpty() && it !in standard }
+                .distinct()
+                .sorted()
+}
+
+enum class DeadlineState {
+    VALID,
+    SOON,
+    URGENT,
+    EXPIRED,
+    MISSING,
+    ARCHIVED,
+}
+
+data class Deadline(val state: DeadlineState, val label: String, val date: String, val days: Long?)
+
+/** Fristen der Dokumente: normale Gültigkeit oder Erneuerung des Führungszeugnisses. */
+fun Entry.deadline(now: LocalDate = LocalDate.now()): Deadline {
+    val extended = this["extendedCertificate"] == "true"
+    val due = if (extended) this["renewalDueOn"] else this["expiryDate"]
+    if (this["archived"] == "true") return Deadline(DeadlineState.ARCHIVED, "Archiviert", due, null)
+    if (due.isBlank())
+        return if (extended) Deadline(DeadlineState.MISSING, "Basisdatum fehlt", "", null)
+        else Deadline(DeadlineState.VALID, "Ohne Frist", "", null)
+    val target =
+        runCatching { LocalDate.parse(due) }.getOrNull()
+            ?: return Deadline(DeadlineState.VALID, "Ohne Frist", due, null)
+    val days = ChronoUnit.DAYS.between(now, target)
+    return when {
+        days < 0 -> Deadline(DeadlineState.EXPIRED, "Abgelaufen", due, days)
+        extended && days < 30 -> Deadline(DeadlineState.URGENT, "Neu beantragen (rot)", due, days)
+        extended && days <= 60 -> Deadline(DeadlineState.SOON, "Erneuerung planen (gelb)", due, days)
+        extended -> Deadline(DeadlineState.VALID, "Frist über 60 Tage (grün)", due, days)
+        days < 30 -> Deadline(DeadlineState.SOON, "Bald ablaufend", due, days)
+        else -> Deadline(DeadlineState.VALID, "Gültig", due, days)
+    }
+}
+
+object Workers {
+    /** Aktuelle Statusmeldung (Gekündigt hat Vorrang), sonst der gespeicherte Status. */
+    fun currentStatus(w: Entry, all: List<Entry>, today: LocalDate = LocalDate.now()): String {
+        val t = today.toString()
+        val current =
+            all.filter {
+                    it.kind == Kind.STATUS &&
+                        !it.deleted &&
+                        it["workerId"] == w.id &&
+                        it["date"] <= t &&
+                        (it["type"] == "terminated" || it["endDate"].ifBlank { it["date"] } >= t)
+                }
+                .sortedWith(
+                    compareBy<Entry> { if (it["type"] == "terminated") 0 else 1 }
+                        .thenByDescending { it["date"] }
+                )
+                .firstOrNull()
+        return when (current?.get("type")) {
+            "sick" -> "Krank gemeldet"
+            "no_show" -> "Nicht gekommen"
+            "late" -> "Zu spät gekommen"
+            "leave" -> "Urlaub"
+            "terminated" -> "Gekündigt"
+            "replacement" -> "Ersatz"
+            else -> w["status"].ifBlank { "Aktiv" }
+        }
+    }
+
+    fun active(status: String) = status in setOf("Aktiv", "Zu spät gekommen")
+
+    fun address(w: Entry) =
+        listOf(w["street"], listOf(w["postalCode"], w["city"]).filter { it.isNotBlank() }.joinToString(" "))
+            .filter { it.isNotBlank() }
+            .joinToString(", ")
+
+    /** Mitarbeiter über Bewacher-ID oder Personalnummer finden. */
+    fun find(input: String, all: List<Entry>, byBewacherId: Boolean): Entry? {
+        val n = input.trim()
+        if (n.isEmpty()) return null
+        return all.firstOrNull {
+            it.kind == Kind.WORKER &&
+                !it.deleted &&
+                (if (byBewacherId) it["bewacherId"].trim().equals(n, true)
+                else it["personnelNumber"].trim() == n)
+        }
+    }
+
+    fun isVacation(type: String) = type.trim().lowercase() in setOf("urlaub", "jahresurlaub")
+
+    fun isApproved(status: String) = status.trim() == "Genehmigt"
+}
+
+/** Geldbetrag im deutschen Format, z. B. „1.234,50 €“. */
+fun money(value: Double): String =
+    java.text.NumberFormat.getCurrencyInstance(java.util.Locale.GERMANY)
+        .apply { currency = java.util.Currency.getInstance("EUR") }
+        .format(value)
+
+/** Zahl im deutschen Format mit [digits] Nachkommastellen. */
+fun decimal(value: Double, digits: Int = 2): String =
+    String.format(java.util.Locale.GERMANY, "%,.${digits}f", value)
+
+/**
+ * Betrag aus einem Eingabefeld: deutsch mit Tausenderpunkten („1.234,50“) oder schlicht
+ * („1234.50“). Mehrdeutiges wird abgelehnt statt still falsch übernommen.
+ */
+fun parseAmount(text: String): Double? {
+    val v = text.trim().removeSuffix("€").trim()
+    val german = Regex("(?:[0-9]+|[0-9]{1,3}(?:\\.[0-9]{3})+)(?:,[0-9]{1,2})?")
+    val plain = Regex("[0-9]+(?:\\.[0-9]{1,2})?")
+    val normalized =
+        when {
+            german.matches(v) -> v.replace(".", "").replace(",", ".")
+            plain.matches(v) -> v
+            else -> return null
+        }
+    return normalized.toDoubleOrNull()?.takeIf { it.isFinite() }
+}
+
+enum class ProofLevel {
+    BAD,
+    SOON,
+    OK,
+    NEUTRAL;
+
+    companion object {
+        fun of(state: DeadlineState) =
+            when (state) {
+                DeadlineState.VALID -> OK
+                DeadlineState.SOON -> SOON
+                DeadlineState.URGENT,
+                DeadlineState.EXPIRED,
+                DeadlineState.MISSING -> BAD
+                DeadlineState.ARCHIVED -> NEUTRAL
+            }
+    }
+}
+
+data class ProofRow(
+    val id: String,
+    val title: String,
+    val subtitle: String,
+    val until: String,
+    val verdict: String,
+    val level: ProofLevel,
+    val document: Entry?,
+)
+
+/** „Nachweise & Fristen“ einer Personalakte, Pflichtnachweise zuerst sichtbar. */
+object Proofs {
+    val required = listOf("Arbeitsvertrag", "Fragebogen", "Erweitertes Führungszeugnis")
+
+    fun title(d: Entry) =
+        if (d["extendedCertificate"] == "true") "Erweitertes Führungszeugnis"
+        else DocumentCategories.title(DocumentCategories.canonical(d["category"]))
+
+    fun proves(title: String, d: Entry) =
+        if (title == "Erweitertes Führungszeugnis")
+            d["extendedCertificate"] == "true" || DocumentCategories.canonical(d["category"]) == title
+        else DocumentCategories.canonical(d["category"]) == title
+
+    fun build(documents: List<Entry>, now: LocalDate = LocalDate.now()): List<ProofRow> {
+        val active = documents.filter { it["archived"] != "true" }
+        val rows =
+            active
+                .map { d ->
+                    val deadline = d.deadline(now)
+                    val level = ProofLevel.of(deadline.state)
+                    var verdict = deadline.label
+                    if (deadline.days != null && deadline.days >= 0 && level != ProofLevel.OK)
+                        verdict += " · ${deadline.days} Tage"
+                    ProofRow(
+                        "doc-${d.id}",
+                        title(d),
+                        listOf(d["documentNumber"], d["originalName"].ifBlank { d.title })
+                            .filter { it.isNotBlank() }
+                            .joinToString(" · "),
+                        if (deadline.date.isEmpty()) "unbefristet" else DateText.german(deadline.date),
+                        verdict,
+                        level,
+                        d,
+                    )
+                }
+                .toMutableList()
+        for (r in required) if (active.none { proves(r, it) })
+            rows +=
+                ProofRow("missing-$r", r, "Noch nicht in der Personalakte", "—", "Fehlt, Pflicht", ProofLevel.BAD, null)
+        return rows.sortedWith(compareBy({ it.level.ordinal }, { it.title }))
+    }
+}
+
+data class TimelineEvent(val id: String, val date: String, val title: String, val detail: String, val severity: Int)
+
+/** Verlauf eines Mitarbeiters: Eintritt, Meldungen, Abwesenheiten, Dokumente, Gehalt. */
+object Timeline {
+    fun build(w: Entry, all: List<Entry>, permitted: (String) -> Boolean): List<TimelineEvent> {
+        val out = mutableListOf<TimelineEvent>()
+        if (w["startDate"].isNotBlank())
+            out += TimelineEvent("hire-${w.id}", w["startDate"], "Eintritt", w["contractType"].ifBlank { w["employmentType"] }, 0)
+        for (e in all.filter { it["workerId"] == w.id && !it.deleted }) {
+            when (e.kind) {
+                Kind.STATUS ->
+                    if (permitted("registrations"))
+                        out += TimelineEvent(
+                            "reg-${e.id}",
+                            e["date"],
+                            "Anmeldung · ${statusKinds[e["type"]] ?: e["type"]}",
+                            e["notes"],
+                            if (e["type"] == "terminated") 2 else 0,
+                        )
+                Kind.REGISTRATION ->
+                    if (permitted("registrations"))
+                        out += TimelineEvent("meld-${e.id}", e["date"], "Meldung · ${e["type"]}", e["status"], 0)
+                Kind.ABSENCE ->
+                    if (permitted("absences"))
+                        out += TimelineEvent(
+                            "absence-${e.id}",
+                            e["date"],
+                            e["type"],
+                            "${DateText.german(e["date"])}–${DateText.german(e["endDate"])} · ${e["status"]}",
+                            if (e["status"] == "Abgelehnt") 1 else 0,
+                        )
+                Kind.DOCUMENT ->
+                    if (permitted("documents")) {
+                        val state = e.deadline().state
+                        out += TimelineEvent(
+                            "doc-${e.id}",
+                            e["date"].ifBlank { e["expiryDate"] },
+                            "Dokument · ${Proofs.title(e)}",
+                            e["originalName"].ifBlank { e.title },
+                            when (state) {
+                                DeadlineState.EXPIRED -> 2
+                                DeadlineState.URGENT,
+                                DeadlineState.SOON -> 1
+                                else -> 0
+                            },
+                        )
+                    }
+                Kind.PAYROLL ->
+                    if (permitted("payrolls"))
+                        out += TimelineEvent(
+                            "pay-${e.id}",
+                            e["date"].take(7) + "-01",
+                            "Lohnabrechnung",
+                            "${e["paymentStatus"].ifBlank { e["status"] }}",
+                            0,
+                        )
+                else -> Unit
+            }
+        }
+        return out.sortedWith(compareByDescending<TimelineEvent> { it.date }.thenByDescending { it.id })
     }
 }

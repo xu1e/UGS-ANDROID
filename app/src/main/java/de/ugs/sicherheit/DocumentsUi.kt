@@ -16,6 +16,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.*
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.input.pointer.pointerInput
@@ -160,44 +161,55 @@ private fun PdfPage(
 
 @Composable
 fun ExportsScreen(vm: UGSViewModel) {
-    var selected by remember { mutableStateOf<String?>(null) }
+    var selected by rememberSaveable { mutableStateOf<String?>(null) }
     var badge by remember { mutableStateOf(false) }
-    if (selected == "probation") {
-        BackHandler { selected = null }
-        Column {
-            TextButton(onClick = { selected = null }) { Text("Zurück zum Exportzentrum") }
-            ContractScreen(vm, "probation")
+    when (selected) {
+        "letter" -> {
+            BackHandler { selected = null }
+            LetterScreen(vm) { selected = null }
+            return
         }
-        return
+        "certificate" -> {
+            BackHandler { selected = null }
+            CertificateScreen(vm) { selected = null }
+            return
+        }
+        "timesheet" -> {
+            BackHandler { selected = null }
+            TimesheetScreen(vm) { selected = null }
+            return
+        }
     }
+    val enabled = vm.canExport("exports")
     LazyColumn(
         contentPadding = PaddingValues(20.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
+        item { Text("Dokumente & Firmenunterlagen", style = MaterialTheme.typography.headlineSmall) }
+        if (!enabled) item { Text("Keine Berechtigung zum Exportieren.", color = MaterialTheme.colorScheme.error) }
+        item { SectionHeader("Schreiben") }
         item {
-            Text("Dokumente & Firmenunterlagen", style = MaterialTheme.typography.headlineSmall)
-        }
-        item {
-            ExportTile(
-                "Kündigung innerhalb der Probezeit",
-                "Mit Kalender und Prüfung der Zweiwochenfrist",
-            ) {
-                selected = "probation"
+            ExportTile("Abmahnung · Kündigung · Probezeit", "Mit Prüfung der Fristen; wird in der Personalakte abgelegt") {
+                if (enabled) selected = "letter"
             }
         }
+        item { SectionHeader("Formulare") }
         item {
-            ExportTile("Dienstausweis ausfüllen", "Mitarbeiter, Bewacher-ID und Gültigkeit") {
-                badge = true
-            }
+            ExportTile("Erweitertes Führungszeugnis", "Anforderung auf der Originalvorlage") { if (enabled) selected = "certificate" }
         }
         item {
-            ExportTile("Belehrung nach § 2a SchwarzArbG", "Für einen ausgewählten Mitarbeiter") {
-                selected = "instruction"
-            }
+            ExportTile("Stundenzettel", "Zeiten eines Monats laden, prüfen und ausfüllen") { if (enabled) selected = "timesheet" }
         }
+        item {
+            ExportTile("Dienstausweis ausfüllen", "Mitarbeiter, Bewacher-ID und Gültigkeit") { if (enabled) badge = true }
+        }
+        item {
+            ExportTile("Belehrung nach § 2a SchwarzArbG", "Für einen ausgewählten Mitarbeiter") { if (enabled) selected = "instruction" }
+        }
+        item { SectionHeader("UGS Sicherheit · PDF-Setup") }
         items(vm.pdf.templates.entries.toList()) { (name, file) ->
             ExportTile(name, "Originalvorlage mit UGS-Branding") {
-                vm.run { vm.showPdf(name) { vm.pdf.asset(file) } }
+                if (enabled) vm.run { vm.showPdf(name) { vm.pdf.asset(file) } }
             }
         }
     }
@@ -235,7 +247,7 @@ fun ExportsScreen(vm: UGSViewModel) {
         ) { v ->
             vm.run {
                 val w = vm.entries.find { it.id == v["workerId"] } ?: error("Mitarbeiter wählen.")
-                vm.showPdf("Belehrung") {
+                vm.showPdf("Belehrung-SchwarzArbG-${w["lastName"]}-${w["firstName"]}", archiveTo = w.id, category = "Anweisung") {
                     vm.pdf.template(
                         "ugs-belehrung-schwarzarbg",
                         Contracts.base(w, vm.company, v),
@@ -245,6 +257,228 @@ fun ExportsScreen(vm: UGSViewModel) {
                 selected = null
             }
         }
+}
+
+/** Abmahnung, Kündigung oder Kündigung in der Probezeit – mit automatischer Ablage. */
+@Composable
+fun LetterScreen(vm: UGSViewModel, back: () -> Unit) {
+    var worker by remember { mutableStateOf<Entry?>(null) }
+    var data by remember { mutableStateOf(LetterData()) }
+    fun change(next: LetterData) {
+        data = next.copy(reviewed = if (next.reviewed != data.reviewed) next.reviewed else false)
+    }
+    LazyColumn(contentPadding = PaddingValues(20.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+        item { BackRow("Schreiben", back) }
+        item { WorkerLookup(vm, worker) { w -> worker = w; change(data.copy(startDate = w["startDate"])) } }
+        item {
+            ChoiceInput("Art", data.kind.name, LetterData.Kind.entries.map { it.name to it.title }) { change(data.copy(kind = LetterData.Kind.valueOf(it))) }
+        }
+        item {
+            ChoiceInput("Anrede", data.salutation, listOf("neutral" to "Guten Tag (neutral)", "female" to "Sehr geehrte Frau", "male" to "Sehr geehrter Herr")) {
+                change(data.copy(salutation = it))
+            }
+        }
+        item { CalendarInput("Briefdatum", data.letterDate, true) { change(data.copy(letterDate = it)) } }
+        if (data.kind == LetterData.Kind.PROBATION) {
+            item { CalendarInput("Arbeitsbeginn", data.startDate, true) { change(data.copy(startDate = it)) } }
+            item { CalendarInput("Vereinbartes Probezeitende", data.probationEndDate, true) { change(data.copy(probationEndDate = it)) } }
+            item { CalendarInput("Geplanter / tatsächlicher Zugang", data.receiptDate, true) { change(data.copy(receiptDate = it)) } }
+            item { CalendarInput("Beendigungsdatum", data.endDate, true) { change(data.copy(endDate = it)) } }
+            item {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Switch(data.individualNotice, { change(data.copy(individualNotice = it)) })
+                    Text("Abweichende vertragliche / tarifliche Frist", Modifier.padding(start = 10.dp))
+                }
+            }
+            if (data.individualNotice)
+                item {
+                    OutlinedTextField(data.noticeRule, { change(data.copy(noticeRule = it)) }, label = { Text("Geprüfte Kündigungsregel") }, modifier = Modifier.fillMaxWidth())
+                }
+            item {
+                Text(
+                    "Die gesetzliche Frist beträgt grundsätzlich 14 Tage ab Zugang, längstens während der ersten sechs Monate. Abweichende Fristen, Sonderkündigungsschutz und eine erforderliche Betriebsratsanhörung sind im Einzelfall zu prüfen. Auf Papier eigenhändig unterschreiben; die PDF allein ersetzt die Schriftform nicht.",
+                    style = MaterialTheme.typography.bodySmall,
+                )
+            }
+        } else {
+            item {
+                CalendarInput(if (data.kind == LetterData.Kind.TERMINATION && data.immediate) "Kenntnis vom Kündigungsgrund" else "Vorfall", data.incidentDate, true) {
+                    change(data.copy(incidentDate = it))
+                }
+            }
+            if (data.kind == LetterData.Kind.TERMINATION) {
+                item {
+                    ChoiceInput("Kündigungsart", data.immediate.toString(), listOf("false" to "Ordentlich", "true" to "Fristlos")) {
+                        change(data.copy(immediate = it == "true"))
+                    }
+                }
+                if (!data.immediate) item { CalendarInput("Beendigungsdatum", data.endDate, true) { change(data.copy(endDate = it)) } }
+            }
+            item {
+                OutlinedTextField(data.reason, { change(data.copy(reason = it)) }, label = { Text("Begründung / Sachverhalt") }, minLines = 4, modifier = Modifier.fillMaxWidth())
+            }
+            if (data.kind == LetterData.Kind.WARNING)
+                item {
+                    OutlinedTextField(data.expected, { change(data.copy(expected = it)) }, label = { Text("Beanstandete Pflicht und erwartetes Verhalten") }, minLines = 3, modifier = Modifier.fillMaxWidth())
+                }
+        }
+        item {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Checkbox(data.reviewed, { data = data.copy(reviewed = it) })
+                Text("Inhalt und Fristen fachlich geprüft")
+            }
+        }
+        item {
+            Button(
+                onClick = {
+                    vm.run {
+                        val w = worker ?: error("Mitarbeiter wählen.")
+                        require(vm.can(AccessAction.CREATE, "documents")) { "Keine Berechtigung zum Ablegen in der Personalakte." }
+                        vm.showPdf("${data.fileLabel}-${w["personnelNumber"]}-${data.letterDate}", archiveTo = w.id, category = data.category) {
+                            LetterPdf.render(vm.app, w, vm.company, data)
+                        }
+                        vm.notice = "Im Mitarbeiterprofil gespeichert."
+                    }
+                },
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Text("Schreiben als PDF")
+            }
+        }
+    }
+}
+
+@Composable
+fun CertificateScreen(vm: UGSViewModel, back: () -> Unit) {
+    var worker by remember { mutableStateOf<Entry?>(null) }
+    var data by remember { mutableStateOf(CertificateRequest()) }
+    var confirmed by remember { mutableStateOf(false) }
+    LazyColumn(contentPadding = PaddingValues(20.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+        item { BackRow("Erweitertes Führungszeugnis", back) }
+        item {
+            WorkerLookup(vm, worker) { w ->
+                worker = w
+                data = CertificateRequest.of(w, vm.company)
+                confirmed = false
+            }
+        }
+        val text: List<Pair<String, Pair<String, (String) -> CertificateRequest>>> =
+            listOf(
+                "Firma" to (data.requester to { v: String -> data.copy(requester = v) }),
+                "Firmenanschrift" to (data.requesterAddress to { v: String -> data.copy(requesterAddress = v) }),
+                "Nachname" to (data.lastName to { v: String -> data.copy(lastName = v) }),
+                "Vorname" to (data.firstName to { v: String -> data.copy(firstName = v) }),
+                "Mitarbeiteranschrift" to (data.address to { v: String -> data.copy(address = v) }),
+                "Tätigkeit" to (data.activity to { v: String -> data.copy(activity = v) }),
+                "Auftraggeber / Objekt" to (data.client to { v: String -> data.copy(client = v) }),
+            )
+        items(text) { (label, pair) ->
+            OutlinedTextField(pair.first, { data = pair.second(it) }, label = { Text(label) }, singleLine = true, modifier = Modifier.fillMaxWidth())
+        }
+        item { CalendarInput("Geburtsdatum", data.birthDate, true) { data = data.copy(birthDate = it) } }
+        item { CalendarInput("Ausstellungsdatum", data.date, true) { data = data.copy(date = it) } }
+        item {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Checkbox(confirmed, { confirmed = it })
+                Text("Voraussetzungen für die Anforderung geprüft")
+            }
+            Text("Die Bescheinigung verwendet die hinterlegte Originalvorlage. Angaben vor dem Export prüfen.", style = MaterialTheme.typography.bodySmall)
+        }
+        item {
+            Button(
+                onClick = {
+                    vm.run {
+                        val w = worker ?: error("Bitte einen Mitarbeiter übernehmen.")
+                        val id = w["personnelNumber"].ifBlank { w["bewacherId"] }
+                        vm.showPdf("Anforderung-erweitertes-Fuehrungszeugnis-$id-${data.date}") { CertificatePdf.render(vm.app, data) }
+                    }
+                },
+                enabled = worker != null && confirmed,
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Text("PDF erstellen")
+            }
+        }
+    }
+}
+
+@Composable
+fun TimesheetScreen(vm: UGSViewModel, back: () -> Unit) {
+    var worker by remember { mutableStateOf<Entry?>(null) }
+    var month by remember { mutableStateOf(today.take(7)) }
+    val rows = remember { mutableStateListOf<TimesheetRow>() }
+    var loaded by remember { mutableStateOf("") }
+    LazyColumn(contentPadding = PaddingValues(20.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        item { BackRow("Stundenzettel", back) }
+        item { WorkerLookup(vm, worker) { worker = it; loaded = "" } }
+        item {
+            OutlinedTextField(month, { month = it; loaded = "" }, label = { Text("Monat JJJJ-MM") }, singleLine = true, modifier = Modifier.fillMaxWidth())
+        }
+        item {
+            OutlinedButton(
+                onClick = {
+                    vm.run {
+                        val w = worker ?: error("Mitarbeiter wählen.")
+                        val days = MonthCalendar.days(month)
+                        val times = vm.rows(Kind.TIME).filter { it["workerId"] == w.id }
+                        rows.clear()
+                        rows.addAll(
+                            days.mapIndexed { i, d ->
+                                val t = times.firstOrNull { it["date"] == d.iso }
+                                TimesheetRow(
+                                    i + 1,
+                                    t?.get("startTime").orEmpty(),
+                                    t?.get("endTime").orEmpty(),
+                                    t?.get("breakMinutes")?.ifBlank { "0" } ?: "0",
+                                    notes = t?.get("notes").orEmpty(),
+                                    weekday = d.weekday,
+                                    workFree = d.workFree,
+                                )
+                            }
+                        )
+                        loaded = "${w.id}|$month"
+                    }
+                },
+                enabled = worker != null,
+            ) {
+                Text("Zeiten für Stundenzettel laden")
+            }
+        }
+        items(rows.indices.toList()) { i ->
+            val r = rows[i]
+            Card(Modifier.fillMaxWidth()) {
+                Column(Modifier.padding(10.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Text("Tag ${r.day} · ${r.weekday}${if (r.workFree) " · arbeitsfrei" else ""}", style = MaterialTheme.typography.labelMedium)
+                    Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                        OutlinedTextField(r.start, { rows[i] = r.copy(start = it) }, label = { Text("Beginn") }, singleLine = true, modifier = Modifier.weight(1f))
+                        OutlinedTextField(r.end, { rows[i] = r.copy(end = it) }, label = { Text("Ende") }, singleLine = true, modifier = Modifier.weight(1f))
+                        OutlinedTextField(r.breakMinutes, { rows[i] = r.copy(breakMinutes = it) }, label = { Text("Pause") }, singleLine = true, modifier = Modifier.weight(1f))
+                    }
+                    Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                        Box(Modifier.weight(1f)) { ChoiceInput("Kürzel", r.code, TimesheetRow.codes.map { it to it.ifBlank { "—" } }) { rows[i] = r.copy(code = it) } }
+                        OutlinedTextField(r.notes, { rows[i] = r.copy(notes = it) }, label = { Text("Notizen") }, singleLine = true, modifier = Modifier.weight(2f))
+                    }
+                }
+            }
+        }
+        if (rows.isNotEmpty())
+            item {
+                Button(
+                    onClick = {
+                        vm.run {
+                            val w = worker ?: error("Mitarbeiter wählen.")
+                            require(loaded == "${w.id}|$month") { "Bitte die Zeiten für diesen Monat neu laden." }
+                            vm.showPdf("Stundenzettel-${w["personnelNumber"]}-$month", archiveTo = w.id, category = "Stundenzettel") {
+                                TimesheetPdf.render(vm.app, w, vm.company, month, rows.toList())
+                            }
+                        }
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    Text("Stundenzettel als PDF")
+                }
+            }
+    }
 }
 
 @Composable
@@ -394,7 +628,7 @@ fun ImportScreen(vm: UGSViewModel) {
                 vm.run {
                     rows =
                         withContext(Dispatchers.IO) {
-                            val bytes = ImportService.read(vm.app, uri)
+                            val bytes = ImportService.read(vm.app, uri, FileLimits.IMPORT_BYTES)
                             if (
                                 bytes.size >= 2 &&
                                     bytes[0] == 80.toByte() &&
@@ -431,7 +665,7 @@ fun ImportScreen(vm: UGSViewModel) {
                         )
                     )
                 },
-                enabled = vm.canEdit,
+                enabled = vm.can(AccessAction.CREATE, "import"),
             ) {
                 Text("Datei auswählen")
             }
@@ -568,7 +802,7 @@ fun OcrScreen(vm: UGSViewModel) {
         Text(
             "Die Texterkennung erfolgt auf dem Gerät. Übernimm nur geprüfte Angaben in die Personalakte."
         )
-        Button(onClick = { pick.launch(arrayOf("image/*")) }, enabled = vm.canEdit) {
+        Button(onClick = { pick.launch(arrayOf("image/*")) }, enabled = vm.canCreate(Kind.WORKER)) {
             Icon(Icons.Default.DocumentScanner, null)
             Text(" Foto auswählen")
         }

@@ -6,7 +6,12 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.material3.*
+import androidx.activity.compose.BackHandler
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -112,84 +117,378 @@ fun ReportsScreen(vm: UGSViewModel) {
 
 @Composable
 fun SettingsScreen(vm: UGSViewModel) {
+    var page by rememberSaveable { mutableStateOf("") }
+    if (page.isNotEmpty()) BackHandler { page = "" }
+    when (page) {
+        "company" -> CompanySettings(vm) { page = "" }
+        "lookups" -> LookupSettings(vm) { page = "" }
+        "mail" -> MailSettingsScreen(vm) { page = "" }
+        "voice" -> VoiceSettingsScreen(vm) { page = "" }
+        else ->
+            LazyColumn(
+                contentPadding = PaddingValues(20.dp),
+                verticalArrangement = Arrangement.spacedBy(10.dp),
+            ) {
+                item {
+                    Card(onClick = { page = "company" }, modifier = Modifier.fillMaxWidth()) {
+                        ListItem(
+                            headlineContent = { Text(vm.company["name"] ?: "Firmendaten") },
+                            supportingContent = {
+                                Text(
+                                    listOfNotNull(
+                                            vm.company["city"],
+                                            vm.user?.let { "Angemeldet: ${it.username}" },
+                                        )
+                                        .filter { it.isNotBlank() }
+                                        .joinToString(" · ")
+                                )
+                            },
+                            leadingContent = { Icon(Icons.Default.Business, null) },
+                        )
+                    }
+                }
+                item { SectionHeader("Darstellung") }
+                item {
+                    ChoiceInput(
+                        "Darstellung",
+                        vm.company["theme"] ?: "System",
+                        listOf("System", "Hell", "Dunkel").map { it to it },
+                    ) { v ->
+                        vm.run {
+                            withContext(Dispatchers.IO) { vm.repo.settings(mapOf("theme" to v)) }
+                            vm.refresh()
+                        }
+                    }
+                }
+                item {
+                    ChoiceInput(
+                        "App-Symbol",
+                        vm.company["appIcon"] ?: "Dunkel",
+                        listOf("Dunkel", "Hell").map { it to it },
+                    ) { v ->
+                        vm.run {
+                            withContext(Dispatchers.IO) {
+                                vm.repo.settings(mapOf("appIcon" to v))
+                                switchLauncher(vm, v == "Hell")
+                            }
+                            vm.refresh()
+                        }
+                    }
+                }
+                item { SectionHeader("Kommunikation und Stammdaten") }
+                item {
+                    SettingsRow("E-Mail-Versand und Posteingang", "SMTP, IMAP, Signatur, Ordner", Icons.Default.Email) {
+                        page = "mail"
+                    }
+                }
+                item {
+                    SettingsRow("Sprachassistent „Alas“", if (Voice.enabled(vm)) "Ein" else "Aus", UgsIcons.Mic) {
+                        page = "voice"
+                    }
+                }
+                item {
+                    SettingsRow("Auswahllisten", "${vm.lookups.size} Listen", Icons.Default.List) {
+                        page = "lookups"
+                    }
+                }
+                item { SectionHeader("Konto") }
+                item {
+                    SettingsRow("Eigenes Profil", "Passwort und Profilfoto", Icons.Default.AccountCircle) {
+                        page = "profile"
+                    }
+                }
+                item {
+                    Text(
+                        "UGS Sicherheit Android $APP_VERSION\nNative Kotlin / Jetpack Compose · Android 8 oder neuer\nFunktionsstand wie iPhone/iPad 1.9.0 (Build 36). Lokale Datenbank und Dokumente verschlüsselt.",
+                        Modifier.padding(top = 12.dp),
+                        style = MaterialTheme.typography.bodySmall,
+                    )
+                }
+            }
+    }
+    if (page == "profile") ProfileDialog(vm) { page = "" }
+}
+
+const val APP_VERSION = "1.9.0"
+
+fun switchLauncher(vm: UGSViewModel, light: Boolean) {
+    val manager = vm.app.packageManager
+    val enable = android.content.pm.PackageManager.COMPONENT_ENABLED_STATE_ENABLED
+    val disable = android.content.pm.PackageManager.COMPONENT_ENABLED_STATE_DISABLED
+    val selected = if (light) "LauncherLight" else "LauncherDark"
+    val other = if (light) "LauncherDark" else "LauncherLight"
+    manager.setComponentEnabledSetting(
+        android.content.ComponentName(vm.app, "de.ugs.sicherheit.$selected"),
+        enable,
+        android.content.pm.PackageManager.DONT_KILL_APP,
+    )
+    manager.setComponentEnabledSetting(
+        android.content.ComponentName(vm.app, "de.ugs.sicherheit.$other"),
+        disable,
+        android.content.pm.PackageManager.DONT_KILL_APP,
+    )
+}
+
+@Composable
+fun SettingsRow(
+    title: String,
+    detail: String,
+    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    click: () -> Unit,
+) {
+    Card(onClick = click, modifier = Modifier.fillMaxWidth()) {
+        ListItem(
+            headlineContent = { Text(title) },
+            supportingContent = { if (detail.isNotBlank()) Text(detail) },
+            leadingContent = { Icon(icon, null) },
+            trailingContent = { Icon(Icons.Default.ChevronRight, null) },
+        )
+    }
+}
+
+@Composable
+fun BackRow(title: String, back: () -> Unit) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        IconButton(onClick = back) {
+            Icon(Icons.AutoMirrored.Filled.ArrowBack, "Zurück")
+        }
+        Text(title, style = MaterialTheme.typography.titleLarge)
+    }
+}
+
+@Composable
+fun CompanySettings(vm: UGSViewModel, back: () -> Unit) {
     val values =
         remember(vm.company) { mutableStateMapOf<String, String>().apply { putAll(vm.company) } }
-    var password by remember { mutableStateOf(false) }
+    val editable = vm.can(AccessAction.EDIT, "settings")
     LazyColumn(
         contentPadding = PaddingValues(20.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        item { Text("Firma & Erscheinungsbild", style = MaterialTheme.typography.headlineSmall) }
+        item { BackRow("Firmendaten", back) }
         items(companyFields) { f ->
-            FieldInput(f, values[f.key].orEmpty(), vm) { values[f.key] = it }
+            FieldInput(f, values[f.key].orEmpty(), vm) { if (editable) values[f.key] = it }
         }
-        item {
-            ChoiceInput(
-                "Darstellung",
-                values["theme"] ?: "System",
-                listOf("System", "Hell", "Dunkel").map { it to it },
-            ) {
-                values["theme"] = it
-            }
-        }
-        item {
-            ChoiceInput(
-                "App-Symbol",
-                values["appIcon"] ?: "Dunkel",
-                listOf("Dunkel", "Hell").map { it to it },
-            ) {
-                values["appIcon"] = it
-            }
-        }
-        item {
-            Button(
-                onClick = {
-                    vm.run {
-                        for (f in companyFields.filter { it.required }) require(
-                            !values[f.key].isNullOrBlank()
-                        ) {
-                            "${f.label} fehlt."
-                        }
-                        withContext(Dispatchers.IO) {
-                            vm.repo.settings(values.toMap())
-                            val manager = vm.app.packageManager
-                            val light = values["appIcon"] == "Hell"
-                            val enable =
-                                android.content.pm.PackageManager.COMPONENT_ENABLED_STATE_ENABLED
-                            val disable =
-                                android.content.pm.PackageManager.COMPONENT_ENABLED_STATE_DISABLED
-                            val selected = if (light) "LauncherLight" else "LauncherDark"
-                            val other = if (light) "LauncherDark" else "LauncherLight"
-                            manager.setComponentEnabledSetting(
-                                android.content.ComponentName(
-                                    vm.app,
-                                    "de.ugs.sicherheit.$selected",
-                                ),
-                                enable,
-                                android.content.pm.PackageManager.DONT_KILL_APP,
-                            )
-                            manager.setComponentEnabledSetting(
-                                android.content.ComponentName(vm.app, "de.ugs.sicherheit.$other"),
-                                disable,
-                                android.content.pm.PackageManager.DONT_KILL_APP,
-                            )
-                        }
-                        vm.refresh()
-                        vm.notice = "Einstellungen gespeichert."
-                    }
-                }
-            ) {
-                Text("Einstellungen speichern")
-            }
-        }
-        item { OutlinedButton(onClick = { password = true }) { Text("Eigenes Passwort ändern") } }
         item {
             Text(
-                "UGS Sicherheit Android 1.0.0\nNative Kotlin / Jetpack Compose · Android 8 oder neuer\nLokale Datenbank und Dokumente verschlüsselt. Kein automatischer Abgleich mit Mac oder iPhone.",
+                "Diese Angaben erscheinen in Verträgen, PDFs und E-Mails.",
+                style = MaterialTheme.typography.bodySmall,
+            )
+        }
+        if (editable)
+            item {
+                Button(
+                    onClick = {
+                        vm.run {
+                            for (f in companyFields.filter { it.required }) require(
+                                !values[f.key].isNullOrBlank()
+                            ) {
+                                "${f.label} fehlt."
+                            }
+                            withContext(Dispatchers.IO) {
+                                vm.repo.settings(values.filterKeys { k -> companyFields.any { it.key == k } })
+                            }
+                            vm.refresh()
+                            vm.notice = "Firmendaten gespeichert."
+                        }
+                    }
+                ) {
+                    Text("Sichern")
+                }
+            }
+    }
+}
+
+@Composable
+fun LookupSettings(vm: UGSViewModel, back: () -> Unit) {
+    var group by rememberSaveable { mutableStateOf<String?>(null) }
+    var newList by remember { mutableStateOf(false) }
+    val editable = vm.can(AccessAction.EDIT, "settings")
+    val current = group
+    if (current != null) {
+        BackHandler { group = null }
+        LookupGroupEditor(vm, current) { group = null }
+        return
+    }
+    LazyColumn(
+        contentPadding = PaddingValues(20.dp),
+        verticalArrangement = Arrangement.spacedBy(10.dp),
+    ) {
+        item { BackRow("Auswahllisten", back) }
+        items(vm.lookups.keys.sortedBy { Lookups.title(it).lowercase() }) { g ->
+            SettingsRow(Lookups.title(g), "${vm.lookups[g].orEmpty().size} Einträge", Icons.Default.List) {
+                group = g
+            }
+        }
+        item {
+            Text(
+                "Diese Listen erscheinen als Auswahl in Formularen der App. Freitext bleibt möglich.",
+                style = MaterialTheme.typography.bodySmall,
+            )
+        }
+        if (editable) item { OutlinedButton(onClick = { newList = true }) { Text("Neue Liste") } }
+    }
+    if (newList)
+        FormDialog(
+            "Neue Liste",
+            listOf(field("name", "Name, z. B. Fahrzeuge", true)),
+            emptyMap(),
+            vm,
+            { newList = false },
+        ) { v ->
+            val key =
+                v["name"].orEmpty().trim().lowercase().replace(Regex("[^a-z0-9äöüß]+"), "_")
+                    .replace("ä", "ae").replace("ö", "oe").replace("ü", "ue").replace("ß", "ss")
+                    .trim('_')
+            if (key.isNotEmpty()) group = key
+            newList = false
+        }
+}
+
+@Composable
+fun LookupGroupEditor(vm: UGSViewModel, group: String, back: () -> Unit) {
+    val values = remember(group, vm.lookups) { vm.lookups[group].orEmpty().toMutableStateList() }
+    var input by remember { mutableStateOf("") }
+    var rename by remember { mutableStateOf<Int?>(null) }
+    val editable = vm.can(AccessAction.EDIT, "settings")
+    fun persist() {
+        val list = values.toList()
+        vm.run {
+            withContext(Dispatchers.IO) { vm.repo.saveLookups(vm.lookups + (group to list)) }
+            vm.refresh()
+        }
+    }
+    LazyColumn(
+        contentPadding = PaddingValues(20.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        item { BackRow(Lookups.title(group), back) }
+        if (editable)
+            item {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    OutlinedTextField(
+                        input,
+                        { input = it },
+                        label = { Text("Neuer Eintrag") },
+                        singleLine = true,
+                        modifier = Modifier.weight(1f),
+                    )
+                    IconButton(
+                        onClick = {
+                            val v = input.trim()
+                            if (v.isNotEmpty() && v !in values) {
+                                values += v
+                                input = ""
+                                persist()
+                            }
+                        }
+                    ) {
+                        Icon(Icons.Default.AddCircle, "Eintrag hinzufügen")
+                    }
+                }
+            }
+        item { Text("${values.size} ${if (values.size == 1) "Eintrag" else "Einträge"}", style = MaterialTheme.typography.labelMedium) }
+        itemsIndexed(values.toList()) { i, v ->
+            Card(Modifier.fillMaxWidth()) {
+                Row(Modifier.padding(start = 16.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Text(v, Modifier.weight(1f).clickable(enabled = editable) { rename = i })
+                    if (editable) {
+                        IconButton(
+                            onClick = {
+                                if (i > 0) {
+                                    values.add(i - 1, values.removeAt(i))
+                                    persist()
+                                }
+                            },
+                            enabled = i > 0,
+                        ) {
+                            Icon(Icons.Default.KeyboardArrowUp, "Nach oben")
+                        }
+                        IconButton(
+                            onClick = {
+                                values.removeAt(i)
+                                persist()
+                            }
+                        ) {
+                            Icon(Icons.Default.Delete, "Löschen")
+                        }
+                    }
+                }
+            }
+        }
+        item {
+            Text(
+                "Antippen zum Umbenennen. Bereits gespeicherte Datensätze behalten ihren Wert.",
                 style = MaterialTheme.typography.bodySmall,
             )
         }
     }
+    rename?.let { i ->
+        FormDialog(
+            "Eintrag umbenennen",
+            listOf(field("value", "Wert", true)),
+            mapOf("value" to values.getOrElse(i) { "" }),
+            vm,
+            { rename = null },
+        ) { v ->
+            val text = v["value"].orEmpty().trim()
+            if (text.isNotEmpty() && i in values.indices) {
+                values[i] = text
+                persist()
+            }
+            rename = null
+        }
+    }
+}
+
+@Composable
+fun ProfileDialog(vm: UGSViewModel, dismiss: () -> Unit) {
+    var password by remember { mutableStateOf(false) }
+    val pickPhoto =
+        rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+            if (uri != null)
+                vm.run {
+                    val png = withContext(Dispatchers.IO) { Photos.thumbnail(vm.app, uri) }
+                    withContext(Dispatchers.IO) { vm.repo.setPhoto("user-${vm.user?.id}", png) }
+                    Photos.invalidate()
+                }
+        }
+    AlertDialog(
+        onDismissRequest = dismiss,
+        title = { Text(vm.user?.username.orEmpty()) },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    UserAvatar(vm, 64.dp)
+                    Column(Modifier.padding(start = 12.dp)) {
+                        Text(vm.user?.role.orEmpty(), fontWeight = androidx.compose.ui.text.font.FontWeight.SemiBold)
+                        Text(
+                            "${vm.user?.let { AccessControl.permissionSet(it).size } ?: 0} Bereiche freigegeben",
+                            style = MaterialTheme.typography.bodySmall,
+                        )
+                    }
+                }
+                OutlinedButton(onClick = { pickPhoto.launch(arrayOf("image/*")) }, modifier = Modifier.fillMaxWidth()) {
+                    Text("Profilfoto wählen")
+                }
+                OutlinedButton(
+                    onClick = {
+                        vm.run {
+                            withContext(Dispatchers.IO) { vm.repo.setPhoto("user-${vm.user?.id}", null) }
+                            Photos.invalidate()
+                        }
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    Text("Profilfoto entfernen")
+                }
+                OutlinedButton(onClick = { password = true }, modifier = Modifier.fillMaxWidth()) {
+                    Text("Eigenes Passwort ändern")
+                }
+            }
+        },
+        confirmButton = { TextButton(onClick = dismiss) { Text("Schließen") } },
+    )
     if (password)
         FormDialog(
             "Passwort ändern",
@@ -217,6 +516,7 @@ fun SettingsScreen(vm: UGSViewModel) {
 fun UsersScreen(vm: UGSViewModel) {
     var users by remember { mutableStateOf(emptyList<Account>()) }
     var add by remember { mutableStateOf(false) }
+    var editing by remember { mutableStateOf<Account?>(null) }
     var remove by remember { mutableStateOf<Account?>(null) }
     LaunchedEffect(Unit) { vm.run { users = withContext(Dispatchers.IO) { vm.repo.users() } } }
     LazyColumn(
@@ -226,16 +526,16 @@ fun UsersScreen(vm: UGSViewModel) {
         item {
             Text("Zugriff verwalten", style = MaterialTheme.typography.headlineSmall)
             Text(
-                "Administrator: alle Bereiche. Personal: Fachdaten bearbeiten. Lesen: Fachdaten ansehen und exportieren."
+                "Administrator: alle Bereiche. Personal, Planung und Lesen: feste Bereiche. Benutzerdefiniert: Bereiche und Aktionen (Anlegen, Bearbeiten, Löschen, Exportieren) einzeln freigeben."
             )
         }
         item { Button(onClick = { add = true }) { Text("Benutzer anlegen") } }
         items(users) { u ->
-            Card(Modifier.fillMaxWidth()) {
+            Card(onClick = { editing = u }, modifier = Modifier.fillMaxWidth()) {
                 Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
                     Column(Modifier.weight(1f)) {
                         Text(u.username, style = MaterialTheme.typography.titleMedium)
-                        Text(u.role)
+                        Text(u.role + if (u.active) " · Aktiv" else " · Deaktiviert")
                     }
                     if (u.id != vm.user?.id)
                         TextButton(onClick = { remove = u }) { Text("Entfernen") }
@@ -243,29 +543,11 @@ fun UsersScreen(vm: UGSViewModel) {
             }
         }
     }
-    if (add)
-        FormDialog(
-            "Benutzer anlegen",
-            listOf(
-                field("username", "Benutzername", true),
-                Field("password", "Passwort (mindestens 12 Zeichen)", Input.PASSWORD, true),
-                choice("role", "Rolle", "Personal", "Lesen", "Administrator"),
-            ),
-            emptyMap(),
-            vm,
-            { add = false },
-        ) { v ->
-            vm.run {
-                withContext(Dispatchers.IO) {
-                    vm.repo.addUser(
-                        v["username"].orEmpty(),
-                        v["password"].orEmpty(),
-                        v["role"].orEmpty(),
-                    )
-                }
-                users = withContext(Dispatchers.IO) { vm.repo.users() }
-                add = false
-            }
+    if (add || editing != null)
+        UserEditor(vm, editing, { add = false; editing = null }) {
+            users = withContext(Dispatchers.IO) { vm.repo.users() }
+            add = false
+            editing = null
         }
     remove?.let { u ->
         AlertDialog(
@@ -287,6 +569,134 @@ fun UsersScreen(vm: UGSViewModel) {
             },
             dismissButton = { TextButton(onClick = { remove = null }) { Text("Abbrechen") } },
         )
+    }
+}
+
+@Composable
+fun UserEditor(
+    vm: UGSViewModel,
+    user: Account?,
+    dismiss: () -> Unit,
+    saved: suspend () -> Unit,
+) {
+    var username by remember { mutableStateOf(user?.username.orEmpty()) }
+    var role by remember { mutableStateOf(user?.role ?: "Lesen") }
+    var active by remember { mutableStateOf(user?.active ?: true) }
+    var password by remember { mutableStateOf("") }
+    val grants = remember {
+        (user?.let { AccessControl.parse(it.permissions) } ?: emptySet()).toMutableStateList()
+    }
+    androidx.compose.ui.window.Dialog(
+        onDismissRequest = dismiss,
+        properties = androidx.compose.ui.window.DialogProperties(usePlatformDefaultWidth = false),
+    ) {
+        Surface(
+            Modifier.fillMaxWidth().widthIn(max = 720.dp).fillMaxHeight(.94f),
+            shape = MaterialTheme.shapes.extraLarge,
+        ) {
+            Column {
+                Text(
+                    if (user == null) "Benutzer anlegen" else "Benutzerkonto",
+                    Modifier.padding(20.dp),
+                    style = MaterialTheme.typography.titleLarge,
+                )
+                LazyColumn(
+                    Modifier.weight(1f),
+                    contentPadding = PaddingValues(horizontal = 20.dp),
+                    verticalArrangement = Arrangement.spacedBy(10.dp),
+                ) {
+                    item {
+                        OutlinedTextField(
+                            username,
+                            { if (user == null) username = it },
+                            label = { Text("Benutzername") },
+                            readOnly = user != null,
+                            singleLine = true,
+                            modifier = Modifier.fillMaxWidth(),
+                        )
+                    }
+                    item { ChoiceInput("Rolle", role, AccessControl.roles.map { it to it }) { role = it } }
+                    item {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Switch(active, { active = it })
+                            Text("Aktiv", Modifier.padding(start = 12.dp))
+                        }
+                    }
+                    item {
+                        PasswordInput(
+                            password,
+                            { password = it },
+                            if (user == null) "Passwort (mind. 12 Zeichen)"
+                            else "Neues Passwort (leer = unverändert)",
+                        )
+                    }
+                    if (role == "Benutzerdefiniert")
+                        items(AccessControl.all.filter { it != "users" }) { key ->
+                            Card(Modifier.fillMaxWidth()) {
+                                Column(Modifier.padding(12.dp)) {
+                                    Row(verticalAlignment = Alignment.CenterVertically) {
+                                        Checkbox(
+                                            key in grants,
+                                            { checked ->
+                                                if (checked) {
+                                                    grants.add(key)
+                                                } else {
+                                                    grants.removeAll { g -> g == key || g.startsWith("$key.") }
+                                                }
+                                            },
+                                        )
+                                        Text(AccessControl.labels[key] ?: key, fontWeight = androidx.compose.ui.text.font.FontWeight.SemiBold)
+                                    }
+                                    if (key in grants)
+                                        Row {
+                                            for (a in AccessAction.entries.filter { it != AccessAction.VIEW }) {
+                                                val k = "$key.${a.name.lowercase()}"
+                                                FilterChip(
+                                                    k in grants,
+                                                    {
+                                                        if (k in grants) {
+                                                            grants.remove(k)
+                                                        } else {
+                                                            grants.add(k)
+                                                        }
+                                                    },
+                                                    label = { Text(a.title) },
+                                                    modifier = Modifier.padding(end = 4.dp),
+                                                )
+                                            }
+                                        }
+                                }
+                            }
+                        }
+                    else
+                        item {
+                            Text(
+                                "Bereiche: " +
+                                    AccessControl.rolePresets[role].orEmpty().mapNotNull { AccessControl.labels[it] }.sorted().joinToString(", "),
+                                style = MaterialTheme.typography.bodySmall,
+                            )
+                        }
+                }
+                Row(Modifier.fillMaxWidth().padding(16.dp), horizontalArrangement = Arrangement.End) {
+                    TextButton(onClick = dismiss) { Text("Abbrechen") }
+                    Button(
+                        onClick = {
+                            vm.run {
+                                withContext(Dispatchers.IO) {
+                                    if (user == null)
+                                        vm.repo.addUser(username, password, role, grants.toSet())
+                                    else vm.repo.updateUser(user.id, role, grants.toSet(), active, password)
+                                }
+                                saved()
+                            }
+                        },
+                        enabled = !vm.busy,
+                    ) {
+                        Text("Speichern")
+                    }
+                }
+            }
+        }
     }
 }
 

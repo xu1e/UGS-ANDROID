@@ -82,6 +82,57 @@ fun ChoiceInput(
     }
 }
 
+/** Anzeigetext eines gespeicherten Auswahlwerts. */
+fun optionLabel(f: Field, value: String): String =
+    if (f.options == statusKinds.keys.toList()) statusKinds[value] ?: value else value
+
+/** Freitext mit Vorschlägen aus einer Auswahlliste; importierte Werte bleiben erhalten. */
+@Composable
+fun LookupInput(label: String, value: String, options: List<String>, change: (String) -> Unit) {
+    var open by remember { mutableStateOf(false) }
+    Box {
+        OutlinedTextField(
+            value,
+            change,
+            label = { Text(label) },
+            singleLine = true,
+            modifier = Modifier.fillMaxWidth(),
+            trailingIcon = {
+                if (options.isNotEmpty())
+                    IconButton(onClick = { open = true }) {
+                        Icon(Icons.Default.ArrowDropDown, "$label auswählen")
+                    }
+            },
+        )
+        DropdownMenu(
+            expanded = open,
+            onDismissRequest = { open = false },
+            modifier = Modifier.heightIn(max = 340.dp),
+        ) {
+            options.forEach { option ->
+                DropdownMenuItem(
+                    text = { Text(option) },
+                    leadingIcon = { if (option == value) Icon(Icons.Default.Check, null) },
+                    onClick = {
+                        change(option)
+                        open = false
+                    },
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun SectionHeader(title: String) {
+    Text(
+        title,
+        Modifier.padding(top = 10.dp),
+        style = MaterialTheme.typography.titleSmall,
+        color = MaterialTheme.colorScheme.primary,
+    )
+}
+
 @Composable
 fun CalendarInput(
     label: String,
@@ -154,7 +205,8 @@ fun FieldInput(f: Field, value: String, vm: UGSViewModel, change: (String) -> Un
                 Checkbox(value == "true", { change(it.toString()) })
                 Text(f.label, Modifier.weight(1f), style = MaterialTheme.typography.bodyMedium)
             }
-        Input.CHOICE -> ChoiceInput(label, value, f.options.map { it to it }, change)
+        Input.CHOICE -> ChoiceInput(label, value, f.options.map { it to optionLabel(f, it) }, change)
+        Input.LOOKUP -> LookupInput(label, value, vm.options(f.group), change)
         Input.WORKER,
         Input.SITE ->
             ChoiceInput(
@@ -227,6 +279,8 @@ fun FormDialog(
     initial: Map<String, String>,
     vm: UGSViewModel,
     dismiss: () -> Unit,
+    extra: (@Composable (MutableMap<String, String>) -> Unit)? = null,
+    saveLabel: String = "Speichern",
     onSave: (Map<String, String>) -> Unit,
 ) {
     val values = remember {
@@ -257,8 +311,12 @@ fun FormDialog(
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
                     items(fields, key = { it.key }) { f ->
-                        FieldInput(f, values[f.key].orEmpty(), vm) { values[f.key] = it }
+                        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                            if (f.section.isNotEmpty()) SectionHeader(f.section)
+                            FieldInput(f, values[f.key].orEmpty(), vm) { values[f.key] = it }
+                        }
                     }
+                    extra?.let { item { it(values) } }
                     item { Spacer(Modifier.height(8.dp)) }
                 }
                 Row(
@@ -267,7 +325,7 @@ fun FormDialog(
                 ) {
                     TextButton(onClick = dismiss) { Text("Abbrechen") }
                     Button(onClick = { onSave(values.toMap()) }, enabled = !vm.busy) {
-                        Text("Speichern")
+                        Text(saveLabel)
                     }
                 }
             }
@@ -284,17 +342,14 @@ fun RecordsScreen(vm: UGSViewModel, kind: Kind) {
     var month by remember { mutableStateOf(YearMonth.now()) }
     var monthFilter by
         remember(kind) { mutableStateOf(kind in listOf(Kind.SHIFT, Kind.TIME, Kind.PAYROLL)) }
+    val page = AccessControl.page(kind)
     var pendingDoc by remember { mutableStateOf<Map<String, String>?>(null) }
     val pick =
         rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
             if (uri != null)
                 vm.run {
                     val values = pendingDoc ?: return@run
-                    withContext(Dispatchers.IO) {
-                        val mime = vm.app.contentResolver.getType(uri) ?: "application/pdf"
-                        val data = ImportService.read(vm.app, uri)
-                        vm.repo.attach(Entry(kind = Kind.DOCUMENT, fields = values), data, mime)
-                    }
+                    withContext(Dispatchers.IO) { ImportService.attach(vm, uri, values) }
                     vm.refresh()
                     pendingDoc = null
                     edit = null
@@ -326,7 +381,7 @@ fun RecordsScreen(vm: UGSViewModel, kind: Kind) {
                 modifier = Modifier.weight(1f),
                 singleLine = true,
             )
-            if (vm.canEdit)
+            if (vm.canCreate(kind))
                 IconButton(
                     onClick = {
                         edit =
@@ -343,19 +398,20 @@ fun RecordsScreen(vm: UGSViewModel, kind: Kind) {
                 ) {
                     Icon(Icons.Default.Add, "Neu")
                 }
-            IconButton(
-                onClick = {
-                    vm.run {
-                        vm.showPdf(kind.title) {
-                            vm.pdf.report(kind.title, rows, vm.entries, vm.company)
+            if (vm.canExport(page))
+                IconButton(
+                    onClick = {
+                        vm.run {
+                            vm.showPdf(kind.title) {
+                                vm.pdf.report(kind.title, rows, vm.entries, vm.company)
+                            }
                         }
                     }
+                ) {
+                    Icon(Icons.Default.PictureAsPdf, "Liste als PDF")
                 }
-            ) {
-                Icon(Icons.Default.PictureAsPdf, "Liste als PDF")
-            }
         }
-        if (kind in listOf(Kind.SHIFT, Kind.TIME, Kind.PAYROLL, Kind.ABSENCE)) {
+        if (kind in listOf(Kind.SHIFT, Kind.TIME, Kind.PAYROLL, Kind.ABSENCE, Kind.STATUS, Kind.EXPENSE)) {
             Row(
                 Modifier.fillMaxWidth().padding(horizontal = 16.dp),
                 verticalAlignment = Alignment.CenterVertically,
@@ -441,6 +497,8 @@ fun RecordsScreen(vm: UGSViewModel, kind: Kind) {
                                     Input.DATE -> Rules.german(raw)
                                     Input.WORKER,
                                     Input.SITE -> vm.entries.find { it.id == raw }?.title.orEmpty()
+                                    Input.CHECK -> if (raw == "true") "Ja" else "Nein"
+                                    Input.CHOICE -> optionLabel(f, raw)
                                     else -> raw
                                 }
                             )
@@ -453,22 +511,13 @@ fun RecordsScreen(vm: UGSViewModel, kind: Kind) {
                     if (kind == Kind.DOCUMENT)
                         TextButton(
                             onClick = {
-                                vm.run {
-                                    val bytes = withContext(Dispatchers.IO) { vm.repo.document(e) }
-                                    if (e["mime"] == "application/pdf")
-                                        vm.showPdf(e.title) { bytes }
-                                    else {
-                                        val ext = if (e["mime"] == "image/png") "png" else "jpg"
-                                        val file = vm.pdf.export(bytes, "${e.title}.$ext")
-                                        vm.pdf.share(file, e["mime"])
-                                    }
-                                    detail = null
-                                }
+                                openDocument(vm, e)
+                                detail = null
                             }
                         ) {
                             Text("Öffnen / Teilen")
                         }
-                    if (vm.canEdit)
+                    if (vm.canEdit(kind))
                         TextButton(
                             onClick = {
                                 detail = null
@@ -481,7 +530,7 @@ fun RecordsScreen(vm: UGSViewModel, kind: Kind) {
             },
             dismissButton = {
                 Row {
-                    if (vm.canEdit)
+                    if (vm.canDelete(kind))
                         TextButton(
                             onClick = {
                                 delete = e
@@ -625,7 +674,7 @@ fun ContractScreen(vm: UGSViewModel, mode: String) {
         }
         item {
             Row {
-                if (vm.canEdit)
+                if (vm.can(AccessAction.CREATE, "contract"))
                     TextButton(
                         onClick = {
                             vm.save(
