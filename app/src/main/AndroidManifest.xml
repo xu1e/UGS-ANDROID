@@ -1,5 +1,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
-    <uses-permission android:name="android.permission.INTERNET" tools:node="remove"/>
+    <!-- E-Mail-Versand (SMTP) und Posteingang (IMAP), nur verschlüsselt über TLS. -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- Mitteilungen bei neuen E-Mails (nur wenn in den Posteingang-Einstellungen eingeschaltet). -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <!-- Sprachassistent „Alas“: nur bei geöffneter, entsperrter App. -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <queries>
+        <intent><action android:name="android.speech.RecognitionService"/></intent>
+        <intent><action android:name="android.intent.action.TTS_SERVICE"/></intent>
+    </queries>
     <application android:name=".UGSApplication" android:label="UGS Sicherheit" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher" android:allowBackup="false" android:fullBackupContent="false" android:dataExtractionRules="@xml/data_extraction_rules" android:usesCleartextTraffic="false" android:supportsRtl="true" android:theme="@style/AppTheme">
         <activity android:name=".MainActivity" android:exported="true" android:windowSoftInputMode="adjustResize">
 

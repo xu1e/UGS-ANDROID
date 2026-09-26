@@ -388,6 +388,18 @@ object Rules {
         }
         if (e.kind == Kind.ABSENCE || e.kind == Kind.STATUS && e["endDate"].isNotBlank())
             require(date(e["endDate"]) >= date(e["date"])) { "Ende liegt vor Beginn." }
+        if (e.kind == Kind.DUTY_PLAN) {
+            MonthCalendar.month(e["month"])
+            require(all.none { it.kind == Kind.DUTY_PLAN && !it.deleted && it.id != e.id && it["siteId"] == e["siteId"] && it["month"] == e["month"] }) {
+                "Für dieses Objekt und diesen Monat gibt es bereits einen Dienstplan."
+            }
+        }
+        if (e.kind == Kind.VACATION_ACCOUNT) {
+            require(e["year"].toIntOrNull() in 2000..2100) { "Jahr ungültig." }
+            require(all.none { it.kind == Kind.VACATION_ACCOUNT && !it.deleted && it.id != e.id && it["workerId"] == e["workerId"] && it["year"] == e["year"] }) {
+                "Für diesen Mitarbeiter gibt es bereits ein Urlaubskonto in diesem Jahr."
+            }
+        }
         if (e.kind == Kind.EXPENSE) {
             require(parseAmount(e["amount"]) != null) { "Bitte einen gültigen Betrag eingeben, z. B. 49,90 oder 1.234,56." }
             require(e["category"].length <= 60) { "Die Kategorie ist zu lang (höchstens 60 Zeichen)." }

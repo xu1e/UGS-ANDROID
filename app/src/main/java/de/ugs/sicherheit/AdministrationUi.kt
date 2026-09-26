@@ -23,56 +23,95 @@ import kotlinx.coroutines.withContext
 
 @Composable
 fun VacationScreen(vm: UGSViewModel) {
-    var year by remember { mutableIntStateOf(LocalDate.now().year) }
+    var year by rememberSaveable { mutableIntStateOf(LocalDate.now().year) }
+    var editor by remember { mutableStateOf<VacationSummary?>(null) }
+    var carry by remember { mutableStateOf(false) }
+    val summaries = vm.rows(Kind.WORKER).map { VacationSummary.build(it, year, vm.entries) }
+    val editable = vm.can(AccessAction.EDIT, "absences")
     LazyColumn(
         contentPadding = PaddingValues(20.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         item {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                TextButton(onClick = { year-- }) { Text("‹") }
-                Text(
-                    "Urlaubskonto $year",
-                    Modifier.weight(1f),
-                    style = MaterialTheme.typography.titleLarge,
-                )
-                TextButton(onClick = { year++ }) { Text("›") }
+                TextButton(onClick = { if (year > 2000) year-- }) { Text("‹") }
+                Text("Urlaubskonto $year", Modifier.weight(1f), style = MaterialTheme.typography.titleLarge)
+                TextButton(onClick = { if (year < 2100) year++ }) { Text("›") }
             }
         }
         item {
             Text(
-                "Planungsübersicht: genehmigter Urlaub, Montag–Freitag. Feiertage, abweichende Arbeitswochen, Teiljahre und Überträge sind hier nicht automatisch berücksichtigt.",
+                "Genommen: genehmigter Jahresurlaub Montag–Freitag im Jahr. Beantragt: noch nicht genehmigter Urlaub. Krankheit, Sonderurlaub usw. zählen nicht gegen den Anspruch. Feiertage und abweichende Arbeitswochen bitte über die Korrektur berücksichtigen.",
                 style = MaterialTheme.typography.bodySmall,
             )
         }
-        items(vm.rows(Kind.WORKER)) { w ->
-            val from = LocalDate.of(year, 1, 1)
-            val to = LocalDate.of(year, 12, 31)
-            val days = mutableSetOf<LocalDate>()
-            vm.rows(Kind.ABSENCE)
-                .filter {
-                    it["workerId"] == w.id && it["type"] == "Urlaub" && it["status"] == "Genehmigt"
-                }
-                .forEach { e ->
-                    val a = maxOf(Rules.date(e["date"]), from)
-                    val b = minOf(Rules.date(e["endDate"]), to)
-                    if (a <= b)
-                        generateSequence(a) { it.plusDays(1) }
-                            .takeWhile { it <= b }
-                            .filter { it.dayOfWeek.value <= 5 }
-                            .forEach { days += it }
-                }
-            val allowance = w["vacationDays"].toIntOrNull() ?: 0
-            Card(Modifier.fillMaxWidth()) {
+        if (editable) item { OutlinedButton(onClick = { carry = true }) { Text("Resturlaub aus Vorjahr übernehmen") } }
+        items(summaries, key = { it.worker.id }) { v ->
+            Card(onClick = { editor = v }, modifier = Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(16.dp)) {
-                    Text(w.title, style = MaterialTheme.typography.titleMedium)
+                    Text(v.worker.title, style = MaterialTheme.typography.titleMedium)
+                    Text("Rest: ${decimal(v.remaining, 1)} · Anspruch: ${decimal(v.total, 1)} · Genommen: ${v.taken}")
                     Text(
-                        "Anspruch laut Personalakte: $allowance Tage\nGenehmigte Werktage: ${days.size}\nRechnerische Differenz: ${allowance-days.size} Tage"
+                        "Beantragt: ${v.requested} Tage · Sonstige Abwesenheit: ${v.other} Tage${if (v.account == null) " · Anspruch aus Personalakte" else ""}",
+                        style = MaterialTheme.typography.bodySmall,
                     )
                 }
             }
         }
     }
+    editor?.let { v ->
+        FormDialog(
+            "${v.worker.title} · $year",
+            listOf(num("entitlement", "Jahresanspruch (Tage)"), num("carryOver", "Übertrag"), field("adjustment", "Korrektur (auch negativ)"), longText("notes", "Notizen")),
+            mapOf(
+                "entitlement" to decimal(v.entitlement, 1),
+                "carryOver" to decimal(v.carryOver, 1),
+                "adjustment" to decimal(v.adjustment, 1),
+                "notes" to v.account?.get("notes").orEmpty(),
+            ),
+            vm,
+            { editor = null },
+        ) { values ->
+            if (!editable) editor = null
+            else {
+                val base = v.account ?: Entry(kind = Kind.VACATION_ACCOUNT, fields = mapOf("workerId" to v.worker.id, "year" to "$year"))
+                vm.save(base.copy(fields = base.fields + values + ("title" to "Urlaubskonto ${v.worker.title} $year"))) { editor = null }
+            }
+        }
+    }
+    if (carry)
+        AlertDialog(
+            onDismissRequest = { carry = false },
+            title = { Text("Resturlaub übernehmen?") },
+            text = { Text("Der Rest aus ${year - 1} wird als Übertrag für $year eingetragen. Bestehende Überträge werden aktualisiert.") },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        vm.run {
+                            val batch =
+                                vm.rows(Kind.WORKER).map { w ->
+                                    val prev = VacationSummary.build(w, year - 1, vm.entries)
+                                    val cur = VacationSummary.build(w, year, vm.entries)
+                                    val base =
+                                        cur.account
+                                            ?: Entry(
+                                                kind = Kind.VACATION_ACCOUNT,
+                                                fields = mapOf("workerId" to w.id, "year" to "$year", "entitlement" to decimal(cur.entitlement, 1), "title" to "Urlaubskonto ${w.title} $year"),
+                                            )
+                                    base.copy(fields = base.fields + ("carryOver" to decimal(maxOf(0.0, prev.remaining), 1)))
+                                }
+                            withContext(Dispatchers.IO) { batch.forEach { vm.repo.save(it) } }
+                            vm.refresh()
+                            carry = false
+                            vm.notice = "Resturlaub für ${batch.size} Mitarbeiter übernommen."
+                        }
+                    }
+                ) {
+                    Text("Übernehmen")
+                }
+            },
+            dismissButton = { TextButton(onClick = { carry = false }) { Text("Abbrechen") } },
+        )
 }
 
 @Composable

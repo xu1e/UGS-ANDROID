@@ -811,6 +811,31 @@ class Repository(private val context: Context) {
         }
     }
 
+    /**
+     * Versandverlauf: wird vor jedem Versand reserviert („nicht bestätigt“) und danach
+     * auf gesendet/fehlgeschlagen gesetzt. Die Rohnachricht mit Anhängen bleibt verschlüsselt.
+     */
+    @Synchronized
+    fun recordMail(e: Entry, raw: ByteArray? = null): Entry {
+        authorize()
+        require(e.kind == Kind.SENT_MAIL)
+        val all = records(true)
+        var fields = e.fields
+        if (raw != null) fields = fields + ("blob" to putBlob(raw.inputStream(), (FileLimits.MAIL_BYTES * 2L)).first)
+        val saved = store(e.copy(fields = fields), all)
+        if (e.revision == 0) audit("E-Mail: ${e["status"]} an ${e["recipient"]} · ${e["subject"]}")
+        else audit("E-Mail-Status: ${e["status"]} · ${e["subject"]}")
+        return saved
+    }
+
+    /** Farben und Blockierregeln des Posteingangs (für alle Benutzer gemeinsam). */
+    @Synchronized
+    fun inboxMeta(key: String, value: String) {
+        authorize(AccessAction.EDIT, "inbox")
+        require(key.matches(Regex("[a-zA-Z0-9_.:-]{1,120}")))
+        db.execSQL("INSERT OR REPLACE INTO settings VALUES(?,?)", arrayOf("inbox.meta.$key", value))
+    }
+
     @Synchronized
     fun exported(label: String) {
         authorize()

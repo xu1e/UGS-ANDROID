@@ -95,6 +95,10 @@ class UGSViewModel(val app: UGSApplication) : ViewModel() {
     var navigation by mutableStateOf<String?>(null)
     /** Übergabe eines Anhangs aus dem Posteingang an „Vertrag stempeln“. */
     var stampHandoff by mutableStateOf<StampHandoff?>(null)
+    /** Posteingang: laufender Abruf, Änderungszähler für Listen, letzter Fehler. */
+    var inboxBusy by mutableStateOf(false)
+    var inboxRevision by mutableStateOf(0)
+    var inboxError by mutableStateOf("")
 
     init {
         run { setup = withContext(Dispatchers.IO) { repo.needsSetup() } }
@@ -413,6 +417,7 @@ fun Workspace(vm: UGSViewModel) {
     }
     val visible = destinations.filter { vm.permitted(it.page) }
     val destination = visible.firstOrNull { it.id == selected } ?: visible.first()
+    InboxPoller(vm)
     if (profile) ProfileDialog(vm) { profile = false }
     BoxWithConstraints(Modifier.fillMaxSize()) {
         val wide = maxWidth >= 800.dp
